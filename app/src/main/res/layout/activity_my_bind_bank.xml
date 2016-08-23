@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include
+        android:id="@+id/bindbank"
+        layout="@layout/activity_main_title"></include>
+
+
+    <ViewStub
+        android:id="@+id/mycard_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout="@layout/layout_mycard_nodata"/>
+
+
+    <ListView
+        android:id="@+id/lv_bindbank_mycard"
+        android:layout_below="@+id/bindbank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/ib_bindbank_unbind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dd_dimen_30px"
+        android:background="@drawable/img_mybindcard_unbind_gray"/>
+
+
+
+
+
+</RelativeLayout>

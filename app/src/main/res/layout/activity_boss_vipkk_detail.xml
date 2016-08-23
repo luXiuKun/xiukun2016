@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_30px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:paddingBottom="@dimen/dd_dimen_30px"
+        >
+
+
+        <ImageView
+            android:id="@+id/img_bossvipdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossvipdetail"/>
+
+
+        <TextView
+            android:id="@+id/tv_vipdetail_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_bossvipdetail"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="会员卡:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_vipnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_vipdetail_tag"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_kktimetag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_bossvipdetail"
+            android:layout_toRightOf="@+id/img_bossvipdetail"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="开卡时间:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_kktime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_vipdetail_kktimetag"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_alignBottom="@+id/img_bossvipdetail"
+            android:textSize="16sp"
+            android:text=""/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline"
+        android:layout_marginLeft="@dimen/dd_dimen_50px">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="会员卡种类:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_viptype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="会员姓名:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_vipname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="销售员工:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_xsstaff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="结算方式:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_jstype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="操作员:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_staff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="开卡金额:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_kkprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textColor="@color/tab_bg"
+            android:text=""/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="技师提成:"/>
+
+        <TextView
+            android:id="@+id/tv_vipdetail_jstc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textColor="@color/tab_bg"
+            android:text=""/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+</LinearLayout>

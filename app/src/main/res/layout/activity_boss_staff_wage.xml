@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        android:id="@+id/include_bossstaffwage"
+        layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:id="@+id/rl_staffwage_nodata"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_bossstaffwage_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_bossstaffwage_nodata"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/img_bossstaffwage_nodata"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_centerHorizontal="true"
+            android:text="暂无员工工资记录"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_staffwage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:layout_below="@+id/include_bossstaffwage"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="姓名"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="提成"
+            android:gravity="center_horizontal"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="工资"
+            android:gravity="center_horizontal"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_staffwage"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+        android:layout_below="@+id/ll_staffwage"
+        >
+
+        <!--头布局-->
+        <include
+            android:id="@+id/swipe_refresh_header"
+
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+        <!--滑动部分-->
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    <Button
+        android:id="@+id/btn_bossstaffwage_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tab_bg"
+        android:layout_alignParentBottom="true"
+        android:textColor="#ffffff"/>
+
+</RelativeLayout>

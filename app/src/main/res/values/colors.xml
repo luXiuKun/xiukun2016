@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="buttom_bg">#F8F8F8</color>
+    <color name="tab_bg">#34C083</color>//蓝色
+    <color name="viewline">#BCBCBC</color>//灰色的线
+    <color name="gray_line">#E5E5E5</color>
+    <color name="order_header_text">#6B6B6B</color>
+    <color name="gvwallet_textcolor">#ff8b2d</color>
+    <color name="gvwallet_textcolor1">#54c0c0</color>
+    <!--灰色按钮-->
+    <color name="btn_gray">#a9a9a9</color>
+    <!--灰色背景-->
+    <color name="gray_bg">#ededed</color>
+
+    <color name="cardtext">#04BBcb</color>
+
+    <color name="wordcolor">#666666</color>
+
+
+    <!--日历-->
+    <color name="blue">#33b5e5</color>
+    <color name="darker_blue">#0099CC</color>
+    <color name="date_picker_text_normal">#FF999999</color>
+    <color name="white">#ffffff</color>
+    <color name="circle_background">#f2f2f2</color>
+    <color name="date_picker_view_animator">#f2f2f2</color>
+    <color name="line_background">#cccccc</color>
+    <color name="calendar_header">#999999</color>
+    <color name="done_text_color_normal">#333333</color>
+    <color name="done_text_color_disabled">#CCCCCC</color>
+
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
+</resources>

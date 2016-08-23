@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/img_bossstaffwage_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/img_mywage"/>
+
+        <TextView
+            android:id="@+id/tv_bossstaffwage_zmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_bossstaffwage_icon"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textColor="@color/tab_bg"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:text="￥0"/>
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="底        薪:"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_staffwagedetail_dx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="排钟提成:"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_staffwagedetail_pztc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点钟提成:"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_staffwagedetail_dztc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="会员卡销售提成:"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_staffwagedetail_kktc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        >
+
+        <TextView
+            android:id="@+id/tv_bossstaffdetail_jjtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本月奖金:"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_staffwagedetail_jj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/tv_bossstaffdetail_jjtag"
+            android:background="@null"
+            android:enabled="false"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+            <Button
+                android:id="@+id/btn_changejj"
+                android:layout_width="@dimen/dd_dimen_120px"
+                android:layout_height="@dimen/dd_dimen_50px"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/tab_bg"
+                android:text="修改"
+                android:layout_marginRight="@dimen/dd_dimen_50px"
+                android:background="@drawable/btn_greenborder"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        >
+
+        <TextView
+            android:id="@+id/tv_bossstaffdetail_fktag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本月罚款:"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_staffwagedetail_fk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:background="@null"
+            android:enabled="false"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_toRightOf="@+id/tv_bossstaffdetail_fktag"
+            android:text=""/>
+
+
+        <Button
+            android:id="@+id/btn_changefk"
+            android:layout_width="@dimen/dd_dimen_120px"
+            android:layout_height="@dimen/dd_dimen_50px"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/tab_bg"
+            android:text="修改"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/btn_greenborder"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/viewline">
+
+    </View>
+
+</LinearLayout>

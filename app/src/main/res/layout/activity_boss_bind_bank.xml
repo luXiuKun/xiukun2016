@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        android:id="@+id/boss_bindbank"
+        layout="@layout/activity_main_title"></include>
+
+
+
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_bossbindbank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+        android:layout_below="@+id/boss_bindbank"
+        >
+
+        <!--头布局-->
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+        <!--滑动部分-->
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+    <ImageButton
+        android:id="@+id/ib_bossbindbank_unbind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dd_dimen_30px"
+        android:background="@drawable/img_mybindcard_unbind_gray"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bossbindbank"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/img_mycard_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_mycard_nodata"/>
+
+
+        <Button
+            android:id="@+id/btn_bossbindbank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_mycard_nodata"
+            android:layout_centerHorizontal="true"
+
+            android:background="@drawable/img_addcard"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

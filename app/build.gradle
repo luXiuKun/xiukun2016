@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.fangzhurapp.technicianport"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets{
+        main{
+            jniLibs.srcDirs = ['libs']
+
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.yolanda.nohttp:nohttp:1.0.3'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.3'
+    compile 'com.facebook.fresco:fresco:0.9.0'
+    compile 'com.jungly:gridPasswordView:0.3'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    compile files('libs/jpush-android-2.1.7.jar')
+    compile 'com.yanzhenjie:recyclerview-swipe:1.0.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile files('libs/SocialSDK_WeiXin_1.jar')
+    compile files('libs/gson-2.2.1.jar')
+}

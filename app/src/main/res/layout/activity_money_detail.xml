@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include
+        android:id="@+id/include_money_detail"
+        layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:id="@+id/rl_nojyjl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/include_money_detail">
+
+        <ImageView
+            android:id="@+id/img_nojyjl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_nojyjl"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@+id/img_nojyjl"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_5px"
+            android:text="暂无交易记录"/>
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_moneydetail"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/include_money_detail"
+        android:layout_height="match_parent">
+
+
+    </ListView>
+
+</RelativeLayout>

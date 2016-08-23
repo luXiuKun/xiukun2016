@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:id="@+id/rl_tx_checkcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:background="@color/gray_line"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:layout_marginTop="@dimen/dd_dimen_20px">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_tx_banklogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            fresco:placeholderImageScaleType="centerCrop"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            fresco:roundAsCircle="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_tx_bankname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_tx_banklogo"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:text=""
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_tx_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_tx_banklogo"
+            android:layout_below="@+id/tv_tx_bankname"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:text=""/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_30px"
+            android:background="@drawable/img_tx_intdicator"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        >
+
+    </View>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:text="@string/tx_warn"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        >
+
+    </View>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_tx_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:text="金额 (元)"/>
+
+        <EditText
+            android:id="@+id/et_tx_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_tx_text"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:textSize="16sp"
+            android:digits="1234567890."
+            android:layout_centerVertical="true"
+            android:background="@null"/>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        >
+
+    </View>
+
+    <ImageButton
+        android:id="@+id/ib_tx_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:background="@drawable/img_tx_next"/>
+
+</LinearLayout>

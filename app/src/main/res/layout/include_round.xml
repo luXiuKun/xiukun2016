@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:background="#F5F4F9"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_performance_day"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wordcolor"
+                android:text="日"/>
+
+            <ImageView
+                android:id="@+id/img_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_round"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_performance_week"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wordcolor"
+                android:text="周"/>
+
+            <ImageView
+                android:id="@+id/img_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_round"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_performance_month"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wordcolor"
+                android:text="月"/>
+
+            <ImageView
+                android:id="@+id/img_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_round"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_performance_year"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wordcolor"
+                android:text="年"/>
+
+            <ImageView
+                android:id="@+id/img_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_round"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_performance"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#ffffff"
+        >
+    </com.github.mikephil.charting.charts.PieChart>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/img_performance_viewbg"></View>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_performance_sjys"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dd_dimen_20px"
+            android:paddingBottom="@dimen/dd_dimen_20px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_performance_sjysmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:text="0元"/>
+
+
+            <ImageView
+                android:id="@+id/img_performance_sjys"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:layout_below="@+id/tv_performance_sjysmoney"
+                android:background="@drawable/img_performance_sjys"
+                android:layout_marginLeft="@dimen/dd_dimen_80px"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_performance_sjys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#64AADB"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:layout_toRightOf="@+id/img_performance_sjys"
+                android:layout_alignBottom="@+id/img_performance_sjys"
+                android:text="实际营收"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_marginBottom="@dimen/dd_dimen_10px"
+            android:background="@color/gray_line">
+
+        </View>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_performance_vip"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dd_dimen_20px"
+            android:paddingBottom="@dimen/dd_dimen_20px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_performance_vipmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:text="0元"/>
+
+
+            <ImageView
+                android:id="@+id/img_performance_vip"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:layout_below="@+id/tv_performance_vipmoney"
+                android:background="@drawable/img_performance_vip"
+                android:layout_marginLeft="@dimen/dd_dimen_80px"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_performance_vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#39D3C2"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:layout_toRightOf="@+id/img_performance_vip"
+                android:layout_alignBottom="@+id/img_performance_vip"
+                android:text="会员开卡"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_performance_stafftc"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dd_dimen_20px"
+            android:paddingBottom="@dimen/dd_dimen_20px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_performance_stafftc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:text="0元"/>
+
+
+            <ImageView
+                android:id="@+id/img_performance_staff"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:layout_below="@+id/tv_performance_stafftc"
+                android:background="@drawable/img_performance_stafftc"
+                android:layout_marginLeft="@dimen/dd_dimen_80px"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_performance_staff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#0FB0DA"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:layout_toRightOf="@+id/img_performance_staff"
+                android:layout_alignBottom="@+id/img_performance_staff"
+                android:text="员工提成"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_marginBottom="@dimen/dd_dimen_10px"
+            android:background="@color/gray_line">
+
+        </View>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_performance_proname"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dd_dimen_20px"
+            android:paddingBottom="@dimen/dd_dimen_20px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_performance_prorank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:text="项目名称"/>
+
+
+            <ImageView
+                android:id="@+id/img_performance_rankicon"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:layout_below="@+id/tv_performance_prorank"
+                android:background="@drawable/img_performance_rank"
+                android:layout_marginLeft="@dimen/dd_dimen_80px"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_performance_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="#FBCD3C"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:layout_toRightOf="@+id/img_performance_rankicon"
+                android:layout_alignBottom="@+id/img_performance_rankicon"
+                android:text="项目排行"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/img_performance_viewbg"></View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_performance_kdj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客单价(元)"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_performance_ordersum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单数(单)"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_performance_kk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开卡数(张)"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

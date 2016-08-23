@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_myself_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_myself_bg">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_msg_nor"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        />
+
+        <ImageView
+            android:id="@+id/img_myself_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_myself_head"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_50px"/>
+
+        <TextView
+            android:id="@+id/tv_myself_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/img_myself_head"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:text="姓名"/>
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rl_myself_bg"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/ll_myself_shopmanager"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_myself_shopm"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="店长"
+                android:layout_marginTop="@dimen/dd_dimen_5px"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_myself_gd"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_myself_gd"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="股东"
+                android:layout_marginTop="@dimen/dd_dimen_5px"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_myself_vip"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_myself_vip"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="会员"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <include
+        android:layout_below="@+id/rl_myself_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/include_myself"></include>
+
+    </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

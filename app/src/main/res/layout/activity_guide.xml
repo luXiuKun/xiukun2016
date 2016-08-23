@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_guide_yun"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:layout_alignParentRight="true"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    </android.support.v4.view.ViewPager>
+
+
+
+    <TextView
+        android:id="@+id/tv_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dd_dimen_270px"
+        android:textColor="@color/wordcolor"/>
+
+    <TextView
+        android:id="@+id/tv_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text=""
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dd_dimen_210px"
+        android:textColor="@color/viewline"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_guide_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dd_dimen_100px"
+        android:orientation="horizontal">
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dd_dimen_60px"
+        android:text="开始体验"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/tab_bg"
+        android:background="@drawable/btn_greenborder"
+        android:layout_marginBottom="@dimen/dd_dimen_140px"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

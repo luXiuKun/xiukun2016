@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dd_dimen_20px"
+    android:paddingTop="@dimen/dd_dimen_20px"
+    android:paddingRight="@dimen/dd_dimen_20px">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_gonggao"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        >
+    </com.facebook.drawee.view.SimpleDraweeView>
+
+
+    <TextView
+        android:id="@+id/tv_gongao_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tab_bg"
+        android:layout_toRightOf="@+id/img_gonggao"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:textSize="18sp"
+        android:text="title"/>
+
+    <TextView
+        android:id="@+id/tv_gonggao_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img_gonggao"
+        android:layout_toRightOf="@+id/img_gonggao"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:text="时间"/>
+
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:background="@color/gray_line"
+       android:layout_marginTop="@dimen/dd_dimen_20px"
+       android:layout_below="@+id/tv_gonggao_time">
+
+   </View>
+</RelativeLayout>

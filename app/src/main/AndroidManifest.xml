@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fangzhurapp.technicianport">
+
+    <!-- 极光 -->
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--友盟-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+    <application
+        android:name=".CustomApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登陆 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <!-- 选择身份 -->
+        <activity
+            android:name=".activity.SelectIdent"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <!-- 忘记密码 -->
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 重置密码 -->
+        <activity
+            android:name=".activity.RestartPWActivity"
+            android:screenOrientation="portrait" />
+        <!-- 可提现金额 -->
+        <activity
+            android:name=".activity.TXPriceActivity"
+            android:screenOrientation="portrait" />
+        <!-- 绑定银行卡 -->
+        <activity
+            android:name=".activity.BindBankCardActivity"
+            android:screenOrientation="portrait" />
+        <!-- 绑定成功 -->
+        <activity
+            android:name=".activity.BindSucessActivty"
+            android:screenOrientation="portrait" />
+        <!-- 设置支付密码 -->
+        <activity
+            android:name=".activity.SetPayPWActivity"
+            android:screenOrientation="portrait" />
+        <!-- 确认支付密码 -->
+        <activity
+            android:name=".activity.ConfirmPayPWActivity"
+            android:screenOrientation="portrait" />
+        <!-- 我的银行卡 -->
+        <activity
+            android:name=".activity.MyBindBankActivity"
+            android:screenOrientation="portrait" />
+        <!-- 提现 -->
+        <activity
+            android:name=".activity.TXActivity"
+            android:screenOrientation="portrait" />
+        <!-- 选择银行卡 -->
+        <activity
+            android:name=".activity.SelectBankActivity"
+            android:screenOrientation="portrait" />
+        <!-- 提现成功 -->
+        <activity
+            android:name=".activity.TxSucessActivity"
+            android:screenOrientation="portrait" />
+        <!-- 现金明细 -->
+        <activity
+            android:name=".activity.MoneyDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的工资 -->
+        <activity
+            android:name=".activity.MyWalletActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设置 -->
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改 -->
+        <activity
+            android:name=".activity.ChangePwActivity"
+            android:screenOrientation="portrait" />
+        <!-- 关于我们 -->
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <!-- 意见反馈 -->
+        <activity
+            android:name=".activity.FeedBackActivity"
+            android:screenOrientation="portrait" />
+        <!-- 消息 -->
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改支付密码 -->
+        <activity
+            android:name=".activity.ChangePayPwActivity"
+            android:screenOrientation="portrait" />
+        <!-- 取消订单详情 -->
+        <activity
+            android:name=".activity.OrderCancelDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--boss提现-->
+        <activity android:name=".activity.BossTXActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.BossChangePayPwActivity"
+            android:screenOrientation="portrait"></activity>
+
+
+        <!-- 极光推送 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required  显示通知栏 -->
+                <category android:name="${applicationId}" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="db7bbeab3557a89c15b8bf15" />
+
+        <!-- 自定义广播 -->
+        <receiver
+            android:name=".receiver.CustomReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".BossMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossSjysActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossVipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossStaffTcActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossRankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossTXPriceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossBindBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossStaffWageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossShopManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossGdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossMyselfVipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossRestartPwActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.BossSjysOrderDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BossVipkkDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BossStaffTcDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BossStaffWageDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.BossMyVipDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait">
+
+
+        </activity>
+
+        <activity android:name=".activity.BossMoneyDetailActivity"
+            android:screenOrientation="portrait" ></activity>
+
+
+
+        <!--友盟分享-->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+
+            android:excludeFromRecents="true"/>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57b3f7d1e0f55a2ee8003103" >
+        </meta-data>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    </application>
+
+</manifest>

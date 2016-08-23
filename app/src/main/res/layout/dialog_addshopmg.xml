@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_addshopmg_bg"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_addshopmg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/tab_bg"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""/>
+
+        <ImageView
+            android:id="@+id/img_addshopmg_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:layout_centerVertical="true"
+            android:background="@drawable/img_close"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline"
+        android:layout_marginRight="@dimen/dd_dimen_20px"
+        android:layout_marginLeft="@dimen/dd_dimen_20px">
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:paddingRight="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="姓     名"/>
+
+        <EditText
+            android:id="@+id/et_addshopmg_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:paddingRight="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_10px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="手机号"/>
+
+        <EditText
+            android:id="@+id/et_addshopmg_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="11"
+            android:digits="0123456789"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:paddingRight="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_10px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="店     铺"/>
+
+        <EditText
+            android:id="@+id/et_addshopmg_shopname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:enabled="false"
+            />
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/ib_addshopmg_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:background="@drawable/img_confirm_bg"/>
+
+
+</LinearLayout>

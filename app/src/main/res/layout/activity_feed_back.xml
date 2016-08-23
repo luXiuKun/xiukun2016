@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <EditText
+        android:id="@+id/et_feddback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="5"
+        android:hint="写下您的意见和反馈，我们会尽快帮您解决并联系到您......"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_30px"
+        android:textSize="15sp"
+        android:maxLength="200"
+        android:background="@null"
+        android:lines="10"
+        android:gravity="top"
+        android:singleLine="false"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        >
+
+        <TextView
+            android:id="@+id/tv_feedback_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_feedback_count"
+            android:layout_marginRight="@dimen/dd_dimen_10px"
+            android:text="还能输入:"/>
+
+        <TextView
+            android:id="@+id/tv_feedback_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_feedback_zcount"
+            android:text="0"/>
+
+        <TextView
+            android:id="@+id/tv_feedback_zcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_30px"
+            android:text="/200"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

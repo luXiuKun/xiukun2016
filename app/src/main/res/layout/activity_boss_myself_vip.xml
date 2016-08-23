@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <include
+        android:id="@+id/include_myselfvip"
+        layout="@layout/activity_main_title"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_myvip"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:layout_below="@+id/include_myselfvip"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="会员姓名"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="会员卡种类"
+            android:gravity="center_horizontal"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="剩余金额"
+            android:gravity="center_horizontal"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bossmyvip_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_myself_vip_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_myself_vip_nodata"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无会员,请在店长端录入"
+            android:textSize="20sp"
+            android:layout_below="@+id/img_myself_vip_nodata"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_20px"/>
+
+    </RelativeLayout>
+
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_myvip"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+        android:layout_below="@+id/ll_myvip"
+        >
+
+        <!--头布局-->
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+        <!--滑动部分-->
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+
+</RelativeLayout>

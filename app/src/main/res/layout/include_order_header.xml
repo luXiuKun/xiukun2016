@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F8F8F8"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:id="@+id/ll_work"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_order_work"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/order_header_work"/>
+
+        <View
+            android:id="@+id/line_work"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:visibility="invisible"
+            android:background="@color/tab_bg">
+
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line">
+
+        </View>
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_line">
+
+    </View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_fz"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_order_fz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:text="@string/order_header_fz"/>
+
+        <View
+            android:id="@+id/line_fz"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:visibility="invisible"
+            android:background="@color/tab_bg">
+
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line">
+
+        </View>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

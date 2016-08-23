@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        android:id="@+id/include_gd"
+        layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:id="@+id/rl_gd_nodata"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_myself_gd_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_myself_gd_nodata"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无股东,请点击右上角标识添加"
+            android:textSize="20sp"
+            android:layout_below="@+id/img_myself_gd_nodata"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_20px"/>
+
+    </RelativeLayout>
+
+
+
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/smr_bossgd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include_gd"
+        >
+
+    </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
+
+</RelativeLayout>

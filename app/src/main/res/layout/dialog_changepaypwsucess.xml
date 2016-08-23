@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_orderfinish_bg">
+
+
+    <ImageView
+        android:id="@+id/img_changepaypw_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:background="@drawable/img_close"/>
+
+    <ImageView
+        android:id="@+id/img_changepaypw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bindsucess"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tab_bg"
+        android:textSize="20sp"
+        android:layout_below="@id/img_changepaypw"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:text="支付密码修改成功"/>
+
+</RelativeLayout>

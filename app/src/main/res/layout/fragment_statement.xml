@@ -1,0 +1,62 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <ViewStub
+        android:id="@+id/vs_fz_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/layout_nodata"
+        />
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_work"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+        >
+
+
+
+
+        <!--头布局  id不能改-->
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+        <!--滑动部分-->
+        <ListView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:divider="#00000000"
+            android:dividerHeight="10dp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_marginRight="@dimen/dd_dimen_20px"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+
+
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+</RelativeLayout>

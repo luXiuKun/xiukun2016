@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dd_dimen_20px"
+    android:layout_marginLeft="@dimen/dd_dimen_20px"
+    android:layout_marginRight="@dimen/dd_dimen_20px"
+    android:background="@drawable/img_ordering_bg"
+    android:orientation="vertical">
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="订  单  号:"/>
+
+        <TextView
+            android:id="@+id/tv_ordering_ordernum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="下单时间:"/>
+
+        <TextView
+            android:id="@+id/tv_ordering_ordertime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        android:layout_marginTop="@dimen/dd_dimen_10px">
+
+    </View>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        >
+
+        <TextView
+            android:id="@+id/tv_ordering_pronametag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="项目名称:"/>
+
+        <TextView
+            android:id="@+id/tv_ordering_proname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="16sp"
+            android:text="asdas"
+            android:layout_toRightOf="@+id/tv_ordering_pronametag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordering_bzjtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_below="@+id/tv_ordering_pronametag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:text="标  准  价:"/>
+
+        <TextView
+            android:id="@+id/tv_ordering_bzj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="16sp"
+            android:text="asfasf"
+            android:layout_toRightOf="@+id/tv_ordering_bzjtag"
+            android:layout_alignBottom="@+id/tv_ordering_bzjtag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordertype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_below="@+id/tv_ordering_bzjtag"
+            android:text="上钟方式:"/>
+
+        <TextView
+            android:id="@+id/tv_ordering_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/tab_bg"
+            android:text="asfasf"
+            android:layout_toRightOf="@+id/tv_ordertype"
+            android:layout_alignBottom="@+id/tv_ordertype"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_ordertype"
+            android:background="@drawable/img_ordering"/>
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

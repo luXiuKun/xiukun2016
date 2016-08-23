@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_bg_paypwdialog"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        >
+
+        <ImageButton
+            android:id="@+id/ib_paypwdialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:background="@drawable/img_paypw_close"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入支付密码"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/dd_dimen_100px"
+            android:textColor="@color/tab_bg"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line">
+
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_paypwdialog_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:text="￥3333.00"/>
+
+    <com.jungly.gridpasswordview.GridPasswordView
+        android:id="@+id/gpv_paypwdialog_pw"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dd_dimen_80px"
+        android:layout_marginLeft="@dimen/dd_dimen_30px"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_gravity="center_horizontal"
+        app:gpvPasswordType="numberPassword"
+
+        >
+
+    </com.jungly.gridpasswordview.GridPasswordView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_paypwdialog_forgetpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码?"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:textColor="@color/tab_bg"/>
+
+    </RelativeLayout>
+</LinearLayout>

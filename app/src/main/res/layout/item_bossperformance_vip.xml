@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dd_dimen_20px"
+    android:paddingBottom="@dimen/dd_dimen_20px"
+
+    >
+    
+    
+    <TextView
+        android:id="@+id/tv_bossvip_cardtype"
+        android:layout_width="@dimen/dd_dimen_300px"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text=""/>
+
+
+
+
+    <TextView
+        android:id="@+id/tv_bossvip_jsprice"
+        android:layout_width="@dimen/dd_dimen_300px"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_80px"
+        android:layout_toRightOf="@+id/tv_bossvip_cardtype"
+        android:gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text=""/>
+
+</RelativeLayout>

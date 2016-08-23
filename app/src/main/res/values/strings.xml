@@ -1,0 +1,24 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">记钟宝</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="order_header_work">工作台</string>
+    <string name="order_header_fz">已分账</string>
+    <string name="restartpw">为了您的账户安全,首次登陆请修改密码</string>
+    <string name="tx_warn">每笔提现金额最少100元,预计工作日24小时到账</string>
+
+    <string name="item_is_selected"><xliff:g example="2013" id="item">%1$s</xliff:g> selected</string>
+    <string name="day_of_week_label_typeface">sans-serif</string>
+    <string name="sans_serif">sans-serif</string>
+    <string name="day_picker_description">Month grid of days</string>
+    <string name="select_day">Select month and day</string>
+    <string name="year_picker_description">Year list</string>
+    <string name="select_year">Select year</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+
+    <string name="about_text">"\u3000\u3000"记钟宝是北京记钟宝科技有限公司旗下专注于足浴养生门店管理软件，致力于为商户提供最高效
+    、便捷的门店移动化管理体验。通过ipad店长端，Boss端技师端三端实现云系统管理。</string>
+</resources>

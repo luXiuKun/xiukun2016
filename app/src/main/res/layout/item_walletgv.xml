@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingBottom="@dimen/dd_dimen_40px"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dd_dimen_370px"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        >
+
+
+    <ImageView
+        android:id="@+id/img_gvwallet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_gvwallet_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/dd_dimen_35px"
+        android:text="￥0.0"/>
+
+    <TextView
+        android:id="@+id/tv_gvwallet_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="@dimen/dd_dimen_25px"
+        android:text="结算中的金额"/>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dd_dimen_20px"
+    android:paddingBottom="@dimen/dd_dimen_20px"
+    >
+
+
+    <TextView
+        android:id="@+id/tv_wage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginLeft="@dimen/dd_dimen_30px"
+        android:text="工资"/>
+
+    <TextView
+        android:id="@+id/tv_wage_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_wage"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
+        android:layout_marginLeft="@dimen/dd_dimen_30px"
+        android:text="2016.07.25 16:00"/>
+    
+    
+    <TextView
+        android:id="@+id/tv_wage_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/tv_wage_time"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        android:textSize="20sp"
+        android:textColor="@color/tab_bg"
+        android:text="-70.00"/>
+    
+
+</RelativeLayout>

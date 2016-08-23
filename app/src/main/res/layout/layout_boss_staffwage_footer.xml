@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dd_dimen_30px"
+    android:paddingBottom="@dimen/dd_dimen_30px"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginLeft="@dimen/dd_dimen_100px"
+        android:text="员工人数:"/>
+
+    <TextView
+        android:id="@+id/tv_boss_staffwage_staffcount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0人"
+        android:layout_marginLeft="@dimen/dd_dimen_10px"
+        android:textSize="18sp"
+        android:textColor="@color/tab_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginLeft="@dimen/dd_dimen_30px"
+        android:text="工资总计:"/>
+
+    <TextView
+        android:id="@+id/tv_boss_staffwage_zwage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/tab_bg"
+        android:layout_marginLeft="@dimen/dd_dimen_10px"
+        android:text="元"/>
+
+
+</LinearLayout>

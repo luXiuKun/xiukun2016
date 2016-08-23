@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="记钟宝账号"/>
+
+        <TextView
+            android:id="@+id/tv_bosschangepaypw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:text=""
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/gray_line">
+
+    </View>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="真实姓名"/>
+
+        <EditText
+            android:id="@+id/et_changepaypw_name"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:background="@null"
+            android:hint="请输入真实姓名"
+
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="密        码"/>
+
+        <EditText
+            android:id="@+id/et_changepaypw_newpw"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:background="@null"
+            android:hint="请设置六位支付密码"
+            android:maxLength="6"
+            android:digits="0123456789"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="确认密码"/>
+
+        <EditText
+            android:id="@+id/et_changepaypw_confirmpw"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:background="@null"
+            android:hint="请确认支付密码"
+            android:maxLength="6"
+            android:digits="0123456789"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_20px"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="验  证  码"/>
+
+        <EditText
+            android:id="@+id/et_changepaypw_code"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:digits="0123456789"
+            android:maxLength="6"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_changepaypw_getcode"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dd_dimen_50px"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text="免费获取"
+            android:textColor="#ffffff"
+            android:background="@drawable/select_getcode"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <ImageButton
+        android:id="@+id/ib_changepaypw_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:background="@drawable/img_tx_next"/>
+
+
+</LinearLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_orderfinish_bg"
+    >
+
+    <TextView
+        android:id="@+id/tv_delshopmgdialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:textSize="20sp"
+        android:text="温馨提示"/>
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@+id/tv_delshopmgdialog"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:text="删除后他将不能登录管理端"/>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_tag"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dd_dimen_80px"
+        android:layout_below="@+id/view_tag"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_delshopmg_yes"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:layout_centerInParent="true"
+            android:textColor="@color/tab_bg"
+            android:textSize="20sp"/>
+
+        </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="@dimen/dd_dimen_80px"
+        android:background="@color/gray_line"
+        >
+
+    </View>
+
+        <RelativeLayout
+            android:id="@+id/rl_delshopmg_no"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:layout_centerInParent="true"
+                android:textColor="@color/tab_bg"
+                android:textSize="20sp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_tag"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_120px"
+        android:layout_below="@+id/tv_tag"
+        android:background="@color/gray_line">
+
+    </View>
+
+</RelativeLayout>
