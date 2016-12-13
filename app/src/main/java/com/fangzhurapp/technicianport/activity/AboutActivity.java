@@ -7,6 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
+import com.fangzhurapp.technicianport.http.UrlConstant;
+import com.yolanda.nohttp.NoHttp;
+import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.rest.Request;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +32,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_about);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }

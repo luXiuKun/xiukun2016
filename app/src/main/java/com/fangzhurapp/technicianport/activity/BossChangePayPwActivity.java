@@ -190,7 +190,7 @@ public class BossChangePayPwActivity extends AppCompatActivity implements View.O
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

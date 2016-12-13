@@ -7,6 +7,35 @@
     android:focusableInTouchMode="true"
     >
 
+    <ImageView
+        android:id="@+id/img_login_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:background="@drawable/login_logo"/>
+
+    <ImageView
+        android:id="@+id/img_login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_appname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_below="@+id/img_login_bg"/>
+
+    <TextView
+        android:id="@+id/tv_login_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_below="@+id/img_login_text"
+        android:textSize="16sp"
+        android:text=""
+        />
+
+
     <LinearLayout
         android:id="@+id/ll_phone"
         android:layout_width="match_parent"
@@ -20,25 +49,20 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
             android:background="@drawable/login_phone"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#414141"
-            android:textSize="15sp"
-            android:layout_marginLeft="@dimen/dd_dimen_40px"
-            android:text="手机号:"/>
+
 
         <EditText
             android:id="@+id/et_login_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_marginLeft="@dimen/dd_dimen_100px"
             android:digits="0123456789"
             android:maxLength="11"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:hint="请输入手机号"/>
 
     </LinearLayout>
@@ -46,7 +70,7 @@
     <View
         android:id="@+id/login_v1"
         android:layout_width="@dimen/dd_dimen_574px"
-        android:background="#414141"
+        android:background="@color/viewline"
         android:layout_centerInParent="true"
         android:layout_below="@id/ll_phone"
         android:layout_marginTop="@dimen/dd_dimen_20px"
@@ -68,24 +92,19 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
             android:background="@drawable/login_pw"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#414141"
-            android:textSize="15sp"
-            android:layout_marginLeft="@dimen/dd_dimen_40px"
-            android:text="密   码:"/>
+
 
         <EditText
             android:id="@+id/et_login_password"
             android:layout_width="@dimen/dd_dimen_230px"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_marginLeft="@dimen/dd_dimen_100px"
             android:maxLength="14"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="textPassword"
             android:hint="请输入密码"/>
 
@@ -93,7 +112,7 @@
             android:id="@+id/img_login_seepw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_marginLeft="@dimen/dd_dimen_60px"
             android:background="@drawable/login_pw_see"/>
 
     </LinearLayout>
@@ -101,7 +120,7 @@
     <View
         android:id="@+id/login_v2"
         android:layout_width="@dimen/dd_dimen_574px"
-        android:background="#414141"
+        android:background="@color/viewline"
         android:layout_centerInParent="true"
         android:layout_below="@id/ll_password"
         android:layout_marginTop="@dimen/dd_dimen_20px"
@@ -115,7 +134,7 @@
         android:layout_below="@id/login_v2"
         android:layout_alignRight="@id/login_v2"
         android:layout_marginTop="@dimen/dd_dimen_20px"
-        android:textColor="#414141"
+        android:textColor="@color/tab_bg"
         android:text="忘记密码?"/>
 
     <ImageButton
@@ -127,25 +146,73 @@
         android:layout_marginTop="@dimen/dd_dimen_50px"
         android:background="@drawable/login_btn_bg"/>
 
+    <LinearLayout
+        android:id="@+id/ll_login_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ib_login"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+    <View
+        android:layout_width="@dimen/dd_dimen_130px"
+        android:layout_height="1dp"
+        android:background="@drawable/login_left_line"
+        >
+
+    </View>
+
     <TextView
         android:id="@+id/tv_login_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="首次登陆初始密码请跟店长索要!"
-        android:textColor="#414141"
+        android:text="还没有账号?点击注册"
+        android:layout_marginLeft="@dimen/dd_dimen_10px"
         android:textSize="12sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/ib_login"
-        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:textColor="@color/tab_bg"
         />
 
+        <View
+            android:layout_width="@dimen/dd_dimen_130px"
+            android:layout_height="1dp"
+            android:background="@drawable/login_right_line"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            >
 
-    <View
-        android:layout_width="@dimen/dd_dimen_350px"
-        android:background="#414141"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tv_login_register"
-        android:layout_height="1dp">
-    </View>
+        </View>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_login_text"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_login_changeident"/>
+
+
+        <TextView
+            android:id="@+id/tv_login_changeident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换身份"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textSize="15sp"
+            android:textColor="@color/tab_bg"
+            />
+
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

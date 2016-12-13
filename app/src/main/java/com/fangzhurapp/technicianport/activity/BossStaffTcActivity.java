@@ -68,7 +68,6 @@ public class BossStaffTcActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_boss_staff_tc);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -120,7 +119,7 @@ public class BossStaffTcActivity extends AppCompatActivity implements View.OnCli
         jsonObjectRequest.add("sid", SpUtil.getString(BossStaffTcActivity.this,"sid",""));
         jsonObjectRequest.add("strtime",strTime);
         jsonObjectRequest.add("endtime",endTime);
-        CallServer.getInstance().add(BossStaffTcActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_PERFORMANCE_STAFFTC,true,false,true);
+        CallServer.getInstance().add(BossStaffTcActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_PERFORMANCE_STAFFTC,false,false,true);
 
     }
 
@@ -154,6 +153,8 @@ public class BossStaffTcActivity extends AppCompatActivity implements View.OnCli
                                 bossStaffTc.setDztc(list.getJSONObject(i).getString("dztc"));
                                 bossStaffTc.setKktc(list.getJSONObject(i).getString("kktc"));
 
+                                bossStaffTc.setTc_count(list.getJSONObject(i).getString("tc_count"));
+
                                 dataList.add(bossStaffTc);
                             }
 
@@ -169,7 +170,7 @@ public class BossStaffTcActivity extends AppCompatActivity implements View.OnCli
 
                                     tv_bossstafftc_name.setText(dataList.get(position).getName());
                                     tv_bossstafftc_num.setText(dataList.get(position).getId_number());
-                                    tv_bossstafftc_tc.setText(dataList.get(position).getPztc());
+                                    tv_bossstafftc_tc.setText(dataList.get(position).getTc_count());
                                 }
                             });
 
@@ -183,7 +184,7 @@ public class BossStaffTcActivity extends AppCompatActivity implements View.OnCli
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
             if (what == UrlTag.BOSS_PERFORMANCE_SJYS){
                 swipeStafftc.setRefreshing(false);
             }

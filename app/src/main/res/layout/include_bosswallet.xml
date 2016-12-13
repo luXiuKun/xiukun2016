@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_bosswallet_smsr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dd_dimen_5px"
+        android:background="@drawable/img_bosswallet_smsr_bg"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bosswallet_dot"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dd_dimen_35px"
+            android:layout_marginTop="@dimen/dd_dimen_35px"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_bosswallet_smsr"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bosswallet_blue"
+                android:textSize="25sp"
+                android:layout_marginLeft="@dimen/dd_dimen_30px"
+                android:text="扫码收入"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bosswallet_smsr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bosswallet_blue"
+            android:textSize="20sp"
+            android:text="0.00元"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_gravity="center_horizontal"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/dd_dimen_15px"
+            android:layout_marginRight="@dimen/dd_dimen_15px"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:background="@color/gray_line"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="@dimen/dd_dimen_20px"
+                    android:text="今日到账"/>
+
+                <TextView
+                    android:id="@+id/tv_bosswallet_daymoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:textSize="17sp"
+                    android:layout_marginTop="@dimen/dd_dimen_20px"
+                    android:text="0.00"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="@dimen/dd_dimen_100px"
+                android:background="@color/gray_line">
+
+            </View>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="@dimen/dd_dimen_20px"
+                    android:text="结算中"/>
+
+                <TextView
+                    android:id="@+id/tv_bosswallet_js"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:textSize="17sp"
+                    android:layout_marginTop="@dimen/dd_dimen_20px"
+                    android:text="0.00"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/ll_bosswallet_ktx"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/img_bosswallet_xjzh_bg"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_bosswallet_tx"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_20px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:text="可提现:"/>
+
+                <TextView
+                    android:id="@+id/tv_bosswallet_txprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:layout_marginLeft="@dimen/dd_dimen_10px"
+                    android:text="0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/bosswallet_xjzh"
+                    android:text="现金账户"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dd_dimen_10px"
+                    android:background="@drawable/img_bosswallet_indicator"/>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dd_dimen_10px"
+            android:layout_height="@dimen/dd_dimen_5px">
+
+
+        </View>
+
+        <LinearLayout
+            android:id="@+id/ll_bosswallet_bindcard"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/img_bosswallet_xjzh_bg"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_bosswallet_card"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_20px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:text="已绑定:"/>
+
+                <TextView
+                    android:id="@+id/tv_bosswallet_cardcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/viewline"
+                    android:layout_marginLeft="@dimen/dd_dimen_10px"
+                    android:text="0张"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dd_dimen_10px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/bosswallet_card"
+                    android:text="我的银行卡"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dd_dimen_10px"
+                    android:background="@drawable/img_bosswallet_card_indicator"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bosswallet_staffwage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_bosswallet_staffwage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bosswallet_staffwage"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_bosswallet_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_bosswallet_staffwage"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="@color/bosswallet_staffwage"
+            android:text="员工工资"/>
+
+        <TextView
+            android:id="@+id/tv_bosswallet_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_bosswallet_staffwage"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:layout_below="@+id/tv_bosswallet_tag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="上月工资:"
+            />
+
+        <TextView
+            android:id="@+id/tv_bosswallet_staffwage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_bosswallet_tag1"
+            android:layout_toRightOf="@+id/tv_bosswallet_tag1"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="0.00元"/>
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_bosswallet_staffwage_indicator"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

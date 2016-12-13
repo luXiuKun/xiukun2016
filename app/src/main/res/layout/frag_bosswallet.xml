@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
     >
-    <include layout="@layout/activity_main_title"></include>
+    <include
+        android:id="@+id/include_bosswallet"
+        layout="@layout/activity_main_title"></include>
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe_bosswallet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dd_dimen_820px"
+        android:layout_below="@+id/include_bosswallet"
         app:swipe_style="classic"
         app:load_more_enabled="false"
 
@@ -46,4 +48,12 @@
 
     </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/swipe_bosswallet"
+        android:background="@color/gray_line">
+
+    </View>
+
+</RelativeLayout>

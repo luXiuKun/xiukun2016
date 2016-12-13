@@ -56,7 +56,6 @@ public class SelectBankActivity extends AppCompatActivity implements View.OnClic
         Fresco.initialize(this);
         setContentView(R.layout.activity_select_bank);
         CustomApplication.addAct(this);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
         initView();
         initEvent();
@@ -104,7 +103,6 @@ public class SelectBankActivity extends AppCompatActivity implements View.OnClic
         if (getIntent() != null){
             carddata = (List<BankCardData>) getIntent().getSerializableExtra("carddata");
 
-            Toast.makeText(SelectBankActivity.this, ""+ carddata.size(), Toast.LENGTH_SHORT).show();
 
             if (stateMap == null)stateMap = new HashMap<>();
 
@@ -132,7 +130,7 @@ public class SelectBankActivity extends AppCompatActivity implements View.OnClic
 
                 break;
 
-            case R.id.img_title_back:
+            case R.id.img_logo:
                 SelectBankActivity.this.finish();
                 break;
 

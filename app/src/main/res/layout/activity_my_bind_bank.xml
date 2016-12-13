@@ -2,18 +2,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     >
     <include
         android:id="@+id/bindbank"
         layout="@layout/activity_main_title"></include>
 
-
-    <ViewStub
+    <RelativeLayout
         android:id="@+id/mycard_nodata"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout="@layout/layout_mycard_nodata"/>
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/img_mycard_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_200px"
+            android:background="@drawable/img_mycard_nodata"/>
+
+        <TextView
+            android:id="@+id/tv_mycard_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_mycard_nodata"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:text="一张银行卡也没有，快去绑定吧"/>
+
+
+        <Button
+            android:id="@+id/btn_mycard_bindcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_mycard_nodata"
+            android:layout_marginTop="@dimen/dd_dimen_30px"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/img_addcard"/>
+
+    </RelativeLayout>
+
+
+
 
 
     <ListView
@@ -31,6 +63,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dd_dimen_30px"
+        android:visibility="gone"
         android:background="@drawable/img_mybindcard_unbind_gray"/>
 
 

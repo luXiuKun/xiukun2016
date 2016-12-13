@@ -21,4 +21,39 @@
 
     <string name="about_text">"\u3000\u3000"记钟宝是北京记钟宝科技有限公司旗下专注于足浴养生门店管理软件，致力于为商户提供最高效
     、便捷的门店移动化管理体验。通过ipad店长端，Boss端技师端三端实现云系统管理。</string>
+
+
+    <string name="rank_price">按结算金额从高到低排序</string>
+    <string name="rank_price1">按结算金额从低到高排序</string>
+    <string name="rank_count">按消费次数从高到低排序</string>
+    <string name="rank_count1">按结算金额从低到高排序</string>
+    <string name="rank_time">按结算时间从近到远排序</string>
+    <string name="rank_time1">按结算时间从远到近排序</string>
+
+    <string name="gold">\u3000金牌合伙人资格认证3680元，营销模式为二级分销制。每分销一位一级合伙人金牌合伙人
+    可获得1600元收益，一级合伙人每分销一位合伙人金牌合伙人可获得800元收益，详情见金牌合伙人协议...</string>
+
+    <string name="city">\u3000城市合伙人资格认证金为10万元，开通账户所产生的所有费用第一年全部由城市合伙人获得，此后十年城市合伙人可获得该城市所有开通用户续费金额的50%分红，详情见城市合伙人协议....</string>
+
+    <string name="cityPartner1">1.注册金牌合伙人需缴纳3680元服务费</string>
+    <string name="cityPartner2">2.金牌合伙人可在全国分销一级合伙人，均享受北京记
+   钟宝科技优先公司金牌合伙人奖励政策。</string>
+    <string name="cityPartner3">3.在您推荐人的最上级为城市合伙人时，您在该城市合
+   伙人所购买的城市不享受金牌合伙人奖励政策</string>
+    <string name="cityPartner4">4.跨城市分销下级合伙人时请您先确认该城市是否拥有“城市合伙人”，
+        在该城市拥有“城市合伙人”前提下您不会享受“金牌合伙人”奖励政策</string>
+
+    <string name="goldpartner">您目前的账户为北京记钟宝科技有限公司金牌合伙人，可享受记钟宝产品分销奖励:</string>
+    <string name="goldpartner1">\u3000\u3000\u3000一级分销用户:1600元/年</string>
+    <string name="goldpartner2">\u3000\u3000\u3000二级分销用户:800元/年</string>
+    <string name="goldpartner3">每年获得一级分销用户续费金额的50%</string>
+    <string name="goldpartner4">(注:以上奖励仅限所分销用户所在的城市无城市合伙人的前提下)</string>
+
+
+    <string name="citypartner">您目前的账户为北京记钟宝科技有限公司城市合伙人，可享受记钟宝产品在</string>
+    <string name="citypartner1">获得所有分销用户开通金额的100%</string>
+    <string name="citypartner2">每年获得所有分销用户续费金额的50%</string>
+
+    <string name="partnermsg">有小伙伴提醒您开通记钟宝合伙人啦，开通后您可享受记钟宝合伙人的各种奖励政策详情咨询记钟宝客服010-5339 6609</string>
+
 </resources>

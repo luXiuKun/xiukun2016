@@ -1,13 +1,16 @@
 package com.fangzhurapp.technicianport.activity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.bean.BossVipkkBean;
+import com.fangzhurapp.technicianport.bean.BossWxIncomeBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +49,6 @@ public class BossVipkkDetailActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_vipkk_detail);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
 
         initView();
         initEvent();
@@ -65,17 +67,45 @@ public class BossVipkkDetailActivity extends AppCompatActivity implements View.O
 
         if (getIntent() != null){
 
-            BossVipkkBean bean = (BossVipkkBean) getIntent().getSerializableExtra("bossvipdetail");
+            if (getIntent().getStringExtra("type").equals("1")){
+                BossVipkkBean bean = (BossVipkkBean) getIntent().getSerializableExtra("bossvipdetail");
 
-            tvVipdetailVipnum.setText(bean.getMnumber());
-            tvVipdetailKktime.setText(bean.getAddtime());
-            tvVipdetailViptype.setText(bean.getK_name());
-            tvVipdetailVipname.setText(bean.getName());
-            tvVipdetailXsstaff.setText(bean.getStaff());
-            tvVipdetailJstype.setText(bean.getType());
-            tvVipdetailStaff.setText(bean.getStaff());
-            tvVipdetailKkprice.setText(bean.getJ_money());
-            tvVipdetailJstc.setText(bean.getYgtc());
+                tvVipdetailVipnum.setText(bean.getMnumber());
+                tvVipdetailKktime.setText(bean.getAddtime());
+                tvVipdetailViptype.setText(bean.getK_name());
+                tvVipdetailVipname.setText(bean.getName());
+                if (!TextUtils.isEmpty(bean.getStaff_name())){
+
+                    tvVipdetailXsstaff.setText(bean.getStaff_name());
+                }else {
+                    tvVipdetailXsstaff.setText("无");
+                }
+                tvVipdetailJstype.setText(bean.getType());
+                tvVipdetailStaff.setText(bean.getStaff());
+                tvVipdetailKkprice.setText(bean.getJ_money());
+                tvVipdetailJstc.setText(bean.getYgtc());
+            }else if (getIntent().getStringExtra("type").equals("2")){
+
+                BossWxIncomeBean wxkk = (BossWxIncomeBean)getIntent().getParcelableExtra("wxkk");
+
+                tvVipdetailVipnum.setText(wxkk.getMnumber());
+                tvVipdetailKktime.setText(wxkk.getTime());
+                tvVipdetailViptype.setText(wxkk.getXm_name());
+                tvVipdetailVipname.setText(wxkk.getName());
+                if (!TextUtils.isEmpty(wxkk.getStaff_name())){
+
+                    tvVipdetailXsstaff.setText(wxkk.getStaff_name());
+                }else {
+                    tvVipdetailXsstaff.setText("无");
+                }
+                tvVipdetailJstype.setText(wxkk.getType());
+                tvVipdetailStaff.setText(wxkk.getStaff());
+                tvVipdetailKkprice.setText(wxkk.getMoney());
+                tvVipdetailJstc.setText(wxkk.getYgtc());
+
+            }
+
+
 
 
         }

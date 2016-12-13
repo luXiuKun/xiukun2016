@@ -23,6 +23,17 @@ public class BossSJYSBean implements Serializable{
     private String set_type;
     private String ygtc;
 
+    private String room_number;
+    private String items_type;
+
+    public String getItems_type() {
+        return items_type;
+    }
+
+    public void setItems_type(String items_type) {
+        this.items_type = items_type;
+    }
+
     public String getYgtc() {
         return ygtc;
     }
@@ -133,5 +144,13 @@ public class BossSJYSBean implements Serializable{
 
     public void setStaff(String staff) {
         this.staff = staff;
+    }
+
+    public String getRoom_number() {
+        return room_number;
+    }
+
+    public void setRoom_number(String room_number) {
+        this.room_number = room_number;
     }
 }

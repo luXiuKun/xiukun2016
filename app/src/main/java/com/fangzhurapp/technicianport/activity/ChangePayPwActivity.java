@@ -64,7 +64,6 @@ public class ChangePayPwActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pay_pw);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         CustomApplication.addAct(this);
         initView();
         initEvent();
@@ -186,7 +185,7 @@ public class ChangePayPwActivity extends AppCompatActivity implements View.OnCli
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

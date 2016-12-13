@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
+    <include
+        android:id="@+id/include_bosswallet"
+        layout="@layout/activity_main_title"></include>
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_bosswallet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include_bosswallet"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+
+        >
+
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+        <ScrollView
+            android:id="@+id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:background="@color/gray_line"
+            android:scrollbars="none"
+            >
+
+            <include layout="@layout/include_bosswallet"></include>
+
+        </ScrollView>
+
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+
+</RelativeLayout>

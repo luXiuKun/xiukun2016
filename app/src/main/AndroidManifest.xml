@@ -20,18 +20,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--友盟-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 友盟 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -39,7 +34,7 @@
     <application
         android:name=".CustomApplication"
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -53,9 +48,7 @@
         <!-- 选择身份 -->
         <activity
             android:name=".activity.SelectIdent"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <!-- 忘记密码 -->
         <activity
             android:name=".activity.ForgetPasswordActivity"
@@ -116,7 +109,8 @@
         <!-- 修改 -->
         <activity
             android:name=".activity.ChangePwActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 关于我们 -->
         <activity
             android:name=".activity.AboutActivity"
@@ -124,7 +118,8 @@
         <!-- 意见反馈 -->
         <activity
             android:name=".activity.FeedBackActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 消息 -->
         <activity
             android:name=".activity.MessageActivity"
@@ -137,12 +132,13 @@
         <activity
             android:name=".activity.OrderCancelDetailActivity"
             android:screenOrientation="portrait" />
-        <!--boss提现-->
-        <activity android:name=".activity.BossTXActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.BossChangePayPwActivity"
-            android:screenOrientation="portrait"></activity>
-
+        <!-- boss提现 -->
+        <activity
+            android:name=".activity.BossTXActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossChangePayPwActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 极光推送 -->
         <activity
@@ -251,6 +247,9 @@
             android:name=".activity.BossBindBankActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.BossBindCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.BossStaffWageActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -265,47 +264,45 @@
         <activity
             android:name=".activity.BossRestartPwActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.BossSjysOrderDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BossVipkkDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BossStaffTcDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BossStaffWageDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BossMyVipDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SplashActivity"
+        <activity
+            android:name=".activity.BossSjysOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossVipkkDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossStaffTcDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossStaffWageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossMyVipDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".activity.GuideActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossMoneyDetailActivity"
+            android:screenOrientation="portrait" />
 
-
-        </activity>
-
-        <activity android:name=".activity.BossMoneyDetailActivity"
-            android:screenOrientation="portrait" ></activity>
-
-
-
-        <!--友盟分享-->
+        <!-- 友盟分享 -->
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
-
-            android:excludeFromRecents="true"/>
+            android:excludeFromRecents="true" />
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="57b3f7d1e0f55a2ee8003103" >
-        </meta-data>
+            android:value="57b3f7d1e0f55a2ee8003103" />
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -313,6 +310,80 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".activity.BossTopupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossIssueWagesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossMsgDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MoneyTradeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.BossWagesSucessAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossWAXPActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossVipConsumeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossGoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossVipConsumeDetailAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.InComeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossOrderVipAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BossSmsrProAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PartnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterCityPartnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerIncomeAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerMsgAct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerMsgDetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PartnerShopActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.StaffInComeActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.adapter.CommAdapter;
 import com.fangzhurapp.technicianport.adapter.ViewHolder;
+import com.fangzhurapp.technicianport.bean.BossMsgBean;
 import com.fangzhurapp.technicianport.bean.GonggaoBean;
 import com.fangzhurapp.technicianport.bean.MessageBean;
 import com.fangzhurapp.technicianport.http.CallServer;
@@ -57,6 +59,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     private List<MessageBean> msgList;
     private List<GonggaoBean> ggList;
     private String CHECK_STATE = "1";
+    private List<BossMsgBean> bossMsgList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_message);
         Fresco.initialize(MessageActivity.this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         CustomApplication.addAct(this);
         initView();
         initEvent();
@@ -92,9 +94,19 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
                     if (CHECK_STATE.equals("1")){
 
-                        Intent intent = new Intent(MessageActivity.this, OrderCancelDetailActivity.class);
-                        intent.putExtra("msgdetail",msgList.get(position));
-                        startActivity(intent);
+                        if (SpUtil.getString(MessageActivity.this,"selectident","").equals("1")){
+
+                            Intent intent = new Intent(MessageActivity.this, OrderCancelDetailActivity.class);
+                            intent.putExtra("msgdetail",msgList.get(position));
+                            startActivity(intent);
+                        }else{
+
+                            Intent intent = new Intent(MessageActivity.this, BossMsgDetailActivity.class);
+
+                            intent.putExtra("bossmsgdetail",bossMsgList.get(position));
+                            startActivity(intent);
+
+                        }
                     }
                 }
             });
@@ -120,11 +132,24 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getMsg() {
-        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.MSG_ORDER, RequestMethod.POST);
+        //技师消息
+        if (SpUtil.getString(MessageActivity.this,"selectident","").equals("1")){
 
-        jsonObjectRequest.add("staff_id","187");
-        jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
-        CallServer.getInstance().add(MessageActivity.this, jsonObjectRequest, callback, UrlTag.MSG_ORDER, true, false, true);
+            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.MSG_ORDER, RequestMethod.POST);
+
+            jsonObjectRequest.add("staff_id",SpUtil.getString(MessageActivity.this,"id",""));
+            jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
+            CallServer.getInstance().add(MessageActivity.this, jsonObjectRequest, callback, UrlTag.MSG_ORDER, true, false, true);
+        }else {
+
+            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_MESSAGE, RequestMethod.POST);
+
+            jsonObjectRequest.add("phone",SpUtil.getString(MessageActivity.this,"phone",""));
+            jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
+            CallServer.getInstance().add(MessageActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_MESSAGE, true, false, true);
+
+        }
+
     }
 
 
@@ -223,15 +248,92 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
                         }
 
+                    }else
+                    {
+
+                        lvMsg.setAdapter(null);
+                        Toast.makeText(MessageActivity.this, "暂无公告", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else if (what == UrlTag.BOSS_MESSAGE){
+                lvMsg.setAdapter(null);
+                LogUtil.d(TAG,response.toString());
+
+                JSONObject jsonObject = response.get();
+                try {
+                    String sucess = jsonObject.getString("sucess");
+
+                    if (sucess.equals("1")){
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        JSONArray list = data.getJSONArray("list");
+
+                        if (list.length() > 0){
+                            bossMsgList = new ArrayList<>();
+
+                            for (int i =0 ;i < list.length();i++){
+
+                                BossMsgBean bossMsgBean = new BossMsgBean();
+                                bossMsgBean.setAuname(list.getJSONObject(i).getString("auname"));
+                                bossMsgBean.setStime(list.getJSONObject(i).getString("stime"));
+                                bossMsgBean.setSta(list.getJSONObject(i).getString("sta"));
+                                bossMsgBean.setAuid(list.getJSONObject(i).getString("auid"));
+                                bossMsgBean.setId(list.getJSONObject(i).getString("id"));
+                                bossMsgBean.setLtime(list.getJSONObject(i).getString("ltime"));
+                                bossMsgBean.setMonth(list.getJSONObject(i).getString("month"));
+                                bossMsgBean.setSid(list.getJSONObject(i).getString("sid"));
+                                bossMsgBean.setSname(list.getJSONObject(i).getString("sname"));
+
+
+                                bossMsgList.add(bossMsgBean);
+                            }
+
+
+                            lvMsg.setAdapter(new CommAdapter<BossMsgBean>(MessageActivity.this,R.layout.item_msg_order,bossMsgList) {
+                                @Override
+                                public void convert(ViewHolder holder, BossMsgBean bossMsgBean, int position) {
+
+                                    ImageView img_msg_order = holder.getView(R.id.img_msg_order);
+                                    TextView tv_msg_orderstate = holder.getView(R.id.tv_msg_orderstate);
+                                    TextView tv_msg_time = holder.getView(R.id.tv_msg_time);
+                                    TextView tv_msg_ordercontent = holder.getView(R.id.tv_msg_ordercontent);
+
+
+                                    if (bossMsgBean.getSta().equals("0")) {
+                                        img_msg_order.setBackgroundResource(R.drawable.img_orderdetail);
+                                        //未读
+                                    } else if (bossMsgBean.getSta().equals("1")) {
+                                        img_msg_order.setBackgroundResource(R.drawable.img_orderdetail);
+                                    }
+                                    tv_msg_time.setText(bossMsgBean.getStime());
+                                    tv_msg_orderstate.setText(bossMsgBean.getSname());
+                                    tv_msg_ordercontent.setText("店长已核对工资,请核实。");
+
+                                }
+                            });
+
+
+
+
+                        }
+
+
+
+                    }else{
+                        lvMsg.setAdapter(null);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

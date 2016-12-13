@@ -59,8 +59,6 @@ public class TXPriceActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_txprice);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
-
         initView();
         initEvent();
 
@@ -90,6 +88,17 @@ public class TXPriceActivity extends AppCompatActivity implements View.OnClickLi
                 tvTxpriceMoney.setText("￥"+0);
             }
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (!TextUtils.isEmpty(SpUtil.getString(TXPriceActivity.this,"ktxprice",""))){
+
+            tvTxpriceMoney.setText("￥"+SpUtil.getString(TXPriceActivity.this,"ktxprice",""));
+        }else{
+            tvTxpriceMoney.setText("￥"+0);
+        }
     }
 
     @Override
@@ -169,7 +178,7 @@ public class TXPriceActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

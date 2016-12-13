@@ -13,12 +13,14 @@ import com.fangzhurapp.technicianport.utils.SpUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SelectIdent extends Activity implements View.OnClickListener{
+public class SelectIdent extends Activity implements View.OnClickListener {
 
     @Bind(R.id.ib_selectident_boss)
     ImageButton ibSelectidentBoss;
     @Bind(R.id.ib_selectident_technician)
     ImageButton ibSelectidentTechnician;
+    @Bind(R.id.ib_selectident_partner)
+    ImageButton ibSelectidentPartner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +34,32 @@ public class SelectIdent extends Activity implements View.OnClickListener{
     private void initEvent() {
         ibSelectidentBoss.setOnClickListener(this);
         ibSelectidentTechnician.setOnClickListener(this);
+        ibSelectidentPartner.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.ib_selectident_boss:
-                SpUtil.putString(SelectIdent.this,"ident","2");
+                SpUtil.putString(SelectIdent.this, "selectident", "2");
                 Intent boss = new Intent(SelectIdent.this, LoginActivity.class);
                 startActivity(boss);
                 SelectIdent.this.finish();
                 break;
 
             case R.id.ib_selectident_technician:
-                SpUtil.putString(SelectIdent.this,"ident","1");
+                SpUtil.putString(SelectIdent.this, "selectident", "1");
                 Intent technician = new Intent(SelectIdent.this, LoginActivity.class);
                 startActivity(technician);
+                SelectIdent.this.finish();
+                break;
+
+            case R.id.ib_selectident_partner:
+                SpUtil.putString(SelectIdent.this, "selectident", "3");
+                Intent partner = new Intent(SelectIdent.this, LoginActivity.class);
+                startActivity(partner);
                 SelectIdent.this.finish();
                 break;
         }

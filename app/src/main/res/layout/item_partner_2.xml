@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dd_dimen_20px"
+    >
+
+    <ImageView
+        android:id="@+id/img_partnerDet_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:background="@drawable/img_partner_noname"/>
+
+    <TextView
+        android:id="@+id/tv_partner_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="张三"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_toRightOf="@+id/img_partnerDet_tag"
+        android:textColor="@color/blacktext"/>
+
+
+
+
+    <TextView
+        android:id="@+id/tv_partner_tag1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已装店铺:"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:layout_toRightOf="@+id/img_partnerDet_tag"
+        android:layout_marginTop="@dimen/dd_dimen_5px"
+        android:layout_below="@+id/tv_partner_name"/>
+
+    <TextView
+        android:id="@+id/tv_partner_shopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginLeft="@dimen/dd_dimen_10px"
+        android:layout_toRightOf="@+id/tv_partner_tag1"
+        android:layout_marginTop="@dimen/dd_dimen_5px"
+        android:layout_below="@+id/tv_partner_name"/>
+
+
+    <TextView
+        android:id="@+id/tv_partner_tag2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已  分  成:"
+        android:layout_marginLeft="@dimen/dd_dimen_20px"
+        android:layout_toRightOf="@+id/img_partnerDet_tag"
+        android:layout_marginTop="@dimen/dd_dimen_5px"
+        android:layout_below="@+id/tv_partner_tag1"/>
+
+    <TextView
+        android:id="@+id/tv_partner_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginLeft="@dimen/dd_dimen_10px"
+        android:layout_toRightOf="@+id/tv_partner_tag2"
+        android:layout_marginTop="@dimen/dd_dimen_5px"
+        android:layout_below="@+id/tv_partner_tag1"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_remind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_partner_tag2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dd_dimen_30px"
+        android:background="@drawable/img_remind_bg"/>
+
+    <ImageView
+        android:id="@+id/img_partner_nopay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:background="@drawable/img_partner_nopay"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/img_partner_nopay"
+        android:background="@color/gray_line">
+
+    </View>
+
+</RelativeLayout>

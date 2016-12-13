@@ -1,6 +1,7 @@
 package com.fangzhurapp.technicianport.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -26,6 +27,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.bean.BankCardData;
+import com.fangzhurapp.technicianport.eventbus.BossBindSucessEvent;
+import com.fangzhurapp.technicianport.eventbus.MsgEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
@@ -35,9 +38,12 @@ import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.fangzhurapp.technicianport.view.UnBindSucessDialog;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.rest.CacheMode;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +94,7 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_boss_bind_bank);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
+        EventBus.getDefault().register(this);
         initView();
         initEvent();
     }
@@ -98,7 +104,7 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
         swipeBindbank.setOnRefreshListener(this);
         btnBossbindbank.setOnClickListener(this);
         ibBossbindbankUnbind.setOnClickListener(this);
-
+        imgTitleRight.setOnClickListener(this);
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,15 +136,23 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
         imgLogo.setBackgroundResource(R.drawable.img_title_back);
         tvShopname.setText("我的银行卡");
         imgTitleIndicator.setVisibility(View.INVISIBLE);
-        imgTitleRight.setVisibility(View.INVISIBLE);
-        swipeTarget.setEmptyView(rlBossbindbank);
+        //imgTitleRight.setVisibility(View.INVISIBLE);
+        imgTitleRight.setBackgroundResource(R.drawable.img_addbankcard);
+        swipeBindbank.setRefreshing(true);
+
+
+    }
+
+    @Subscribe
+    public void onEventMainThread(BossBindSucessEvent msg) {
         swipeBindbank.setRefreshing(true);
     }
+
 
     private void unBind() {
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.UNBIND_CARD, RequestMethod.POST);
-        jsonObjectRequest.add("id",selectCard.get(0).getId());
+        jsonObjectRequest.add("id",selectCard.get(selectPosition).getId());
         CallServer.getInstance().add(BossBindBankActivity.this,jsonObjectRequest,callback,UrlTag.UNBIND_CARD,true,false,true);
 
     }
@@ -152,7 +166,13 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.btn_bossbindbank:
-                Toast.makeText(BossBindBankActivity.this, "添加银行卡", Toast.LENGTH_SHORT).show();
+                if (SpUtil.getString(BossBindBankActivity.this,"shenfen","").equals("1")){
+
+                    Intent intent = new Intent(BossBindBankActivity.this, BossBindCardActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(BossBindBankActivity.this, "无操作权限", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.ib_bossbindbank_unbind:
@@ -165,6 +185,16 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
 
                 break;
 
+            case R.id.img_title_right:
+                if (SpUtil.getString(BossBindBankActivity.this,"shenfen","").equals("1")){
+
+                    Intent intent = new Intent(BossBindBankActivity.this, BossBindCardActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(BossBindBankActivity.this, "无操作权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
 
         }
     }
@@ -174,6 +204,7 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
     public void onRefresh() {
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_BIND_CARD_LIST, RequestMethod.POST);
+        jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
         jsonObjectRequest.add("staff_id", SpUtil.getString(BossBindBankActivity.this, "id", ""));
         CallServer.getInstance().add(BossBindBankActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_BIND_CARD_LIST, true, false, true);
 
@@ -193,29 +224,37 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")) {
                         JSONArray data = jsonObject.getJSONArray("data");
-                        bindCardList = new ArrayList<>();
-                        ibBossbindbankUnbind.setVisibility(View.VISIBLE);
+                        if (data.length() > 0){
+                            bindCardList = new ArrayList<>();
+                            ibBossbindbankUnbind.setVisibility(View.VISIBLE);
 
-                        for (int i = 0; i < data.length(); i++) {
+                            for (int i = 0; i < data.length(); i++) {
 
-                            BankCardData bankCardData = new BankCardData();
-                            bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
-                            bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
-                            bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
-                            bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
-                            bankCardData.setSname(data.getJSONObject(i).getString("sname"));
-                            bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
-                            bankCardData.setId(data.getJSONObject(i).getString("id"));
-                            bindCardList.add(bankCardData);
+                                BankCardData bankCardData = new BankCardData();
+                                bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
+                                bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
+                                bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
+                                bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
+                                bankCardData.setSname(data.getJSONObject(i).getString("sname"));
+                                bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
+                                bankCardData.setId(data.getJSONObject(i).getString("id"));
+                                bindCardList.add(bankCardData);
+                            }
+
+                            initCheck();
+                        }else{
+                            swipeTarget.setEmptyView(rlBossbindbank);
+                            ibBossbindbankUnbind.setVisibility(View.GONE);
                         }
 
-                        initCheck();
 
 
                     } else {
+                        swipeTarget.setEmptyView(rlBossbindbank);
                         ibBossbindbankUnbind.setVisibility(View.GONE);
                     }
                 } catch (JSONException e) {
+                    swipeTarget.setEmptyView(rlBossbindbank);
                     ibBossbindbankUnbind.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
@@ -233,7 +272,7 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
                         String isok = data.getString("isok");
 
                         if (isok.equals("1")){
-
+                            EventBus.getDefault().post(new BossBindSucessEvent(true));
                             unBindSucessDialog = new UnBindSucessDialog(BossBindBankActivity.this, R.layout.dialog_unbindsucess);
                             unBindSucessDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             unBindSucessDialog.show();
@@ -243,7 +282,8 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
 
                             bindCardList.remove(selectPosition);
                             selectCardAdapter.notifyDataSetChanged();
-                            swipeBindbank.setRefreshing(true);
+
+                            //swipeBindbank.setRefreshing(true);
 
                         }else{
 
@@ -262,11 +302,11 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
             if (what == UrlTag.BOSS_BIND_CARD_LIST) {
                 swipeBindbank.setRefreshing(false);
 
-
+                swipeTarget.setEmptyView(rlBossbindbank);
             }
         }
     };
@@ -397,4 +437,10 @@ public class BossBindBankActivity extends AppCompatActivity implements View.OnCl
             unBindSucessDialog.dismiss();
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -82,7 +82,7 @@
                 android:layout_marginLeft="@dimen/dd_dimen_100px"
                 android:textSize="18sp"
                 android:textColor="@color/tab_bg"
-                android:text="010-5339-6608"/>
+                android:text="010-5339-6609"/>
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+
     >
     <ScrollView
         android:layout_width="match_parent"
@@ -20,6 +22,7 @@
         android:background="@drawable/img_myself_bg">
 
     <ImageView
+        android:id="@+id/img_boss_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/title_msg_nor"
@@ -34,7 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/img_myself_head"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dd_dimen_50px"/>
+            android:layout_marginTop="@dimen/dd_dimen_100px"/>
 
         <TextView
             android:id="@+id/tv_myself_name"
@@ -58,6 +61,7 @@
         android:layout_alignBottom="@+id/rl_myself_bg"
         android:paddingTop="@dimen/dd_dimen_10px"
         android:paddingBottom="@dimen/dd_dimen_10px"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
 

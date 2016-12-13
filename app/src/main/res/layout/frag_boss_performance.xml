@@ -2,16 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <include layout="@layout/activity_main_title"></include>
 
-    <ScrollView
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_boss_pre"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+        >
+
+    <include
+        android:id="@+id/swipe_refresh_header"
+        layout="@layout/layout_twitter_header">
+
+    </include>
+
+    <ScrollView
+        android:id="@+id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <include layout="@layout/include_round"></include>
 
     </ScrollView>
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 
 </LinearLayout>

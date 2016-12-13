@@ -19,11 +19,13 @@ import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.google.gson.Gson;
+import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -74,7 +76,6 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_staff_wage_detail);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -123,9 +124,7 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
                     BTN_CHANGE_JJ_STATE = "1";
 
                 }else{
-                    BTN_CHANGE_JJ_STATE = "0";
-                    btnChangejj.setText("修改");
-                    etStaffwagedetailJj.setEnabled(false);
+
 
                     subMitJj();
 
@@ -143,9 +142,7 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
                     BTN_CHANGE_FK_STATE = "1";
 
                 }else{
-                    BTN_CHANGE_FK_STATE = "0";
-                    btnChangefk.setText("修改");
-                    etStaffwagedetailFk.setEnabled(false);
+
 
                     subMitFk();
 
@@ -164,7 +161,11 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
      * 提交罚款
      */
     private void subMitFk() {
-        if (!TextUtils.isEmpty(btnChangefk.getText().toString())){
+        if (!TextUtils.isEmpty(etStaffwagedetailFk.getText().toString())){
+
+            BTN_CHANGE_FK_STATE = "0";
+            btnChangefk.setText("修改");
+            etStaffwagedetailFk.setEnabled(false);
             toJson = new ArrayList<>();
             BossStaffWageBean bossStaffWageBean = new BossStaffWageBean();
             bossStaffWageBean.setId(bean.getId());
@@ -172,8 +173,8 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
             bossStaffWageBean.setTypea(bean.getTypea());
             bossStaffWageBean.setTypeb(bean.getTypeb());
             bossStaffWageBean.setTypes(bean.getTypes());
-            bossStaffWageBean.setFmoney(btnChangefk.getText().toString());
-            bossStaffWageBean.setJmoney(btnChangejj.getText().toString());
+            bossStaffWageBean.setFmoney(etStaffwagedetailFk.getText().toString());
+            bossStaffWageBean.setJmoney(etStaffwagedetailJj.getText().toString());
             toJson.add(bossStaffWageBean);
 
             Gson gson = new Gson();
@@ -199,7 +200,10 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
      */
     private void subMitJj() {
 
-        if (!TextUtils.isEmpty(btnChangejj.getText().toString())){
+        if (!TextUtils.isEmpty(etStaffwagedetailJj.getText().toString())){
+            BTN_CHANGE_JJ_STATE = "0";
+            btnChangejj.setText("修改");
+            etStaffwagedetailJj.setEnabled(false);
             toJson = new ArrayList<>();
             BossStaffWageBean bossStaffWageBean = new BossStaffWageBean();
 
@@ -208,12 +212,12 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
             bossStaffWageBean.setTypea(bean.getTypea());
             bossStaffWageBean.setTypeb(bean.getTypeb());
             bossStaffWageBean.setTypes(bean.getTypes());
-            bossStaffWageBean.setJmoney(btnChangejj.getText().toString());
-            bossStaffWageBean.setFmoney(btnChangefk.getText().toString());
+            bossStaffWageBean.setJmoney(etStaffwagedetailJj.getText().toString());
+            bossStaffWageBean.setFmoney(etStaffwagedetailFk.getText().toString());
             toJson.add(bossStaffWageBean);
             Gson gson = new Gson();
             String jj = gson.toJson(toJson);
-
+            Logger.d(jj);
             Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_SUBMIT_WAGE, RequestMethod.POST);
 
             jsonObjectRequest.add("json",jj);
@@ -237,11 +241,41 @@ public class BossStaffWageDetailActivity extends AppCompatActivity implements Vi
             if (what == UrlTag.BOSS_SUBMIT_WAGE){
                 LogUtil.d(TAG,response.toString());
 
+                JSONObject jsonObject = response.get();
+                try {
+                    String sucess = jsonObject.getString("sucess");
+                    if (sucess.equals("1")){
+
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        String isok = data.getString("isok");
+                        if (isok.equals("1")){
+
+                            Toast.makeText(BossStaffWageDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+
+                            BossStaffWageDetailActivity.this.finish();
+
+                        }else{
+                            Toast.makeText(BossStaffWageDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }else{
+
+                        Toast.makeText(BossStaffWageDetailActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

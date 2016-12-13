@@ -10,5 +10,5 @@
     <dimen name="month_day_label_text_size">10sp</dimen>
     <dimen name="done_label_size">14sp</dimen>
 
-    <dimen name="item_height">65dp</dimen>
+    <dimen name="item_height">58dp</dimen>
 </resources>

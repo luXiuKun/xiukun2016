@@ -2,19 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/colorWhite"
     >
 
     <include
-        android:id="@+id/include_money_detail"
+        android:id="@+id/include_title"
         layout="@layout/activity_main_title"></include>
+
+
 
     <RelativeLayout
         android:id="@+id/rl_nojyjl"
+        android:layout_below="@+id/include_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout_below="@+id/include_money_detail">
+        >
 
         <ImageView
             android:id="@+id/img_nojyjl"
@@ -38,7 +41,7 @@
     <ListView
         android:id="@+id/lv_moneydetail"
         android:layout_width="match_parent"
-        android:layout_below="@+id/include_money_detail"
+        android:layout_below="@+id/include_title"
         android:layout_height="match_parent">
 
 

@@ -25,6 +25,21 @@ public class WorkorderBean {
     private String onumber;//进行中订单编号
     private String smoney;//标准价
 
+    private String add_order;//是否加钟；大于1都是加钟
+
+    private String room_id;//房间号
+    private String room_number;
+
+    private String items_type;
+
+
+    public String getItems_type() {
+        return items_type;
+    }
+
+    public void setItems_type(String items_type) {
+        this.items_type = items_type;
+    }
 
     public String getId() {
         return id;
@@ -136,5 +151,30 @@ public class WorkorderBean {
 
     public void setSmoney(String smoney) {
         this.smoney = smoney;
+    }
+
+
+    public String getAdd_order() {
+        return add_order;
+    }
+
+    public void setAdd_order(String add_order) {
+        this.add_order = add_order;
+    }
+
+    public String getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(String room_id) {
+        this.room_id = room_id;
+    }
+
+    public String getRoom_number() {
+        return room_number;
+    }
+
+    public void setRoom_number(String room_number) {
+        this.room_number = room_number;
     }
 }

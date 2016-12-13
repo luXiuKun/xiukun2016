@@ -3,13 +3,18 @@ package com.fangzhurapp.technicianport.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -69,13 +74,15 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
     private TextView tv_count;
     private TextView tv_wage;
 
+    private String WAGE_STATUS ;
+    private String staffWages = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_staff_wage);
         ButterKnife.bind(this);
         CustomApplication.addAct(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -84,6 +91,7 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
         imgLogo.setOnClickListener(this);
         swipeStaffwage.setOnRefreshListener(this);
         tvShopname.setOnClickListener(this);
+        btnBossstaffwageState.setOnClickListener(this);
 
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,13 +102,15 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
                 startActivity(intent);
             }
         });
+
+
     }
 
     private void initView() {
         imgLogo.setBackgroundResource(R.drawable.img_title_back);
         imgTitleRight.setVisibility(View.INVISIBLE);
         swipeTarget.setEmptyView(rlStaffwageNodata);
-
+        imgTitleIndicator.setBackgroundResource(R.drawable.img_setting_indicator);
         tvShopname.setText(TimeUtils.getBeforeMonth1());
         strTime = TimeUtils.getBeforeMonth1() + "-01 00:00:00";
         String beforeMonth1 = TimeUtils.getBeforeMonth1();
@@ -117,6 +127,12 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        swipeStaffwage.setRefreshing(true);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_logo:
@@ -124,6 +140,11 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
                 break;
 
             case R.id.tv_shopname:
+                RotateAnimation rotateAnimation = new RotateAnimation(0f,90f, Animation.RELATIVE_TO_SELF,0.5f
+                        ,Animation.RELATIVE_TO_SELF,0.5f);
+                rotateAnimation.setDuration(300);
+                rotateAnimation.setFillAfter(true);
+                imgTitleIndicator.startAnimation(rotateAnimation);
                 dataPickPopWindow = DataPickPopWindow.getInstance(BossStaffWageActivity.this, R.layout.popupwindow_datapicker);
 
                 dataPickPopWindow.showPopupWindow(btnBossstaffwageState);
@@ -140,6 +161,44 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
                     }
                 });
 
+                dataPickPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        RotateAnimation rotateAnimation = new RotateAnimation(90f,0f, Animation.RELATIVE_TO_SELF,0.5f
+                                ,Animation.RELATIVE_TO_SELF,0.5f);
+                        rotateAnimation.setDuration(300);
+                        rotateAnimation.setFillAfter(true);
+
+                        imgTitleIndicator.startAnimation(rotateAnimation);
+                        dataPickPopWindow = null;
+
+                    }
+                });
+
+
+
+                break;
+
+            case R.id.btn_bossstaffwage_state:
+                //发放工资
+                if (WAGE_STATUS.equals("0")){
+
+
+                    Intent intent = new Intent(BossStaffWageActivity.this, BossIssueWagesActivity.class);
+
+                    intent.putExtra("month",tvShopname.getText().toString());
+                    intent.putExtra("staffcount",dataList.size());
+                    intent.putExtra("staffwages",staffWages);
+
+                    startActivity(intent);
+
+
+                }else{
+
+                    Toast.makeText(BossStaffWageActivity.this, "工资已发放", Toast.LENGTH_SHORT).show();
+
+                }
+
                 break;
         }
     }
@@ -153,7 +212,7 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
         jsonObjectRequest.add("strtime", strTime);
         jsonObjectRequest.add("endtime", endTime);
 
-        CallServer.getInstance().add(BossStaffWageActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_STAFF_WAGE, true, false, true);
+        CallServer.getInstance().add(BossStaffWageActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_STAFF_WAGE, false, false, true);
 
 
     }
@@ -175,13 +234,19 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
                         String is_f = data.getString("is_f");
                         String count = data.getString("count");
                         String sum = data.getString("sum");
+                        staffWages = sum;
+
                         tv_wage.setText(sum+"元");
                         tv_count.setText(count+"人");
 
                         if (is_f.equals("0")) {
+                            WAGE_STATUS = "0";
                             btnBossstaffwageState.setText("发放工资");
+
                         } else {
+                            WAGE_STATUS = "1";
                             btnBossstaffwageState.setText("工资已发放");
+                            btnBossstaffwageState.setBackgroundResource(R.drawable.btn_gray);
 
                         }
                         JSONArray list = data.getJSONArray("list");
@@ -244,7 +309,7 @@ public class BossStaffWageActivity extends AppCompatActivity implements View.OnC
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
             if (what == UrlTag.BOSS_STAFF_WAGE) {
                 swipeStaffwage.setRefreshing(false);
             }

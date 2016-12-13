@@ -44,7 +44,6 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         imgList = new ArrayList<>();
         imgList.add(R.drawable.img_guide2);
         imgList.add(R.drawable.img_guide4);
@@ -95,7 +94,6 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         switch (position){
 
             case 0:
-
                 tvText1.setText("工资授权  移动管店");
                 tvText2.setText("工资智能核算，手机一键发放");
                 break;

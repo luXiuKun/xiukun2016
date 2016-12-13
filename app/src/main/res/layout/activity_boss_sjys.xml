@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     >
-
-
 
 
     <include
         android:id="@+id/include_sjys"
-        layout="@layout/activity_main_title"></include>
+        layout="@layout/activity_main_title">
+
+    </include>
 
     <RelativeLayout
         android:id="@+id/rl_sjysnodata"
@@ -46,6 +47,7 @@
         android:paddingBottom="@dimen/dd_dimen_20px"
         android:layout_below="@+id/include_sjys"
         android:paddingTop="@dimen/dd_dimen_20px"
+        android:background="@color/buttom_bg"
         android:orientation="horizontal">
 
         <TextView
@@ -71,6 +73,15 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:text="客户身份"
+            android:gravity="center_horizontal"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="结算金额"
             android:gravity="center_horizontal"
             android:textColor="@color/tab_bg"
@@ -78,6 +89,13 @@
 
 
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_sjys"
+        android:background="@color/gray_line"></View>
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 
         xmlns:app="http://schemas.android.com/apk/res-auto"

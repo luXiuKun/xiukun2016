@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.fangzhurapp.technicianport.BossMainActivity;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.MainActivity;
+import com.fangzhurapp.technicianport.PartnerActivity;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
@@ -25,6 +26,7 @@ import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
+import com.fangzhurapp.technicianport.utils.ToastUtil;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -33,11 +35,14 @@ import com.yolanda.nohttp.rest.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpCookie;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends Activity implements View.OnClickListener {
 
     @Bind(R.id.et_login_phone)
     EditText etLoginPhone;
@@ -49,6 +54,12 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     TextView loginTvForgetPw;
     @Bind(R.id.ib_login)
     ImageButton ibLogin;
+    @Bind(R.id.tv_login_port)
+    TextView tvLoginPort;
+    @Bind(R.id.tv_login_changeident)
+    TextView tvLoginChangeident;
+    @Bind(R.id.tv_login_register)
+    TextView tvLoginRegister;
     private Boolean seePassword = true;
     private static final String TAG = "LoginActivity";
     private String ident;
@@ -67,27 +78,36 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     private void initView() {
 
 
+        ident = SpUtil.getString(LoginActivity.this, "selectident", "");
 
-        ident = SpUtil.getString(LoginActivity.this,"ident","");
+        if (ident.equals("1")) {
+            tvLoginPort.setText("技师端");
+        } else if (ident.equals("2")) {
+            tvLoginPort.setText("Boss端");
+        } else {
+            tvLoginPort.setText("合伙人");
+        }
     }
 
     private void initEvent() {
-        if (!TextUtils.isEmpty(SpUtil.getString(LoginActivity.this,"phone",""))){
-            etLoginPhone.setText(SpUtil.getString(LoginActivity.this,"phone",""));
+        if (!TextUtils.isEmpty(SpUtil.getString(LoginActivity.this, "phone", ""))) {
+            etLoginPhone.setText(SpUtil.getString(LoginActivity.this, "phone", ""));
         }
         imgLoginSeepw.setOnClickListener(this);
         ibLogin.setOnClickListener(this);
         loginTvForgetPw.setOnClickListener(this);
+        tvLoginChangeident.setOnClickListener(this);
+        tvLoginRegister.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_login_seepw:
 
-                if (seePassword){
+                if (seePassword) {
                     etLoginPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else {
+                } else {
                     etLoginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
 
@@ -107,6 +127,20 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 startActivity(intent);
                 break;
 
+            case R.id.tv_login_changeident:
+
+                Intent intent1 = new Intent(LoginActivity.this, SelectIdent.class);
+                startActivity(intent1);
+                LoginActivity.this.finish();
+
+
+                break;
+
+            case R.id.tv_login_register:
+                Intent reg = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(reg);
+                break;
+
 
         }
 
@@ -115,40 +149,47 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     private void login() {
 
         if (!TextUtils.isEmpty(etLoginPhone.getText().toString()) &&
-                !TextUtils.isEmpty(etLoginPassword.getText().toString())){
-            if (etLoginPhone.getText().toString().trim().length() == 11 && etLoginPassword.length() >= 6){
+                !TextUtils.isEmpty(etLoginPassword.getText().toString())) {
+            if (etLoginPhone.getText().toString().trim().length() == 11 && etLoginPassword.length() >= 6) {
 
-                if (ident.equals("1")){
+                if (ident.equals("1")) {
                     Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.LOGIN, RequestMethod.POST);
-                    jsonObjectRequest.add("phone",etLoginPhone.getText().toString());
-                    jsonObjectRequest.add("passwd",etLoginPassword.getText().toString());
-                    CallServer.getInstance().add(LoginActivity.this,jsonObjectRequest,callback, UrlTag.LOGIN,true,false,true);
-                }else if (ident.equals("2")){
+                    jsonObjectRequest.add("phone", etLoginPhone.getText().toString());
+                    jsonObjectRequest.add("passwd", etLoginPassword.getText().toString());
+                    CallServer.getInstance().add(LoginActivity.this, jsonObjectRequest, callback, UrlTag.LOGIN, true, false, true);
+                } else if (ident.equals("2")) {
 
                     Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_LOGIN, RequestMethod.POST);
-                    jsonObjectRequest.add("phone",etLoginPhone.getText().toString());
-                    jsonObjectRequest.add("passwd",etLoginPassword.getText().toString());
-                    CallServer.getInstance().add(LoginActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_LOGIN,true,false,true);
+                    jsonObjectRequest.add("account", etLoginPhone.getText().toString());
+                    jsonObjectRequest.add("password", etLoginPassword.getText().toString());
+                    jsonObjectRequest.add("identity", "1");
+                    CallServer.getInstance().add(LoginActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_LOGIN, true, false, true);
 
-                    /*Intent intent = new Intent(LoginActivity.this, BossMainActivity.class);
-                    startActivity(intent);*/
+
+                }else if (ident.equals("3")){
+
+                    //合伙人
+                    Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_LOGIN, RequestMethod.POST);
+                    jsonObjectRequest.add("account", etLoginPhone.getText().toString());
+                    jsonObjectRequest.add("password", etLoginPassword.getText().toString());
+                    jsonObjectRequest.add("identity", "2");
+                    CallServer.getInstance().add(LoginActivity.this, jsonObjectRequest, callback, UrlTag.PARTNER_LOGIN, true, false, true);
                 }
 
 
-            }else{
-                if (etLoginPhone.getText().toString().trim().length() != 11){
+            } else {
+                if (etLoginPhone.getText().toString().trim().length() != 11) {
 
                     Toast.makeText(LoginActivity.this, "请输入合法的手机号", Toast.LENGTH_SHORT).show();
-                }else if (etLoginPassword.length() < 6){
+                } else if (etLoginPassword.length() < 6) {
 
                     Toast.makeText(LoginActivity.this, "密码长度不够", Toast.LENGTH_SHORT).show();
                 }
             }
 
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "手机号或者密码不能为空!", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -156,12 +197,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     private HttpCallBack<JSONObject> callback = new HttpCallBack<JSONObject>() {
         @Override
         public void onSucceed(int what, Response<JSONObject> response) {
-            if (what == UrlTag.LOGIN){
-                LogUtil.d(TAG,response.toString());
+            if (what == UrlTag.LOGIN) {
+                LogUtil.d(TAG, response.toString());
+
                 try {
                     JSONObject jsonObject = response.get();
                     String sucess = jsonObject.getString("sucess");
-                    if (sucess.equals("1")){
+                    if (sucess.equals("1")) {
+                        SpUtil.putString(LoginActivity.this, "phone", etLoginPhone.getText().toString());
                         JSONObject data = jsonObject.getJSONObject("data");
                         String id = data.getString("id");
                         String sid = data.getString("sid");
@@ -169,46 +212,45 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                         String name = data.getString("name");
                         String sex = data.getString("sex");
 
-                        SpUtil.putString(LoginActivity.this,"id",id);
-                        SpUtil.putString(LoginActivity.this,"sid",sid);
-                        SpUtil.putString(LoginActivity.this,"id_number",id_number);
-                        SpUtil.putString(LoginActivity.this,"name",name);
-                        SpUtil.putString(LoginActivity.this,"sex",sex);
-
+                        SpUtil.putString(LoginActivity.this, "id", id);
+                        SpUtil.putString(LoginActivity.this, "sid", sid);
+                        SpUtil.putString(LoginActivity.this, "id_number", id_number);
+                        SpUtil.putString(LoginActivity.this, "name", name);
+                        SpUtil.putString(LoginActivity.this, "sex", sex);
 
 
                         String is_chongzhi = data.getString("is_chongzhi");
-                        if (is_chongzhi.equals("1")){
+                        if (is_chongzhi.equals("1")) {
                             //首次登陆充值密码
-                            SpUtil.putString(LoginActivity.this,"phone",etLoginPhone.getText().toString());
-                            SpUtil.putString(LoginActivity.this,"password",etLoginPassword.getText().toString());
+
+                            SpUtil.putString(LoginActivity.this, "password", etLoginPassword.getText().toString());
 
                             Intent intent = new Intent(LoginActivity.this, RestartPWActivity.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
-                            LoginActivity.this.finish();
-                        }else{
-                            SpUtil.putString(LoginActivity.this,"phone",etLoginPhone.getText().toString());
-                            SpUtil.putString(LoginActivity.this,"ident","js");
+                        } else {
+                            SpUtil.putString(LoginActivity.this, "password", etLoginPassword.getText().toString());
+                            SpUtil.putString(LoginActivity.this, "ident", "js");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             LoginActivity.this.finish();
                         }
 
-                    }else{
-                        Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "请检查手机号或密码是否正确!", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }else if (what == UrlTag.BOSS_LOGIN){
+            } else if (what == UrlTag.BOSS_LOGIN) {
 
-                LogUtil.d(TAG,response.toString());
+                LogUtil.d(TAG, response.toString());
                 JSONObject jsonObject = response.get();
                 try {
                     String sucess = jsonObject.getString("sucess");
 
-                    if (sucess.equals("1")){
-                        SpUtil.putString(LoginActivity.this,"phone",etLoginPhone.getText().toString());
+                    if (sucess.equals("1")) {
+                        SpUtil.putString(LoginActivity.this, "phone", etLoginPhone.getText().toString());
                         JSONObject data = jsonObject.getJSONObject("data");
                         String id = data.getString("id");
                         String is_chongzhi = data.getString("is_chongzhi");
@@ -216,34 +258,71 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                         String shenfen = data.getString("shenfen");
                         String sid = data.getString("sid");
 
-                        SpUtil.putString(LoginActivity.this,"shenfen",shenfen);
-                        SpUtil.putString(LoginActivity.this,"id",id);
-                        SpUtil.putString(LoginActivity.this,"sid",sid);
-                        SpUtil.putString(LoginActivity.this,"name",name);
-                        if (is_chongzhi.equals("1")){
+                        SpUtil.putString(LoginActivity.this, "shenfen", shenfen);
+                        SpUtil.putString(LoginActivity.this, "id", id);
+                        SpUtil.putString(LoginActivity.this, "sid", sid);
+                        SpUtil.putString(LoginActivity.this, "name", name);
+                        if (is_chongzhi.equals("1")) {
+                            SpUtil.putString(LoginActivity.this, "password", etLoginPassword.getText().toString());
                             Intent intent = new Intent(LoginActivity.this, BossRestartPwActivity.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
-                        }else{
-                            SpUtil.putString(LoginActivity.this,"ident","boss");
+                        } else {
+                            SpUtil.putString(LoginActivity.this, "ident", "boss");
+                            SpUtil.putString(LoginActivity.this, "password", etLoginPassword.getText().toString());
                             Intent intent = new Intent(LoginActivity.this, BossMainActivity.class);
                             startActivity(intent);
                             LoginActivity.this.finish();
                         }
 
-                    }else{
-                        Toast.makeText(LoginActivity.this, "登录失败,请检查账号和密码是否正确", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "请检查手机号或密码是否正确!", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
+            }else if (what == UrlTag.PARTNER_LOGIN){
+
+
+                LogUtil.d(TAG,response.toString());
+
+
+
+                JSONObject jsonObject = response.get();
+                try {
+                    if (jsonObject.getString("sucess").equals("1")){
+                        SpUtil.putString(LoginActivity.this, "phone", etLoginPhone.getText().toString());
+                        SpUtil.putString(LoginActivity.this, "password", etLoginPassword.getText().toString());
+                        SpUtil.putString(LoginActivity.this, "ident", "partner");
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+
+                        SpUtil.putString(LoginActivity.this,"uname",data.getString("account"));
+                        SpUtil.putString(LoginActivity.this,"invite_people",data.getString("invite_people"));
+                        SpUtil.putString(LoginActivity.this,"gold",data.getString("identity_gold"));
+                        SpUtil.putString(LoginActivity.this,"shenfen",data.getString("identity_admin_type"));//1boss2股东
+                        SpUtil.putString(LoginActivity.this,"city",data.getString("identity_city"));
+                        SpUtil.putString(LoginActivity.this,"partnerid",data.getString("id"));
+                        SpUtil.putString(LoginActivity.this,"cityname",data.getString("city"));
+                        Intent intent = new Intent(LoginActivity.this, PartnerActivity.class);
+                        startActivity(intent);
+
+
+                    }else{
+                        ToastUtil.showToast(LoginActivity.this,"登录失败，请检查用户名密码");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

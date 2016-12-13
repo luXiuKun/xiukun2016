@@ -32,7 +32,6 @@ public class TxSucessActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_tx_sucess);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }

@@ -17,11 +17,14 @@ package com.fangzhurapp.technicianport.http;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import com.fangzhurapp.technicianport.CustomApplication;
+import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.error.NetworkError;
 import com.yolanda.nohttp.error.NotFoundCacheError;
+import com.yolanda.nohttp.error.ParseError;
 import com.yolanda.nohttp.error.ServerError;
 import com.yolanda.nohttp.error.TimeoutError;
 import com.yolanda.nohttp.error.URLError;
@@ -31,6 +34,8 @@ import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
 import com.fangzhurapp.technicianport.view.WaitDialog;
+
+import java.net.ProtocolException;
 
 /**
  * Created in Mar 6, 2016 9:01:42 PM.
@@ -57,7 +62,6 @@ public class ResponseListener<T> implements OnResponseListener<T> {
 			mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
-					//mRequest.cancel(true);
 					mRequest.cancel();
 				}
 			});
@@ -77,17 +81,48 @@ public class ResponseListener<T> implements OnResponseListener<T> {
 	}
 
 	@Override
+	public void onFailed(int what, Response<T> response) {
+		Exception exception = response.getException();
+		if (exception instanceof NetworkError) {// 网络不好
+			Toast.makeText(CustomApplication.getInstance(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof TimeoutError) {// 请求超时
+			Toast.makeText(CustomApplication.getInstance(), "连接超时,请重新请求", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof UnKnownHostError) {// 找不到服务器
+			Toast.makeText(CustomApplication.getInstance(), "未发现指定服务器", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof URLError) {// URL是错的
+			Toast.makeText(CustomApplication.getInstance(), "URL错误", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof NotFoundCacheError) {
+			// 这个异常只会在仅仅查找缓存时没有找到缓存时返回
+			Toast.makeText(CustomApplication.getInstance(), "没有发现缓存", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof ProtocolException) {
+			Toast.makeText(CustomApplication.getInstance(), "系统错误", Toast.LENGTH_SHORT).show();
+		} else if (exception instanceof ParseError) {
+			Toast.makeText(CustomApplication.getInstance(), "数据解析错误", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(CustomApplication.getInstance(), "未知错误", Toast.LENGTH_SHORT).show();
+		}
+		Logger.e("错误：" + exception.getMessage());
+		if (callBack != null)
+			callBack.onFailed(what, response);
+	}
+
+
+
+
+
+
+	/*@Override
 	public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
 		if (isShowError) {
-			/*if (exception instanceof ClientError) {// 客户端错误
+			*//*if (exception instanceof ClientError) {// 客户端错误
 				Toast.makeText(MyApplication.getInstance(), "客户端发生错误", Toast.LENGTH_SHORT).show();
-			} else*/
+			} else*//*
 			if (exception instanceof ServerError) {// 服务器错误
 				Toast.makeText(CustomApplication.getInstance(), "服务器发生错误", Toast.LENGTH_SHORT).show();
 			} else if (exception instanceof NetworkError) {// 网络不好
-				Toast.makeText(CustomApplication.getInstance(), "请检查网络", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CustomApplication.getInstance(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
 			} else if (exception instanceof TimeoutError) {// 请求超时
-				Toast.makeText(CustomApplication.getInstance(), "请求超时，网络不好或者服务器不稳定", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CustomApplication.getInstance(), "连接超时,请重新请求", Toast.LENGTH_SHORT).show();
 			} else if (exception instanceof UnKnownHostError) {// 找不到服务器
 				Toast.makeText(CustomApplication.getInstance(), "未发现指定服务器", Toast.LENGTH_SHORT).show();
 			} else if (exception instanceof URLError) {// URL是错的
@@ -100,7 +135,7 @@ public class ResponseListener<T> implements OnResponseListener<T> {
 		}
 		if (callBack != null)
 			callBack.onFailed(what, url, tag, exception, responseCode, networkMillis);
-	}
+	}*/
 
 	@Override
 	public void onFinish(int what) {

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.fangzhurapp.technicianport.activity.PartnerMsgAct">
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <ListView
+        android:id="@+id/lv_partner_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_nomsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/il_msg">
+
+        <ImageView
+            android:id="@+id/img_partner_nomsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/img_msg_nomsg"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/img_partner_nomsg"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:text="暂无消息"/>
+    </RelativeLayout>
+
+</LinearLayout>

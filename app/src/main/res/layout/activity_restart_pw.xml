@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@color/colorWhite"
     >
 
     <include layout="@layout/title_forgetpw"></include>

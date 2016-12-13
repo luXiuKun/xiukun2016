@@ -18,13 +18,29 @@
             android:layout_height="wrap_content"
             android:background="@drawable/img_ordervip"/>
 
+
+
+        <TextView
+            android:id="@+id/tv_ordervip_viptype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_ordervip"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            android:text="会员卡种类:"/>
+
+
         <TextView
             android:id="@+id/tv_vipnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
             android:layout_toRightOf="@+id/img_ordervip"
-            android:textSize="15sp"
+            android:layout_marginTop="@dimen/dd_dimen_10px"
+            android:layout_below="@+id/tv_ordervip_viptype"
+            android:textSize="14sp"
+            android:textColor="@color/green"
             android:text="会员卡编号:"/>
 
         <TextView
@@ -32,29 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_vipnum"
+            android:layout_alignBottom="@+id/tv_vipnum"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            android:textColor="@color/green"
             android:text="会员卡编号:"/>
 
-        <TextView
-            android:id="@+id/tv_kktime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_ordervip"
-            android:layout_alignBottom="@+id/img_ordervip"
-            android:layout_marginLeft="@dimen/dd_dimen_10px"
-            android:textSize="15sp"
-            android:text="开 卡 时 间:"/>
 
-        <TextView
-            android:id="@+id/tv_ordervip_kktime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_kktime"
-            android:layout_alignBottom="@+id/tv_kktime"
-            android:layout_marginLeft="@dimen/dd_dimen_10px"
-            android:textSize="15sp"
-            android:text="开 卡 时 间:"/>
 
     </RelativeLayout>
 
@@ -75,27 +75,31 @@
 
 
         <TextView
-            android:id="@+id/tv_ordervip"
+            android:id="@+id/tv_kktime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="会员卡种类:"/>
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textSize="15sp"
+            android:text="开 卡 时 间:"/>
 
         <TextView
-            android:id="@+id/tv_ordervip_viptype"
+            android:id="@+id/tv_ordervip_kktime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_ordervip"
+            android:layout_toRightOf="@+id/tv_kktime"
+            android:layout_alignBottom="@+id/tv_kktime"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
-            android:textSize="16sp"
-            android:text="会员卡种类:"/>
+            android:textSize="15sp"
+            android:text="开 卡 时 间:"/>
+
+
 
 
         <TextView
             android:id="@+id/tv_payprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_ordervip"
+            android:layout_below="@+id/tv_kktime"
             android:layout_marginTop="@dimen/dd_dimen_20px"
             android:textSize="16sp"
             android:text="支 付 金 额:"/>

@@ -4,7 +4,13 @@ package com.fangzhurapp.technicianport.http;
  * Created by android on 2016/7/5.
  */
 public class UrlConstant {
-
+    /**
+     * 测试
+     */
+    //public final static String  BASE_URL = "http://www.jizhongbao.net/";
+    /**
+     * 正式
+     */
     public  final static String BASE_URL = "http://www.fangzhur.com/jizhongbao/";
     /**
      * 登陆
@@ -15,6 +21,13 @@ public class UrlConstant {
      * 修改密码
      */
     public final static String CHANGE_PW= BASE_URL+"app_alpha.php?c=Setup&a=updatePwd3";
+
+    /**
+     * boss修改密码
+     * 合伙人共用
+     */
+    //public final static String BOSS_CHANGE_PW= BASE_URL+"app_alpha.php?c=Setup&a=updatePwd5";
+    public final static String BOSS_CHANGE_PW= BASE_URL+"join.php?c=Password&a=boss";
 
     /**
      * 找回密码
@@ -122,7 +135,8 @@ public class UrlConstant {
     /**
      * boss登录
      */
-    public final static String BOSS_LOGIN = BASE_URL+"app_alpha.php?c=Setup&a=isLogin3";
+    //public final static String BOSS_LOGIN = BASE_URL+"app_alpha.php?c=Setup&a=isLogin3";
+    public final static String BOSS_LOGIN = BASE_URL+"join.php?c=Login&a=boss";
 
     /**
      * boss业绩首页
@@ -216,5 +230,118 @@ public class UrlConstant {
      * boss提交员工工资
      */
     public final static String BOSS_SUBMIT_WAGE =BASE_URL+"app_alpha.php?c=Wallet&a=save";
+
+    /**
+     * boss消息列表
+     */
+    public final static String BOSS_MESSAGE = BASE_URL+"app_alpha.php?c=Setup&a=bNewsList";
+
+    /**
+     * 检查版本更新
+     */
+    public static final String VERSION = BASE_URL+"app_alpha.php?c=Deploy&a=get";
+
+
+    /**
+     * 微信支付
+     */
+    public static final String BOSS_WXPAY = BASE_URL+"app_alpha.php?c=PayWx&a=index";
+
+    /**
+     * 会员的消费详情
+     */
+    public static final String BOSS_VIPCONSUME_DETAIL = BASE_URL+"app_alpha.php?c=Results&a=udetails";
+
+
+    /**
+     * 实际营收中的订单收入 不包含会员的消费
+     */
+    public static final String  BOSS_ORDER =BASE_URL+"app_alpha.php?c=Results&a=NonMemberOrderList";
+
+
+    /**
+     * 充值查询的接口
+     */
+    public static final String BOSS_PAY_QUERY = BASE_URL+"app_alpha.php?c=PayWx&a=orderQuery";
+
+    /**
+     * boss扫码收入
+     */
+    public static final String BOSS_SMSR = BASE_URL+"app_alpha.php?c=Wallet&a=sweepsTheCodeIncome";
+
+
+    /**
+     * 注册合伙人
+     */
+    public static final String REGISTER_PARTNER = BASE_URL+"join.php?c=Register&a=boss";
+
+    /**
+     * 登录合伙人
+     */
+    public static final String PARTNER_LOGIN=BASE_URL+"join.php?c=user&a=login";
+
+    /**
+     * 合伙人支付
+     */
+    public static final String PARTNER_PAR = BASE_URL+"join.php?c=auth&a=pay";
+
+    /**
+     * 合伙人订单查询
+     */
+    public static final String PARTNER_QUERY = BASE_URL+"join.php?c=auth&a=orderQuery";
+
+
+    /**
+     * 合伙人修改密码
+     */
+    public static final String PARTNER_CHANGE_PW=BASE_URL+"join.php?c=user&a=updatePass";
+
+    /**
+     * 合伙人忘记密码
+     */
+    public static final String PARTNER_FORGET_PW=BASE_URL+"join.php?c=user&a=checkPollCode";
+
+
+    /**
+     * 合伙人详情
+     */
+    public static final String PARTNER_DETAIL =  BASE_URL+"join.php?c=Boss&a=subCopartner";
+
+    /**
+     * 合伙人钱包首页
+     */
+    public static final String PARTNER_WALLET =BASE_URL+"join.php?c=Boss&a=copartner";
+
+
+    /**
+     * 合伙人绑定银行卡
+     */
+    public static final String PARTNER_BINDCARD = BASE_URL+"join.php?c=BankCard&a=bind";
+
+    /**
+     * 合伙人获取绑定的银行卡列表
+     */
+    public static final String PARTNER_CARDLIST = BASE_URL+"join.php?c=BankCard&a=getLists";
+
+    /**
+     * 合伙人收入
+     */
+    public static final String PARTNER_INCOME = BASE_URL+"join.php?c=Boss&a=incomePartner";
+
+    /**
+     * 合伙人查看已安装店铺
+     */
+    public static final String PARTNER_SHOP = BASE_URL+"join.php?c=BossStore&a=getLists";
+
+    /**
+     * 合伙人提醒验证
+     */
+    public static final String PARTNER_REMIND =BASE_URL+"join.php?c=Info&a=sendHhr";
+
+    /**
+     * 获取合伙人消息列表
+     */
+    public static final String PARTNER_MSG = BASE_URL+"join.php?c=Info&a=getHhr";
+
 
 }

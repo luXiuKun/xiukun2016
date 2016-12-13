@@ -130,18 +130,50 @@ public class StatementFragment extends Fragment implements OnRefreshListener{
                         for (int i =0;i < data.length();i++){
 
                             if (data.getJSONObject(i).getString("o_type").equals("2")){
-                                WorkorderBean workorderBean = new WorkorderBean();
-                                workorderBean.setId(data.getJSONObject(i).getString("id"));
-                                workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
-                                workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
-                                workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
-                                workorderBean.setType(data.getJSONObject(i).getString("type"));
-                                workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
-                                workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
-                                workorderBean.setMoney(data.getJSONObject(i).getString("money"));
-                                workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
 
-                                orderList.add(workorderBean);
+                                if(data.getJSONObject(i).getString("items_type").equals("1")){
+
+                                    WorkorderBean workorderBean = new WorkorderBean();
+                                    workorderBean.setId(data.getJSONObject(i).getString("id"));
+                                    workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
+                                    workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                    workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                    workorderBean.setType(data.getJSONObject(i).getString("type"));
+                                    workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
+                                    workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                    workorderBean.setMoney(data.getJSONObject(i).getString("money"));
+                                    workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
+                                    workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                    workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                    workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                    workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+
+                                    orderList.add(workorderBean);
+
+
+                                }else if (data.getJSONObject(i).getString("items_type").equals("2")
+                                        || data.getJSONObject(i).getString("items_type").equals("3")){
+
+                                    WorkorderBean workorderBean = new WorkorderBean();
+                                    workorderBean.setId(data.getJSONObject(i).getString("id"));
+                                    workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
+                                    workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                    workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                    workorderBean.setType(data.getJSONObject(i).getString("type"));
+                                    workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
+                                    workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                    workorderBean.setMoney(data.getJSONObject(i).getString("money"));
+                                    workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
+                                    workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                    workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                    workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                    workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+
+                                    orderList.add(workorderBean);
+
+                                }
+
+
                             }else if (data.getJSONObject(i).getString("o_type").equals("1")){
 
                                 WorkorderBean workorderBean = new WorkorderBean();
@@ -162,6 +194,9 @@ public class StatementFragment extends Fragment implements OnRefreshListener{
                         StatementOrderAdapter statementOrderAdapter = new StatementOrderAdapter(mContext, orderList);
                         swipe_target.setAdapter(statementOrderAdapter);
 
+                        }else{
+                            swipe_target.setAdapter(null);
+                            vs_nodata.setVisibility(View.VISIBLE);
                         }
                     }else{
                         swipe_target.setAdapter(null);
@@ -173,7 +208,7 @@ public class StatementFragment extends Fragment implements OnRefreshListener{
 
                 } catch (JSONException e) {
                     swipe_target.setAdapter(null);
-                    Toast.makeText(mContext, "返回参数有误", Toast.LENGTH_SHORT).show();
+                    vs_nodata.setVisibility(View.VISIBLE);
                     e.printStackTrace();
                 }
 
@@ -181,12 +216,11 @@ public class StatementFragment extends Fragment implements OnRefreshListener{
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-
+        public void onFailed(int what,  Response<JSONObject> response) {
+            if (what == UrlTag.FZ_SUCESS){
+                mSwipeload.setRefreshing(false);
+            }
         }
     };
 
-    public void resresh(){
-        mSwipeload.setRefreshing(true);
-    }
 }

@@ -3,6 +3,7 @@ package com.fangzhurapp.technicianport.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -37,6 +38,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 改为订单收入的界面
+ */
 public class BossSjysActivity extends AppCompatActivity implements View.OnClickListener, OnRefreshListener {
 
     @Bind(R.id.img_logo)
@@ -64,7 +68,6 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_sjys);
-        getSupportActionBar().hide();
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
         initView();
@@ -79,16 +82,28 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
         swipeTarget.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(BossSjysActivity.this, BossSjysOrderDetailActivity.class);
-                intent.putExtra("sjysdetail", dataList.get(position));
-                startActivity(intent);
+                if (dataList.get(position).getItems_type().equals("2")
+                        || dataList.get(position).getItems_type().equals("3")){
+
+                    Intent intent = new Intent(BossSjysActivity.this, BossGoodsDetailActivity.class);
+                    intent.putExtra("goodsdetail", dataList.get(position));
+                    intent.putExtra("goodstype", "1");
+                    startActivity(intent);
+                }else{
+
+                    Intent intent = new Intent(BossSjysActivity.this, BossSjysOrderDetailActivity.class);
+                    intent.putExtra("sjysdetail", dataList.get(position));
+                    intent.putExtra("sjystype","1");
+                    startActivity(intent);
+                }
+
             }
         });
     }
 
     private void initView() {
         imgLogo.setBackgroundResource(R.drawable.img_title_back);
-        tvShopname.setText("实际营收");
+        tvShopname.setText("订单收入");
         imgTitleIndicator.setVisibility(View.INVISIBLE);
         imgTitleRight.setVisibility(View.INVISIBLE);
 
@@ -122,7 +137,7 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
         jsonObjectRequest.add("strtime", strTime);
         jsonObjectRequest.add("endtime", endTime);
         jsonObjectRequest.add("sta", "1");
-        CallServer.getInstance().add(BossSjysActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_PERFORMANCE_SJYS, true, false, true);
+        CallServer.getInstance().add(BossSjysActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_PERFORMANCE_SJYS, false, false, true);
 
     }
 
@@ -159,8 +174,9 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
                                 bossSJYSBean.setFwtime(list.getJSONObject(i).getString("fwtime"));
                                 bossSJYSBean.setSet_type(list.getJSONObject(i).getString("set_type"));
                                 bossSJYSBean.setYgtc(list.getJSONObject(i).getString("ygtc"));
-
-
+                                bossSJYSBean.setStaff(list.getJSONObject(i).getString("staff"));
+                                bossSJYSBean.setRoom_number(list.getJSONObject(i).getString("room_number"));
+                                bossSJYSBean.setItems_type(list.getJSONObject(i).getString("items_type"));
                                 dataList.add(bossSJYSBean);
                             }
 
@@ -172,10 +188,17 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
                                     TextView tv_bosssjys_proname = holder.getView(R.id.tv_bosssjys_proname);
                                     TextView tv_bosssjys_js = holder.getView(R.id.tv_bosssjys_js);
                                     TextView tv_bosssjys_jsprice = holder.getView(R.id.tv_bosssjys_jsprice);
+                                    TextView tv_bosssjys_ident = holder.getView(R.id.tv_bosssjys_ident);
 
-
+                                    tv_bosssjys_ident.setText(dataList.get(position).getSet_type());
                                     tv_bosssjys_proname.setText(dataList.get(position).getXm_name());
-                                    tv_bosssjys_js.setText(dataList.get(position).getStaff_name());
+                                    if (!TextUtils.isEmpty(dataList.get(position).getStaff_name())){
+
+                                        tv_bosssjys_js.setText(dataList.get(position).getStaff_name());
+                                    }else{
+                                        tv_bosssjys_js.setText("无");
+
+                                    }
                                     tv_bosssjys_jsprice.setText(dataList.get(position).getMoney());
                                 }
                             });
@@ -190,7 +213,7 @@ public class BossSjysActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
             if (what == UrlTag.BOSS_PERFORMANCE_SJYS) {
                 swipeSjys.setRefreshing(false);
             }

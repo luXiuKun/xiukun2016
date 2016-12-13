@@ -1,6 +1,8 @@
 package com.fangzhurapp.technicianport.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +10,8 @@ import android.widget.TextView;
 
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.bean.moneyDetailBean;
+import com.fangzhurapp.technicianport.utils.NumberUtils;
+import com.yolanda.nohttp.Logger;
 
 import java.util.List;
 
@@ -17,6 +21,7 @@ import java.util.List;
 public class moneyDetailAdapter extends BaseAdapter{
     private List<moneyDetailBean> dataList;
     private Context mContext;
+    private final  int TYPE_COUNT = 2;
 
     public moneyDetailAdapter(List<moneyDetailBean> list, Context context){
 
@@ -34,17 +39,17 @@ public class moneyDetailAdapter extends BaseAdapter{
     public int getItemViewType(int position) {
         //提现
         if (dataList.get(position).getType().equals("1")){
-            return  1;
+            return  0;
             //工资
         }else if (dataList.get(position).getType().equals("2")){
-            return 2;
+            return 1;
         }
-        return 0;
+        return -1;
     }
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return TYPE_COUNT;
     }
 
     @Override
@@ -65,50 +70,88 @@ public class moneyDetailAdapter extends BaseAdapter{
         int itemViewType = getItemViewType(position);
 
 
-        switch (itemViewType){
-            //提现
-            case 1:
-                txHolder = new TxHolder();
-
-                if (convertView == null){
-                    convertView =  View.inflate(mContext, R.layout.item_moneydetail_tx,null);
-
-                    txHolder.tv_tx_time = (TextView) convertView.findViewById(R.id.tv_tx_time);
-                    txHolder.tv_tx_money = (TextView) convertView.findViewById(R.id.tv_tx_money);
 
 
-                    convertView.setTag(txHolder);
-                }else{
+            if (convertView == null){
 
-                    txHolder = (TxHolder) convertView.getTag();
+                switch (itemViewType){
+                    //收入
+                    case 1:
+                        txHolder = new TxHolder();
+
+
+                        convertView =  LayoutInflater.from(mContext).inflate(R.layout.item_moneydetail_out,null);
+
+                        txHolder.tv_moneydetail_time = (TextView) convertView.findViewById(R.id.tv_moneydetail_time);
+                        txHolder.tv_moneydetail_money = (TextView) convertView.findViewById(R.id.tv_moneydetail_money);
+                        txHolder.tv_moneydetail_type = (TextView) convertView.findViewById(R.id.tv_moneydetail_type);
+                        txHolder.tv_moneydetail_zmoney = (TextView) convertView.findViewById(R.id.tv_moneydetail_zmoney);
+                        txHolder.tv_moneydetail_poundage = (TextView) convertView.findViewById(R.id.tv_moneydetail_poundage);
+
+
+                        txHolder.tv_moneydetail_time.setText(dataList.get(position).getTime());
+                        //String zmoney = NumberUtils.floatFormat(Float.valueOf(dataList.get(position).getMoney()) + Float.valueOf(dataList.get(position).getSmoney()));
+                        txHolder.tv_moneydetail_money.setText("+"+dataList.get(position).getMoney()
+                        );
+                        txHolder.tv_moneydetail_type.setText(dataList.get(position).getCname());
+                        txHolder.tv_moneydetail_zmoney.setText(Html.fromHtml("总金额"+"<font color= '#34C083'>"+dataList.get(position).getMoney()+"</font>"+"元"));
+                        txHolder.tv_moneydetail_poundage.setText(Html.fromHtml("手续费"+"<font color= '#34C083'>"+dataList.get(position).getSmoney()+"</font>"+"元"));
+
+                        convertView.setTag(txHolder);
+
+                        break;
+                    //支出
+                    case 0:
+
+                        wageHolder = new WageHolder();
+
+
+                        convertView =  LayoutInflater.from(mContext).inflate(R.layout.item_moneydetail_wage,null);
+
+                        wageHolder.tv_wage_time = (TextView) convertView.findViewById(R.id.tv_wage_time);
+                        wageHolder.tv_wage_money = (TextView) convertView.findViewById(R.id.tv_wage_money);
+                        wageHolder.tv_wage = (TextView) convertView.findViewById(R.id.tv_wage);
+
+
+                        wageHolder.tv_wage_time.setText(dataList.get(position).getTime());
+                        wageHolder.tv_wage_money.setText("-"+dataList.get(position).getMoney());
+                        wageHolder.tv_wage.setText(dataList.get(position).getCname());
+                        convertView.setTag(wageHolder);
+
+                        break;
                 }
-                txHolder.tv_tx_time.setText(dataList.get(position).getTime());
-                txHolder.tv_tx_money.setText("-"+dataList.get(position).getMoney());
+            }else{
 
 
-                break;
-            //工资
-            case 2:
+                switch (itemViewType){
+                    //收入
+                    case 1:
 
-                wageHolder = new WageHolder();
+                        txHolder = (TxHolder) convertView.getTag();
 
-                if (convertView == null){
-                    convertView =  View.inflate(mContext, R.layout.item_moneydetail_wage,null);
+                        txHolder.tv_moneydetail_time.setText(dataList.get(position).getTime());
+                       // String zmoney = NumberUtils.floatFormat(Float.valueOf(dataList.get(position).getMoney()) + Float.valueOf(dataList.get(position).getCounter_fee()));
+                        txHolder.tv_moneydetail_money.setText("+"+dataList.get(position).getMoney() );
+                        txHolder.tv_moneydetail_type.setText(dataList.get(position).getCname());
+                        txHolder.tv_moneydetail_zmoney.setText(Html.fromHtml("总金额"+"<font color= '#34C083'>"+dataList.get(position).getMoney()+"</font>"+"元"));
+                        txHolder.tv_moneydetail_poundage.setText(Html.fromHtml("手续费"+"<font color= '#34C083'>"+dataList.get(position).getSmoney()+"</font>"+"元"));
+                        break;
+                    //支出
+                    case 0:
 
-                    wageHolder.tv_wage_time = (TextView) convertView.findViewById(R.id.tv_wage_time);
-                    wageHolder.tv_wage_money = (TextView) convertView.findViewById(R.id.tv_wage_money);
 
+                        wageHolder = (WageHolder) convertView.getTag();
 
-                    convertView.setTag(wageHolder);
-                }else{
+                        wageHolder.tv_wage_time.setText(dataList.get(position).getTime());
+                        wageHolder.tv_wage_money.setText("-"+dataList.get(position).getMoney());
+                        wageHolder.tv_wage.setText(dataList.get(position).getCname());
 
-                    wageHolder = (WageHolder) convertView.getTag();
+                        break;
                 }
-                wageHolder.tv_wage_time.setText(dataList.get(position).getTime());
-                wageHolder.tv_wage_money.setText("+"+dataList.get(position).getMoney());
+            }
 
-                break;
-        }
+
+
 
 
         return convertView;
@@ -119,12 +162,17 @@ public class moneyDetailAdapter extends BaseAdapter{
 
         TextView tv_wage_time;
         TextView tv_wage_money;
+        TextView tv_wage;
+
 
 
     }
 
     class TxHolder{
-        TextView tv_tx_time;
-        TextView tv_tx_money;
+        TextView tv_moneydetail_type;
+        TextView tv_moneydetail_time;
+        TextView tv_moneydetail_money;
+        TextView tv_moneydetail_zmoney;
+        TextView tv_moneydetail_poundage;
     }
 }

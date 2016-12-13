@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dd_dimen_20px"
+    android:paddingLeft="@dimen/dd_dimen_30px">
+
+    <ImageView
+        android:id="@+id/img_partner_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_partner_shop"/>
+
+    <TextView
+        android:id="@+id/tv_partner_shopName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asdasd"
+        android:layout_toRightOf="@+id/img_partner_shop"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/img_partner_shop"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:background="@color/viewline"></View>
+
+</RelativeLayout>

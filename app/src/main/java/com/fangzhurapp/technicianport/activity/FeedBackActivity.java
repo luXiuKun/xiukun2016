@@ -53,7 +53,6 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
         CustomApplication.addAct(this);
         initView();
@@ -131,7 +130,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
 
                     subMitData();
                 }else{
-                    Toast.makeText(FeedBackActivity.this, "请填写意见", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FeedBackActivity.this, "请留下您宝贵的意见", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -160,10 +159,10 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
-                        Toast.makeText(FeedBackActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FeedBackActivity.this, "意见反馈成功", Toast.LENGTH_SHORT).show();
                         FeedBackActivity.this.finish();
                     }else{
-                        Toast.makeText(FeedBackActivity.this, "提交失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FeedBackActivity.this, "意见反馈失败,请重新提交", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -173,7 +172,7 @@ public class FeedBackActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

@@ -36,7 +36,6 @@ public class BindSucessActivty extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_bind_sucess_activty);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }

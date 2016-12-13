@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,9 @@ public class DataPickPopWindow extends PopupWindow implements View.OnClickListen
     private TextView btn_datapicker_finish;
     private DataPickListener mListener;
     private static DataPickPopWindow instance;
+    private Context mContext;
 
-    public synchronized static DataPickPopWindow getInstance(Activity context,int layout){
+    public synchronized static DataPickPopWindow getInstance(Context context,int layout){
 
         if (instance == null){
 
@@ -38,15 +40,15 @@ public class DataPickPopWindow extends PopupWindow implements View.OnClickListen
         }
 
         return instance;
-    };
+    }
 
-    private DataPickPopWindow(Activity context,int layout){
-
+    private DataPickPopWindow(Context context,int layout){
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        this.mContext = context;
         view = inflater.inflate(layout,null);
         initView();
+
     }
 
     private void initView() {
@@ -59,16 +61,30 @@ public class DataPickPopWindow extends PopupWindow implements View.OnClickListen
         setContentView(view);
 
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        float height = mContext.getResources().getDimension(R.dimen.dd_dimen_330px);
 
-        setHeight(350);
+        setHeight((int)height);
         setOutsideTouchable(false);
+       setFocusable(true);
         this.setAnimationStyle(R.style.popupwindow_anim);
 
-        //ColorDrawable dw = new ColorDrawable(0000000000);
         // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
-        this.setBackgroundDrawable(new PaintDrawable());
+        ColorDrawable dw = new ColorDrawable(0x90000000);
+        //this.setBackgroundDrawable(new PaintDrawable());
+        this.setBackgroundDrawable(dw);
 
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+                if (keyCode == KeyEvent.KEYCODE_BACK){
+                    DataPickPopWindow.this.dismiss();
+
+                    return  true;
+                }
+                return false;
+            }
+        });
     }
 
 

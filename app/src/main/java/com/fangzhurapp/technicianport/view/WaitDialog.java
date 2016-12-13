@@ -31,7 +31,7 @@ public class WaitDialog extends ProgressDialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setCanceledOnTouchOutside(false);
 		setProgressStyle(STYLE_SPINNER);
-		setMessage("正在请求，请稍候…");
+		setMessage("加载中，请稍候…");
 	}
 
 }

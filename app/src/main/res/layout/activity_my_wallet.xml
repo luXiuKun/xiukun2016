@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     >
 
     <include layout="@layout/activity_main_title"></include>
@@ -23,10 +24,10 @@
 
         <LinearLayout
             android:id="@+id/ll_timetag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dd_dimen_60px"
             android:layout_below="@+id/img_mywallet_icon"
-            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
 
@@ -50,10 +51,11 @@
             />
 
         <ImageView
+            android:id="@+id/img_staffwages_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
-            android:layout_marginTop="@dimen/dd_dimen_5px"
             android:background="@drawable/img_setting_indicator"/>
 
 

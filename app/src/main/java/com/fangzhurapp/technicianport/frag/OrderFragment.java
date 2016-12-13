@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.receiver.MessageReceiver;
+import com.fangzhurapp.technicianport.utils.AnimationUtils;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.yolanda.nohttp.NoHttp;
@@ -106,7 +108,6 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d(TAG, "onCreateView: "+"OrderFragment");
         EventBus.getDefault().register(this);
         view = inflater.inflate(R.layout.fragment_order, container, false);
 
@@ -119,8 +120,10 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
 
     @Subscribe
     public void onEventMainThread(MsgEvent msg){
-
+        tv_shopname.setText(msg.getStringMsg());
     }
+
+
 
 
     private void initEvent() {
@@ -178,7 +181,6 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
 
         ll_work = (LinearLayout) view.findViewById(R.id.ll_work);
         ll_fz = (LinearLayout) view.findViewById(R.id.ll_fz);
-
         fragmentList = new ArrayList<>();
 
         workFragment = new WorkFragment();
@@ -195,7 +197,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
     private void getMsgState() {
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.MSG_ORDER, RequestMethod.POST);
-        jsonObjectRequest.add("staff_id","187");
+        jsonObjectRequest.add("staff_id",SpUtil.getString(mContext,"id",""));
         CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.MSG_ORDER,true,false,true);
     }
 
@@ -230,6 +232,10 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
 
             case R.id.tv_shopname:
                 CHANGE_SHOP_STATE = "2";
+
+                RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(0f, 90f, 0.5f, 0.5f, 300, true);
+                img_title_indicator.startAnimation(rotateAnimation);
+
                 popupWindow = new PopupWindow();
                 View view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_changeshop, null);
                 pop_listview = (ListView) view.findViewById(R.id.pop_listview);
@@ -239,6 +245,14 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
                 popupWindow.setBackgroundDrawable(new PaintDrawable());
                 popupWindow.setFocusable(true);
                 popupWindow.showAsDropDown(tv_shopname);
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(90f, 0f, 0.5f, 0.5f, 300, true);
+                        img_title_indicator.startAnimation(rotateAnimation);
+                    }
+                });
+
                 changeShop();
                 break;
 
@@ -257,6 +271,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CHANGE_SHOP, RequestMethod.POST);
         jsonObjectRequest.add("phone",SpUtil.getString(mContext,"phone",""));
+        jsonObjectRequest.setRetryCount(3);
         jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
         CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.CHANGE_SHOP,false,false,true);
     }
@@ -303,6 +318,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
                                 shopdataBean.setSid(data.getJSONObject(i).getString("sid"));
                                 shopdataBean.setSname(data.getJSONObject(i).getString("sname"));
                                 shopdataBean.setName(data.getJSONObject(i).getString("name"));
+                                shopdataBean.setId_number(data.getJSONObject(i).getString("id_number"));
                                 shopList.add(shopdataBean);
                             }
                             //进入界面
@@ -360,6 +376,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
                                             SpUtil.putString(mContext,"sid",shopList.get(position).getSid());
                                             SpUtil.putString(mContext,"shopname",shopList.get(position).getSname());
                                             SpUtil.putString(mContext,"name",shopList.get(position).getName());
+                                            SpUtil.putString(mContext, "id_number", shopList.get(position).getId_number());
 
                                            /* FragmentManager fm = getActivity().getSupportFragmentManager();
 
@@ -402,7 +419,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener{
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

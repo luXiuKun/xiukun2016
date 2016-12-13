@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.fangzhurapp.technicianport.activity.StaffInComeActivity">
+
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/dd_dimen_20px"
+        android:background="@color/gray_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_staffincome_bg"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_staff_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:text="￥0.00"
+            android:textColor="@color/tab_bg"
+            />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_staff_income"
+        android:layout_width="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_height="match_parent">
+
+
+    </ListView>
+</LinearLayout>

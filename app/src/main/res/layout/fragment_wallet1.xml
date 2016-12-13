@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
+
+    <include
+        android:id="@+id/include_walletfrag"
+        layout="@layout/activity_main_title"></include>
+
+
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_wallet"
+        android:layout_below="@+id/include_walletfrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:swipe_style="classic"
+        app:load_more_enabled="false"
+
+        >
+
+        <include
+            android:id="@+id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header">
+
+        </include>
+
+    <ScrollView
+        android:id="@+id/swipe_target"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+
+        <include layout="@layout/include_frag_wallet"></include>
+
+    </ScrollView>
+
+
+        <include
+            android:id="@+id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer">
+
+        </include>
+
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+
+
+</RelativeLayout>

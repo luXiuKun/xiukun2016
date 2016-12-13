@@ -218,4 +218,118 @@ public class UrlTag {
      */
     public static final int BOSS_SUBMIT_WAGE = 0x51;
 
+    /**
+     * boss消息列表
+     */
+    public static final int BOSS_MESSAGE = 0x52;
+
+    /**
+     * 微信支付
+     */
+    public static final int WX_PAY = 0x53;
+
+    /**
+     * 检查版本更新
+     */
+    public static final int VERSION = 0x54;
+
+    /**
+     * boss修改密码
+     */
+    public static final int BOSS_CHANGE_PW = 0x55;
+
+
+    /**
+     * 会员消费排行
+     */
+    public static final int BOSS_VIPCONSUME_RANK = 0x56;
+
+    /**
+     * 会员消费详情
+     */
+    public static final int BOSS_VIPCONSUME_DETAIL = 0x57;
+
+    /**
+     * 实际营收中的订单收入  不包含会员消费
+     */
+    public static final int BOSS_ORDER = 0x58;
+
+    /**
+     * 充值查询
+     */
+    public static final int BOSS_PAY_QUERY = 0x59;
+
+    /**
+     * boss扫码收入明细
+     */
+    public static final int BOSS_SMSR = 0x60;
+    /**
+     * 注册合伙人
+     */
+    public static final int REGISTER_PARTNER = 0x61;
+
+    /**
+     * 登录合伙人
+     */
+    public static final int PARTNER_LOGIN = 0x62;
+
+    /**
+     * 合伙人支付
+     */
+    public static final int PARTNER_PAR = 0x63;
+
+    /**
+     * 合伙人订单查询
+     */
+    public static final int PARTNER_QUERY = 0x64;
+
+
+    /**
+     * 合伙人修改密码
+     */
+    public static final int PARTNER_CHANGE_PW = 0x65;
+
+    /**
+     * 合伙人忘记密码
+     */
+    public static final int PARTNER_FORGET_PW = 0x66;
+
+    /**
+     * 合伙人详情
+     */
+    public static final int PARTNER_DETAIL =0x67;
+    /**
+     * 合伙人钱包首页
+     */
+    public static final int PARTNER_WALLET = 0x68;
+
+    /**
+     * 合伙人绑定银行卡
+     */
+    public static final int PARTNER_BINDCARD=0x69;
+
+    /**
+     * 合伙人绑定的银行卡列表
+     */
+    public static final int PARTNER_CARDLIST = 0x70;
+
+    /**
+     * 合伙人收入
+     */
+    public static final int PARTNER_INCOME =0x71;
+
+    /**
+     * 合伙人查看已安装的店铺
+     */
+    public static final int PARTNER_SHOP = 0x72;
+
+    /**
+     *发送推送消息
+     */
+    public static final int PARTNER_REMIND = 0x73;
+
+    /**
+     * 合伙人消息列表
+     */
+    public static final int PARTNER_MSG = 0x74;
 }

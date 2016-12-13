@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     >
 
 
@@ -46,6 +47,7 @@
         android:paddingBottom="@dimen/dd_dimen_20px"
         android:layout_below="@+id/include_vip"
         android:paddingTop="@dimen/dd_dimen_20px"
+        android:background="@color/buttom_bg"
         android:orientation="horizontal">
 
         <TextView
@@ -71,6 +73,12 @@
 
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_vip"
+        android:background="@color/gray_line"></View>
 
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout

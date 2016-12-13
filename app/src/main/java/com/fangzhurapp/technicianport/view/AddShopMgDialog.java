@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class AddShopMgDialog extends Dialog implements View.OnClickListener{
     private ImageButton ib_addshopmg_submit;
     private AddShopMg mListener;
     private String mState;
+    private ImageView img_addshopmg_close;
 
 
     public AddShopMgDialog(Context context) {
@@ -54,7 +56,9 @@ public class AddShopMgDialog extends Dialog implements View.OnClickListener{
         et_addshopmg_phone = (EditText) view.findViewById(R.id.et_addshopmg_phone);
         EditText et_addshopmg_shopname = (EditText) view.findViewById(R.id.et_addshopmg_shopname);
         ib_addshopmg_submit = (ImageButton) view.findViewById(R.id.ib_addshopmg_submit);
+        img_addshopmg_close = (ImageView) view.findViewById(R.id.img_addshopmg_close);
         ib_addshopmg_submit.setOnClickListener(this);
+        img_addshopmg_close.setOnClickListener(this);
         et_addshopmg_shopname.setText(SpUtil.getString(mContext,"shopname",""));
 
         setContentView(view);
@@ -86,6 +90,10 @@ public class AddShopMgDialog extends Dialog implements View.OnClickListener{
                        Toast.makeText(mContext, "手机号不合法", Toast.LENGTH_SHORT).show();
                    }
                 }
+                break;
+
+            case R.id.img_addshopmg_close:
+                this.dismiss();
                 break;
 
         }

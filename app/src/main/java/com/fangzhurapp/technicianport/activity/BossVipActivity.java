@@ -65,7 +65,6 @@ public class BossVipActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_vip);
-        getSupportActionBar().hide();
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
         initView();
@@ -81,6 +80,7 @@ public class BossVipActivity extends AppCompatActivity implements View.OnClickLi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(BossVipActivity.this, BossVipkkDetailActivity.class);
                 intent.putExtra("bossvipdetail", dataList.get(position));
+                intent.putExtra("type","1");
                 startActivity(intent);
             }
         });
@@ -120,7 +120,7 @@ public class BossVipActivity extends AppCompatActivity implements View.OnClickLi
         jsonObjectRequest.add("strtime", strTime);
         jsonObjectRequest.add("endtime", endTime);
         jsonObjectRequest.add("sta", "2");
-        CallServer.getInstance().add(BossVipActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_PERFORMANCE_SJYS, true, false, true);
+        CallServer.getInstance().add(BossVipActivity.this, jsonObjectRequest, callback, UrlTag.BOSS_PERFORMANCE_SJYS, false, false, true);
     }
 
 
@@ -182,7 +182,7 @@ public class BossVipActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
             if (what == UrlTag.BOSS_PERFORMANCE_SJYS) {
                 swipeVip.setRefreshing(false);
             }

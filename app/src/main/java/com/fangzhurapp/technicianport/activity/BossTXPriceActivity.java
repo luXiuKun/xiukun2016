@@ -60,7 +60,6 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_txprice);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         CustomApplication.addAct(this);
 
         initView();
@@ -87,7 +86,7 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
 
         if (!TextUtils.isEmpty(SpUtil.getString(BossTXPriceActivity.this, "bossktxprice", ""))) {
 
-            tvBosstxpriceMoney.setText(SpUtil.getString(BossTXPriceActivity.this, "bossktxprice", ""));
+            tvBosstxpriceMoney.setText("￥"+SpUtil.getString(BossTXPriceActivity.this, "bossktxprice", ""));
         } else {
             tvBosstxpriceMoney.setText("￥" + 0);
         }
@@ -115,12 +114,16 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
             case R.id.tv_bosstxprice_moneydetail:
                 Intent intent2 = new Intent(BossTXPriceActivity.this, BossMoneyDetailActivity.class);
                 startActivity(intent2);
+
                 break;
 
             case R.id.ib_bosstxprice_pay:
 
                 if (SpUtil.getString(BossTXPriceActivity.this,"shenfen","").equals("1")){
-                    Toast.makeText(BossTXPriceActivity.this, "充值", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(BossTXPriceActivity.this, BossTopupActivity.class);
+                    startActivity(intent);
+
                 }else{
                     Toast.makeText(BossTXPriceActivity.this, "无操作权限", Toast.LENGTH_SHORT).show();
                 }
@@ -160,7 +163,7 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
                             bindBankDialog.setCancelBindListener(new BindBankDialog.CancelBindListener() {
                                 @Override
                                 public void setConfirmListener() {
-                                    Intent intent = new Intent(BossTXPriceActivity.this, BindBankCardActivity.class);
+                                    Intent intent = new Intent(BossTXPriceActivity.this, BossBindCardActivity.class);
                                     startActivity(intent);
                                     bindBankDialog.dismiss();
                                 }
@@ -174,6 +177,7 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
 
                             Intent intent = new Intent(BossTXPriceActivity.this, BossTXActivity.class);
                             startActivity(intent);
+
                         }
 
                     }
@@ -185,10 +189,20 @@ public class BossTXPriceActivity extends AppCompatActivity implements View.OnCli
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (!TextUtils.isEmpty(SpUtil.getString(BossTXPriceActivity.this, "bossktxprice", ""))) {
+
+            tvBosstxpriceMoney.setText("￥"+SpUtil.getString(BossTXPriceActivity.this, "bossktxprice", ""));
+        } else {
+            tvBosstxpriceMoney.setText("￥" + 0);
+        }
+    }
 }

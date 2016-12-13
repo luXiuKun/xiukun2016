@@ -63,7 +63,6 @@ public class BossRankActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_boss_rank);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -108,7 +107,7 @@ public class BossRankActivity extends AppCompatActivity implements View.OnClickL
         jsonObjectRequest.add("sid", SpUtil.getString(BossRankActivity.this,"sid",""));
         jsonObjectRequest.add("strtime",strTime);
         jsonObjectRequest.add("endtime",endTime);
-        CallServer.getInstance().add(BossRankActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_PROJECT_RANK,true,false,true);
+        CallServer.getInstance().add(BossRankActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_PROJECT_RANK,false,false,true);
 
     }
 
@@ -168,7 +167,7 @@ public class BossRankActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
                 if (what == UrlTag.BOSS_PROJECT_RANK){
                     swipeRank.setRefreshing(false);
 

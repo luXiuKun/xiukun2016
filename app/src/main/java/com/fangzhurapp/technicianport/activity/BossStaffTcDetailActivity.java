@@ -44,7 +44,6 @@ public class BossStaffTcDetailActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_staff_tc_detail);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -69,8 +68,8 @@ public class BossStaffTcDetailActivity extends AppCompatActivity implements View
             tvBossstaffPztc.setText(bean.getPztc());
             tvBossstaffDztc.setText(bean.getDztc());
             tvBossstaffXstc.setText(bean.getKktc());
-            String tc = NumberUtils.floatFormat(Float.valueOf(bean.getKktc()) + Float.valueOf(bean.getDztc()) + Float.valueOf(bean.getPztc()));
-            tvBossstaffZtc.setText(tc);
+           // String tc = NumberUtils.floatFormat(Float.valueOf(bean.getKktc()) + Float.valueOf(bean.getDztc()) + Float.valueOf(bean.getPztc()));
+            tvBossstaffZtc.setText(bean.getTc_count());
         }
     }
 

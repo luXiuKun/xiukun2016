@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorWhite"
     >
 
     <include layout="@layout/activity_main_title"></include>
@@ -48,7 +49,7 @@
         android:textSize="25sp"
         android:textColor="@color/tab_bg"
         android:layout_marginTop="@dimen/dd_dimen_35px"
-        android:text="￥100000.00"/>
+        android:text="￥0.00"/>
 
 
     <ImageButton

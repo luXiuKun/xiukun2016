@@ -130,7 +130,7 @@
 -keep class com.yolanda.nohttp.**{*;}
 
 
-#友盟
+#友盟分享
 -dontshrink
  -dontwarn com.google.android.maps.**
  -dontwarn android.webkit.WebView
@@ -197,4 +197,12 @@
  -keep class com.linkedin.** { *; }
  -keepattributes Signature
 
+#微信
+-keep class com.tencent.mm.sdk.** {
+   *;}
 
+
+
+#bug追踪
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

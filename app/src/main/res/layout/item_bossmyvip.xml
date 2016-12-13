@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/dd_dimen_20px"
@@ -9,7 +9,8 @@
     
     <TextView
         android:id="@+id/tv_bossmyvip_name"
-        android:layout_width="@dimen/dd_dimen_200px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dd_dimen_20px"
         android:gravity="center_horizontal"
@@ -18,23 +19,22 @@
 
     <TextView
         android:id="@+id/tv_bossmyvip_viptype"
-        android:layout_width="@dimen/dd_dimen_220px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:layout_toRightOf="@+id/tv_bossmyvip_name"
         android:gravity="center_horizontal"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:text=""/>
 
 
     <TextView
         android:id="@+id/tv_bosssmyvip_money"
-        android:layout_width="@dimen/dd_dimen_200px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:layout_toRightOf="@+id/tv_bossmyvip_viptype"
         android:gravity="center_horizontal"
+        android:layout_marginRight="@dimen/dd_dimen_20px"
         android:textSize="16sp"
         android:text=""/>
 
-</RelativeLayout>
+</LinearLayout>

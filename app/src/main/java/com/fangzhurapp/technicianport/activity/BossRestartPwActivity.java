@@ -48,13 +48,13 @@ public class BossRestartPwActivity extends AppCompatActivity implements View.OnC
     ImageButton ibBossRespwConfirm;
 
     private static final String TAG = "BossRestartPwActivity";
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_restart_pw);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -68,7 +68,9 @@ public class BossRestartPwActivity extends AppCompatActivity implements View.OnC
     private void initView() {
         tvTitleText.setText("重置密码");
 
-
+        if (getIntent() != null){
+            id = getIntent().getStringExtra("id");
+        }
 
     }
 
@@ -97,8 +99,7 @@ public class BossRestartPwActivity extends AppCompatActivity implements View.OnC
                 !TextUtils.isEmpty(etBossRespwConfirmpw.getText().toString())){
 
             if (etBossRespwPassword.getText().toString().equals(etBossRespwConfirmpw.getText().toString()
-             )
-                    ){
+             )){
 
                 if (etBossRespwConfirmpw.getText().length() < 6){
 
@@ -179,7 +180,7 @@ public class BossRestartPwActivity extends AppCompatActivity implements View.OnC
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

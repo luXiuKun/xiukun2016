@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossissue_staffcount"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="员工人数:"
+            android:textSize="17sp"
+            android:textColor="@color/blacktext"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            />
+
+        <TextView
+            android:id="@+id/tv_bossissue_staffcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="17sp"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/gray_line">
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossissue_wages"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="工资总计:"
+            android:textSize="17sp"
+            android:textColor="@color/blacktext"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            />
+
+        <TextView
+            android:id="@+id/tv_bossissue_wages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="17sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/gray_line">
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossissue_month"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发放月份:"
+            android:textSize="17sp"
+            android:textColor="@color/blacktext"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            />
+
+        <TextView
+            android:id="@+id/tv_bossissue_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="17sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/gray_line">
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossissue_paytype"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text="支付方式:"
+            android:textColor="@color/blacktext"
+            />
+
+        <TextView
+            android:id="@+id/tv_bossissue_moneypay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="17sp"
+            android:textColor="@color/blacktext"
+            android:text="现金账户"/>
+
+        <CheckBox
+            android:id="@+id/cb_bossissue_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/selector_paytype"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bossissue_paytype"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text="支付方式:"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/tv_bossissue_wxpay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="17sp"
+            android:textColor="@color/blacktext"
+            android:text="微信支付"/>
+
+        <CheckBox
+            android:id="@+id/cb_bossissue_wxpay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/selector_paytype"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:background="@color/gray_line">
+    </View>
+
+
+    <Button
+        android:id="@+id/btn_bossissue_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_100px"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/img_confirm_bg"
+        />
+
+</LinearLayout>

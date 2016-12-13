@@ -81,14 +81,34 @@
             android:layout_toRightOf="@+id/tv_sf_order_pronametag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             android:textSize="16sp"
-            android:text="项目名称"/>
+            android:text=""/>
+
+
+        <TextView
+            android:id="@+id/tv_sf_housenumtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_sf_order_pronametag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="房  间  号:"/>
+
+        <TextView
+            android:id="@+id/tv_sf_housenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sf_housenumtag"
+            android:layout_alignBottom="@+id/tv_sf_housenumtag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textSize="16sp"
+            android:text=""/>
 
 
         <TextView
             android:id="@+id/tv_sf_pztypetag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_sf_order_pronametag"
+            android:layout_below="@+id/tv_sf_housenumtag"
             android:layout_marginTop="@dimen/dd_dimen_20px"
             android:textSize="16sp"
             android:text="上钟方式:"/>
@@ -101,7 +121,7 @@
             android:layout_alignBottom="@+id/tv_sf_pztypetag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             android:textSize="16sp"
-            android:text="上钟方式"/>
+            android:text=""/>
 
 
         <TextView
@@ -121,7 +141,7 @@
             android:layout_alignBottom="@+id/tv_sf_khidenttag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             android:textSize="16sp"
-            android:text="7.7:"/>
+            android:text=""/>
 
 
 
@@ -143,7 +163,7 @@
             android:layout_alignBottom="@+id/tv_sf_jspricetag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             android:textSize="16sp"
-            android:text="10000"/>
+            android:text=""/>
 
 
         <TextView
@@ -164,7 +184,7 @@
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             android:textSize="16sp"
             android:textColor="@color/tab_bg"
-            android:text="1000"/>
+            android:text=""/>
 
 
 

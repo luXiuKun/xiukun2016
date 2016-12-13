@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/dd_dimen_20px"
     android:paddingBottom="@dimen/dd_dimen_20px"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
     >
 
 
     <TextView
         android:id="@+id/tv_bossrank_rank"
-        android:layout_width="@dimen/dd_dimen_200px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dd_dimen_20px"
         android:gravity="center_horizontal"
@@ -18,10 +21,9 @@
 
     <TextView
         android:id="@+id/tv_bossrank_proname"
-        android:layout_width="@dimen/dd_dimen_200px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:layout_toRightOf="@+id/tv_bossrank_rank"
         android:gravity="center_horizontal"
         android:textSize="16sp"
         android:text=""/>
@@ -29,12 +31,12 @@
 
     <TextView
         android:id="@+id/tv_bossrank_ordercount"
-        android:layout_width="@dimen/dd_dimen_200px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:layout_toRightOf="@+id/tv_bossrank_proname"
+        android:layout_marginRight="@dimen/dd_dimen_20px"
         android:gravity="center_horizontal"
         android:textSize="16sp"
         android:text=""/>
 
-</RelativeLayout>
+</LinearLayout>

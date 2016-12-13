@@ -3,6 +3,11 @@ package com.fangzhurapp.technicianport.frag;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -36,6 +41,7 @@ import com.fangzhurapp.technicianport.receiver.MessageReceiver;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.fangzhurapp.technicianport.view.ConfirmFzSucessDialog;
+import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -87,9 +93,15 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_work, container, false);
         initView();
+        initEvent();
         EventBus.getDefault().register(this);
         registerMessageReceiver();
         return view;
+    }
+
+    private void initEvent() {
+
+
     }
 
     private void initView() {
@@ -110,7 +122,6 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
 
     @Override
     public void onRefresh() {
-
         workOrder();
     }
 
@@ -138,12 +149,14 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
                 mSwipeload.setRefreshing(false);
                 orderList = new ArrayList<>();
                 newOrder();
-                LogUtil.d(TAG,response.toString());
+                //LogUtil.d(TAG,response.toString());
+                Logger.d(response.toString());
                 JSONObject jsonObject = response.get();
 
                 try {
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
+
                         JSONArray data = jsonObject.getJSONArray("data");
 
                         if (data.length() >0){
@@ -151,18 +164,44 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
                             for (int i = 0; i< data.length(); i++){
 
                                 if (data.getJSONObject(i).getString("o_type").equals("2")){
-                                    WorkorderBean workorderBean = new WorkorderBean();
-                                    workorderBean.setId(data.getJSONObject(i).getString("id"));
-                                    workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
-                                    workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
-                                    workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
-                                    workorderBean.setType(data.getJSONObject(i).getString("type"));
-                                    workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
-                                    workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
-                                    workorderBean.setMoney(data.getJSONObject(i).getString("money"));
-                                    workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
 
-                                    orderList.add(workorderBean);
+                                    if (data.getJSONObject(i).getString("items_type").equals("2")
+                                            || data.getJSONObject(i).getString("items_type").equals("3")){
+
+                                        WorkorderBean workorderBean = new WorkorderBean();
+                                        workorderBean.setId(data.getJSONObject(i).getString("id"));
+                                        workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
+                                        workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                        workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                        workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
+                                        workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                        workorderBean.setMoney(data.getJSONObject(i).getString("money"));
+                                        workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
+                                        workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                        workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                        workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                        workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+
+                                        orderList.add(workorderBean);
+
+                                    }else if (data.getJSONObject(i).getString("items_type").equals("1")){
+                                        WorkorderBean workorderBean = new WorkorderBean();
+                                        workorderBean.setId(data.getJSONObject(i).getString("id"));
+                                        workorderBean.setMnumber(data.getJSONObject(i).getString("mnumber"));
+                                        workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                        workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                        workorderBean.setType(data.getJSONObject(i).getString("type"));
+                                        workorderBean.setTc_money(data.getJSONObject(i).getString("tc_money"));
+                                        workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                        workorderBean.setMoney(data.getJSONObject(i).getString("money"));
+                                        workorderBean.setSet_type(data.getJSONObject(i).getString("set_type"));
+                                        workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                        workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                        workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                        workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+                                        orderList.add(workorderBean);
+                                    }
+
                                 }else if (data.getJSONObject(i).getString("o_type").equals("1")){
 
                                     WorkorderBean workorderBean = new WorkorderBean();
@@ -183,20 +222,26 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
 
                             swipe_target.setAdapter(workOrderAdapter);
 
-                            workOrderAdapter.setConfirmFzListener(new WorkOrderAdapter.ConfirmFzImpl() {
-                                @Override
-                                public void confirmFzListener(String id,int position) {
-                                    selPosition = position;
-                                    Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CONFIRM_FZ, RequestMethod.POST);
-                                    jsonObjectRequest.add("id",id);
-                                    CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.CONFIRM_FZ,true,false,true);
+                            if (workOrderAdapter !=  null){
 
 
-                                }
-                            });
+                                workOrderAdapter.setConfirmFzListener(new WorkOrderAdapter.ConfirmFzImpl() {
+                                    @Override
+                                    public void confirmFzListener(String id,int position) {
+                                        selPosition = position;
+                                        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CONFIRM_FZ, RequestMethod.POST);
+                                        jsonObjectRequest.add("id",id);
+                                        CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.CONFIRM_FZ,false,false,true);
+
+
+                                    }
+                                });
+                            }
+
+
                         }else{
-
-                            Toast.makeText(mContext, "没有数据", Toast.LENGTH_SHORT).show();
+                            swipe_target.setAdapter(null);
+                            vs_nodata.setVisibility(View.VISIBLE);
                         }
 
 
@@ -205,7 +250,6 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
                         vs_nodata.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(mContext, "返回参数有误", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
@@ -220,22 +264,17 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
                         orderList.remove(selPosition);
                         workOrderAdapter.notifyDataSetChanged();
 
+                        TimeTimer timeTimer = new TimeTimer(1000, 1000);
+                        timeTimer.start();
 
                         confirmFzSucessDialog = new ConfirmFzSucessDialog(mContext, R.layout.dialog_fzsucess);
                         confirmFzSucessDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         confirmFzSucessDialog.show();
+
                         mSwipeload.setRefreshing(true);
-                        TimeTimer timeTimer = new TimeTimer(1000, 1000);
-                        timeTimer.start();
 
-                       /* FragmentManager fm = getActivity().getSupportFragmentManager();
 
-                        WalletFragment walletfragment = (WalletFragment)fm.findFragmentByTag("walletfragment");
 
-                        if (walletfragment != null){
-                            walletfragment.refresh();
-
-                        }*/
 
                         EventBus.getDefault().post(new MsgEvent1(true));
 
@@ -255,54 +294,68 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
                     if (sucess.equals("1")){
 
                         JSONArray data = jsonObject.getJSONArray("data");
-                        orderIngList = new ArrayList<>();
 
+                        orderIngList = new ArrayList<>();
                         if (data.length() > 0){
 
                         for (int i =0;i<data.length();i++){
 
-                            WorkorderBean workorderBean = new WorkorderBean();
-                            workorderBean.setOnumber(data.getJSONObject(i).getString("onumber"));
-                            workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
-                            workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
-                            workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
-                            workorderBean.setSmoney(data.getJSONObject(i).getString("smoney"));
-                            workorderBean.setType(data.getJSONObject(i).getString("type"));
+                            if (data.getJSONObject(i).getString("items_type").equals("2")
+                                    || data.getJSONObject(i).getString("items_type").equals("3")){
 
-                            orderIngList.add(workorderBean);
+                                WorkorderBean workorderBean = new WorkorderBean();
+                                workorderBean.setOnumber(data.getJSONObject(i).getString("onumber"));
+                                workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                workorderBean.setSmoney(data.getJSONObject(i).getString("smoney"));
+                                workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+
+                                orderIngList.add(workorderBean);
+                            }else{
+                                WorkorderBean workorderBean = new WorkorderBean();
+                                workorderBean.setOnumber(data.getJSONObject(i).getString("onumber"));
+                                workorderBean.setO_type(data.getJSONObject(i).getString("o_type"));
+                                workorderBean.setProject_name(data.getJSONObject(i).getString("project_name"));
+                                workorderBean.setPtime(data.getJSONObject(i).getString("ptime"));
+                                workorderBean.setSmoney(data.getJSONObject(i).getString("smoney"));
+                                workorderBean.setType(data.getJSONObject(i).getString("type"));
+                                workorderBean.setAdd_order(data.getJSONObject(i).getString("add_order"));
+                                workorderBean.setRoom_id(data.getJSONObject(i).getString("room_id"));
+                                workorderBean.setRoom_number(data.getJSONObject(i).getString("room_number"));
+                                workorderBean.setItems_type(data.getJSONObject(i).getString("items_type"));
+                                orderIngList.add(workorderBean);
+                            }
+
+
                         }
 
                          if (orderList != null ){
 
 
-                             if (workOrderAdapter != null){
+                                 //这里改了  9.9
                                  orderList.addAll(0,orderIngList);
-
-                                // workOrderAdapter = new WorkOrderAdapter(mContext, orderList);
-                                // workOrderAdapter.notifyDataSetChanged();
-                                 swipe_target.setAdapter(workOrderAdapter);
-                                 vs_nodata.setVisibility(View.GONE);
-                             }else{
-                                 workOrderAdapter = new WorkOrderAdapter(mContext, orderIngList);
+                                 workOrderAdapter = new WorkOrderAdapter(mContext, orderList);
                                  swipe_target.setAdapter(workOrderAdapter);
                                  vs_nodata.setVisibility(View.GONE);
 
-                             }
+                             if (workOrderAdapter !=  null){
 
-                         }  else{
 
-                             if (workOrderAdapter != null){
-                                 orderList.addAll(0,orderIngList);
-                                // workOrderAdapter = new WorkOrderAdapter(mContext, orderList);
-                                // workOrderAdapter.notifyDataSetChanged();
-                                 swipe_target.setAdapter(workOrderAdapter);
-                                 vs_nodata.setVisibility(View.GONE);
-                             }else{
+                                 workOrderAdapter.setConfirmFzListener(new WorkOrderAdapter.ConfirmFzImpl() {
+                                     @Override
+                                     public void confirmFzListener(String id,int position) {
+                                         selPosition = position;
+                                         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CONFIRM_FZ, RequestMethod.POST);
+                                         jsonObjectRequest.add("id",id);
+                                         CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.CONFIRM_FZ,false,false,true);
 
-                                 workOrderAdapter = new WorkOrderAdapter(mContext, orderIngList);
-                                 swipe_target.setAdapter(workOrderAdapter);
-                                 vs_nodata.setVisibility(View.GONE);
 
+                                     }
+                                 });
                              }
 
                          }
@@ -311,17 +364,16 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
 
                         }else{
 
-                            if (orderList.size() > 0 || orderIngList.size() >0){
+                            if (orderList.size() > 0 || orderIngList .size() > 0){
+
                                 vs_nodata.setVisibility(View.GONE);
+
                             }else{
 
                                 vs_nodata.setVisibility(View.VISIBLE);
                             }
-                            Toast.makeText(mContext, "没有进行中的订单", Toast.LENGTH_SHORT).show();
 
-                            if (workOrderAdapter != null){
-                                workOrderAdapter.notifyDataSetChanged();
-                            }
+
                         }
 
                     }
@@ -333,16 +385,26 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-            mSwipeload.setRefreshing(false);
+        public void onFailed(int what,  Response<JSONObject> response) {
+            if (what == UrlTag.ORDER_ING){
+
+                mSwipeload.setRefreshing(false);
+                Toast.makeText(mContext, "获取进行中订单失败,请重新刷新", Toast.LENGTH_SHORT).show();
+            }else if (what == UrlTag.ORDER){
+                mSwipeload.setRefreshing(false);
+                Toast.makeText(mContext, "获取订单失败,请重新刷新", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
     private void newOrder() {
+
+
+
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.ORDER_ING, RequestMethod.POST);
         jsonObjectRequest.add("sid", SpUtil.getString(mContext,"sid",""));
         jsonObjectRequest.add("id", SpUtil.getString(mContext,"id",""));
-        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.ORDER_ING,true,false,true);
+        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.ORDER_ING,false,false,true);
     }
 
 
@@ -393,7 +455,20 @@ public class WorkFragment extends Fragment implements OnRefreshListener{
         messageReceiver.setNewOrderListener(new MessageReceiver.newOrderListener() {
             @Override
             public void sendNewOrderMessage() {
-                newOrder();
+                try {
+                    AssetManager assetManager = mContext.getAssets();
+                    AssetFileDescriptor afd = assetManager.openFd("music.mp3");
+                    MediaPlayer player = new MediaPlayer();
+                    player.setDataSource(afd.getFileDescriptor(),
+                            afd.getStartOffset(), afd.getLength());
+                    player.setLooping(false);//循环播放
+                    player.prepare();
+                    player.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mSwipeload.setRefreshing(true);
             }
         });
 

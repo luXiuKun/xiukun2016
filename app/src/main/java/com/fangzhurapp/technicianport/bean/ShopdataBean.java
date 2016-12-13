@@ -9,6 +9,24 @@ public class ShopdataBean {
     private String id;
     private String sid;
     private String name;
+    private String shenfen;
+    private String id_number;
+
+    public String getId_number() {
+        return id_number;
+    }
+
+    public void setId_number(String id_number) {
+        this.id_number = id_number;
+    }
+
+    public String getShenfen() {
+        return shenfen;
+    }
+
+    public void setShenfen(String shenfen) {
+        this.shenfen = shenfen;
+    }
 
     public String getName() {
         return name;

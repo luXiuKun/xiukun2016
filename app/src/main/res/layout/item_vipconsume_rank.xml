@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    >
+
+    <TextView
+        android:id="@+id/tv_vipconsume_ranktype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="12124124"
+        android:paddingTop="@dimen/dd_dimen_30px"
+        android:paddingBottom="@dimen/dd_dimen_30px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_below="@+id/tv_vipconsume_ranktype"
+        android:background="@color/viewline">
+
+    </View>
+</RelativeLayout>

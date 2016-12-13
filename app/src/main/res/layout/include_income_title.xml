@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dd_dimen_15px"
+    android:background="@color/buttom_bg"
+    android:orientation="horizontal">
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="已到账"/>
+
+            <View
+                android:id="@+id/view_account"
+                android:layout_width="@dimen/dd_dimen_150px"
+                android:layout_height="1dp"
+                android:background="@color/tab_bg"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dd_dimen_5px">
+
+            </View>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="@dimen/dd_dimen_50px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/viewline">
+
+    </View>
+
+
+    <LinearLayout
+        android:id="@+id/ll_accounting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_accounting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="结算中"/>
+
+        <View
+            android:id="@+id/view_accounting"
+            android:layout_width="@dimen/dd_dimen_150px"
+            android:layout_height="1dp"
+            android:background="@color/tab_bg"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dd_dimen_5px">
+
+        </View>
+
+    </LinearLayout>
+
+</LinearLayout>

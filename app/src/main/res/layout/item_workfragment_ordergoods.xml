@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dd_dimen_20px"
+    android:layout_marginLeft="@dimen/dd_dimen_20px"
+    android:layout_marginRight="@dimen/dd_dimen_20px"
+    android:background="@drawable/img_ordering_bg"
+    android:orientation="vertical">
+    
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <ImageView
+            android:id="@+id/img_ordergoods_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/img_ordering"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_ordergoods_goodsname"
+            android:layout_width="@dimen/dd_dimen_300px"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"
+            android:text="阿芙精油"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_toRightOf="@+id/img_ordergoods_tag"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_ordering_housenum_bg"/>
+
+
+        <LinearLayout
+            android:layout_width="@dimen/dd_dimen_100px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_55px"
+            android:layout_marginTop="@dimen/dd_dimen_50px"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/tv_ordergoods_housenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:text="1232房"/>
+
+            </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        android:layout_marginTop="@dimen/dd_dimen_10px">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
+        android:orientation="horizontal">
+
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        >
+
+        <TextView
+            android:id="@+id/tv_ordergoods_ordernumtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="订  单  号:"/>
+
+        <TextView
+            android:id="@+id/tv_ordergoods_ordernum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_toRightOf="@+id/tv_ordergoods_ordernumtag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordergoods_ordertimetag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_toRightOf="@+id/tv_ordergoods_ordernum"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:text="下单时间:"/>
+
+        <TextView
+            android:id="@+id/tv_ordergoods_ordertime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_toRightOf="@+id/tv_ordergoods_ordertimetag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordergoods_goodsnametag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_below="@+id/tv_ordergoods_ordernumtag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:text="商品名称:"/>
+
+        <TextView
+            android:id="@+id/tv_ordergoods_goodsname1"
+            android:layout_width="@dimen/dd_dimen_400px"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="16sp"
+            android:text=""
+            android:layout_toRightOf="@+id/tv_ordergoods_goodsnametag"
+            android:layout_alignTop="@+id/tv_ordergoods_goodsnametag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+        <TextView
+            android:id="@+id/tv_ordergoods_bzjtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:layout_below="@+id/tv_ordergoods_goodsname1"
+            android:text="标  准  价:"/>
+
+        <TextView
+            android:id="@+id/tv_ordergoods_bzj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/tab_bg"
+            android:text=""
+            android:layout_toRightOf="@+id/tv_ordergoods_bzjtag"
+            android:layout_alignBottom="@+id/tv_ordergoods_bzjtag"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

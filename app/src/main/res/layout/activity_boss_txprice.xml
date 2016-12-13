@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorWhite"
     >
 
     <include layout="@layout/activity_main_title"></include>

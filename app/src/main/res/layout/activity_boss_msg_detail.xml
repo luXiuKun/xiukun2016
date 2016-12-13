@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dd_dimen_30px"
+        android:paddingTop="@dimen/dd_dimen_30px"
+        android:paddingLeft="@dimen/dd_dimen_30px"
+        >
+
+
+        <ImageView
+            android:id="@+id/img_bossmsgdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_orderdetail"/>
+
+
+        <TextView
+            android:id="@+id/tv_bossmsgdetail_timetag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/img_bossmsgdetail"
+            android:text="时       间:"/>
+
+        <TextView
+            android:id="@+id/tv_bossmsgdetail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_bossmsgdetail_timetag"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="2016.03.15 16:00"/>
+
+        <TextView
+            android:id="@+id/tv_bossmsgdetail_nametag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_bossmsgdetail"
+            android:layout_below="@+id/tv_bossmsgdetail_timetag"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="店铺名称:"/>
+
+        <TextView
+            android:id="@+id/tv_bossmsgdetail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_bossmsgdetail_nametag"
+            android:layout_toRightOf="@+id/tv_bossmsgdetail_nametag"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:textSize="16sp"
+            android:text="欢乐谷暖山店"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline"
+        android:layout_marginLeft="@dimen/dd_dimen_40px">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
+        android:layout_marginRight="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bossmsgdetail_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:lineSpacingExtra="10dp"
+            android:text=""/>
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        >
+
+    </View>
+
+</LinearLayout>

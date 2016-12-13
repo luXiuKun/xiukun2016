@@ -12,10 +12,13 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
-        fresco:placeholderImageScaleType="centerCrop"
+        fresco:placeholderImageScaleType="focusCrop"
+        fresco:actualImageScaleType="focusCrop"
         android:layout_marginLeft="@dimen/dd_dimen_50px"
         fresco:roundAsCircle="true"
         />
+
+
 
     <TextView
         android:id="@+id/tv_mybindcard_bankname"
@@ -23,18 +26,18 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/img_mybindcard_banklogo"
         android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:text="民生银行"
-        android:textSize="18sp"/>
+        android:text=""
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_mybindcard_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:layout_toRightOf="@+id/img_mybindcard_banklogo"
         android:layout_below="@+id/tv_mybindcard_bankname"
         android:layout_marginLeft="@dimen/dd_dimen_30px"
-        android:text="尾号9876"/>
+        android:text=""/>
 
 
     <CheckBox
@@ -45,6 +48,8 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dd_dimen_30px"
         android:button="@null"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
         android:background="@drawable/selector_selectcard"
         />
 

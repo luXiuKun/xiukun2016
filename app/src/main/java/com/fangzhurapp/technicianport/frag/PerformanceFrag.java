@@ -8,47 +8,68 @@ import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.fangzhurapp.technicianport.BossMainActivity;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
+import com.fangzhurapp.technicianport.activity.BossGroupActivity;
+import com.fangzhurapp.technicianport.activity.BossOrderVipAct;
 import com.fangzhurapp.technicianport.activity.BossRankActivity;
 import com.fangzhurapp.technicianport.activity.BossSjysActivity;
 import com.fangzhurapp.technicianport.activity.BossStaffTcActivity;
 import com.fangzhurapp.technicianport.activity.BossVipActivity;
+import com.fangzhurapp.technicianport.activity.BossVipConsumeActivity;
+import com.fangzhurapp.technicianport.activity.BossWAXPActivity;
 import com.fangzhurapp.technicianport.adapter.CommAdapter;
 import com.fangzhurapp.technicianport.adapter.ViewHolder;
 import com.fangzhurapp.technicianport.bean.ShopdataBean;
 import com.fangzhurapp.technicianport.eventbus.BossBoolMsgEvent;
 import com.fangzhurapp.technicianport.eventbus.BossMsgEvent;
 import com.fangzhurapp.technicianport.eventbus.BossNameMsgEvent;
+import com.fangzhurapp.technicianport.eventbus.BossPerformanceMsgEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
+import com.fangzhurapp.technicianport.utils.AnimationUtils;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.NumberUtils;
 import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.fangzhurapp.technicianport.utils.TimeUtils;
+import com.fangzhurapp.technicianport.view.DataPickPopWindow;
+import com.fangzhurapp.technicianport.view.DataPickdayPopWindow;
+import com.fangzhurapp.technicianport.view.LxkCircleView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.listener.PieRadarChartTouchListener;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -62,12 +83,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by android on 2016/8/1.
  */
-public class PerformanceFrag extends Fragment implements View.OnClickListener{
+public class PerformanceFrag extends Fragment implements View.OnClickListener,OnRefreshListener{
 
 
     private View view;
@@ -97,7 +117,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
     private TextView tv_kdj;
     private TextView tv_orderSum;
     private TextView tv_kkCount;
-    private PieChart pie_performance;
+    private LxkCircleView pie_performance;
     private TextView tv_shopname;
     private String CHANGE_SHOP_STATE = "1";
     private PopupWindow popupWindow;
@@ -106,6 +126,15 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
     private ImageView img_title_indicator;
     private String strTime;
     private String endTime;
+    private ScrollView swipe_target;
+    private SwipeToLoadLayout swipe_boss_pre;
+    private LinearLayout ll_starttime,ll_endtime;
+    private TextView startTime,endTime1;
+    private DataPickdayPopWindow dataPickPopWindow;
+
+    private String sTime,eTime;
+    private TextView tv_performance_order;
+    private RelativeLayout rl_performance_order;
 
 
     @Override
@@ -142,6 +171,10 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         ll_performance_month.setOnClickListener(this);
         ll_performance_year.setOnClickListener(this);
         tv_shopname.setOnClickListener(this);
+
+        ll_starttime.setOnClickListener(this);
+        ll_endtime.setOnClickListener(this);
+        rl_performance_order.setOnClickListener(this);
     }
 
     private void initView() {
@@ -174,26 +207,118 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         tv_orderSum = (TextView) view.findViewById(R.id.tv_performance_ordersum);
         tv_kkCount = (TextView) view.findViewById(R.id.tv_performance_kk);
         img_title_indicator = (ImageView) view.findViewById(R.id.img_title_indicator);
-        getShopData();
-        selectTime(0);
+
+        ll_starttime = (LinearLayout) view.findViewById(R.id.ll_starttime);
+        ll_endtime = (LinearLayout) view.findViewById(R.id.ll_endtime);
+         endTime1 =   (TextView) view.findViewById(R.id.tv_performance_endtime);
+        startTime = (TextView)view.findViewById(R.id.tv_performance_starttime);
+
         ImageView img_title_right = (ImageView) view.findViewById(R.id.img_title_right);
         img_title_right.setVisibility(View.INVISIBLE);
-        pie_performance = (PieChart) view.findViewById(R.id.pie_performance);
+
+        pie_performance = (LxkCircleView) view.findViewById(R.id.pie_performance);
+        swipe_target = (ScrollView) view.findViewById(R.id.swipe_target);
+        swipe_boss_pre = (SwipeToLoadLayout) view.findViewById(R.id.swipe_boss_pre);
+
+        swipe_boss_pre.setOnRefreshListener(this);
+
+        tv_performance_order = (TextView) view.findViewById(R.id.tv_performance_order);
+        rl_performance_order = (RelativeLayout) view.findViewById(R.id.rl_performance_order);
+        getShopData();
+        selectTime(0);
 
         //属性
-        pie_performance.setHoleRadius(40);
+        /*pie_performance.setHoleRadius(40);
         pie_performance.setTransparentCircleRadius(44);
 
         pie_performance.setDrawCenterText(true);
         pie_performance.setDrawHoleEnabled(true);
-        //pie_performance.setRotationAngle(90);
+        pie_performance.setRotationAngle(240);
         pie_performance.setRotationEnabled(true);
         pie_performance.setUsePercentValues(true);
         pie_performance.setCenterTextSize(18);
         pie_performance.setDescription("");
+        
+        pie_performance.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
         Legend legend = pie_performance.getLegend();
         legend.setDrawInside(false);
-        legend.setEnabled(false);
+        legend.setEnabled(false);*/
+
+        pie_performance.setArcSelection(new LxkCircleView.onArcSelection() {
+            @Override
+            public void arcClick(int select) {
+
+                switch (select){
+
+                    case 0:
+                        Intent alipay = new Intent(mContext, BossWAXPActivity.class);
+                        alipay.putExtra("selectarc",0);
+                        alipay.putExtra("strtime",sTime);
+                        alipay.putExtra("endtime",eTime);
+                        startActivity(alipay);
+                        break;
+
+                    case 1:
+                        Intent wx = new Intent(mContext, BossWAXPActivity.class);
+                        wx.putExtra("selectarc",1);
+                        wx.putExtra("strtime",sTime);
+                        wx.putExtra("endtime",eTime);
+                        startActivity(wx);
+                        break;
+
+                    case 2:
+                        Intent vipConsume = new Intent(mContext, BossVipConsumeActivity.class);
+                        vipConsume.putExtra("strtime",sTime);
+                        vipConsume.putExtra("endtime",eTime);
+                        startActivity(vipConsume);
+                        break;
+
+                    case 3:
+                        Intent money = new Intent(mContext, BossWAXPActivity.class);
+                        money.putExtra("selectarc",3);
+                        money.putExtra("strtime",sTime);
+                        money.putExtra("endtime",eTime);
+                        startActivity(money);
+                        break;
+
+                    case 4:
+                        Intent group = new Intent(mContext, BossGroupActivity.class);
+                        group.putExtra("strtime",sTime);
+                        group.putExtra("endtime",eTime);
+                        startActivity(group);
+                        break;
+
+                    case 5:
+                        Intent pos = new Intent(mContext, BossWAXPActivity.class);
+                        pos.putExtra("selectarc",5);
+                        pos.putExtra("strtime",sTime);
+                        pos.putExtra("endtime",eTime);
+                        startActivity(pos);
+                        break;
+
+                }
+
+            }
+        });
+
+        pie_performance.setOnHoleCilckListener(new LxkCircleView.onHoleClickListener() {
+            @Override
+            public void holeClick() {
+            }
+        });
     }
 
     @Subscribe
@@ -204,7 +329,8 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
     @Subscribe
     public void onEventMainThread(BossBoolMsgEvent msg){
 
-        getShopData();
+        //getShopData();
+        swipe_boss_pre.setRefreshing(true);
     }
 
 
@@ -214,6 +340,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_SHOP_CHANGE, RequestMethod.POST);
         jsonObjectRequest.add("phone",SpUtil.getString(mContext,"phone",""));
+        jsonObjectRequest.setRetryCount(3);
         CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.BOSS_SHOP_CHANGE,true,false,true);
     }
 
@@ -227,7 +354,10 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 strTime = TimeUtils.getDayStartTime()+" 00:00:00";
                 endTime = TimeUtils.getDayEndTime()+" 23:59:59";
 
-
+                startTime.setText(TimeUtils.getDayStartTime());
+                endTime1.setText(TimeUtils.getDayEndTime());
+                sTime = TimeUtils.getDayStartTime()+" 00:00:00";
+                eTime = TimeUtils.getDayEndTime()+" 23:59:59";
                 getPerformanceHomeData(strTime, endTime);
                 break;
 
@@ -237,6 +367,12 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 strTime = TimeUtils.getWeekStartTime()+" 00:00:00";
                 endTime = TimeUtils.getDayStartTime()+" 23:59:59";
 
+                startTime.setText(TimeUtils.getWeekStartTime());
+                endTime1.setText(TimeUtils.getDayStartTime());
+
+                sTime = TimeUtils.getWeekStartTime()+" 00:00:00";
+                eTime =  TimeUtils.getDayStartTime()+" 23:59:59";
+
                 getPerformanceHomeData(strTime,endTime);
                 break;
 
@@ -245,6 +381,12 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 img_month.setVisibility(View.VISIBLE);
                 strTime = TimeUtils.getBeforeMonth()+" 00:00:00";
                 endTime = TimeUtils.getDayEndTime()+" 23:59:59";
+
+                startTime.setText(TimeUtils.getBeforeMonth());
+                endTime1.setText(TimeUtils.getDayEndTime());
+
+                sTime = TimeUtils.getBeforeMonth()+" 00:00:00";
+                eTime = TimeUtils.getDayEndTime()+" 23:59:59";
                 getPerformanceHomeData(strTime,endTime);
                 break;
 
@@ -253,6 +395,11 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 img_year.setVisibility(View.VISIBLE);
                 strTime = TimeUtils.getYearTime()+" 00:00:00";
                 endTime = TimeUtils.getDayEndTime()+" 23:59:59";
+                startTime.setText(TimeUtils.getYearTime());
+                endTime1.setText(TimeUtils.getDayEndTime());
+
+                sTime =  TimeUtils.getYearTime()+" 00:00:00";
+                eTime = TimeUtils.getDayEndTime()+" 23:59:59";
                 getPerformanceHomeData(strTime,endTime);
                 break;
         }
@@ -274,17 +421,17 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
 
     private void showPeiChart(PieData pieData,String yye) {
 
-
-        pie_performance.setCenterText(yye+"\n"+"营业额");
+        /*Spanned spanned = Html.fromHtml(yye+"<br/>"+"<font color= '#34C083'>营业额</font>");
+        pie_performance.setCenterText(spanned);
         pie_performance.setData(pieData);
-        pie_performance.invalidate();
+        pie_performance.invalidate();*/
 
-
+        
 
     }
 
 
-    private PieData setPieData(ArrayList<PieEntry> data){
+    /*private PieData setPieData(ArrayList<PieEntry> data){
 
 
         ArrayList<Integer> colors = new ArrayList<>();
@@ -298,7 +445,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         pieDataSet.setDrawValues(false);
         pieDataSet.setValueTextSize(15);
         pieDataSet.setValueTextColor(getResources().getColor(R.color.white));
-        pieDataSet.setSliceSpace(0f);
+        pieDataSet.setSliceSpace(1f);
         colors.add(new Color().rgb(157,204,251));
         colors.add(new Color().rgb(190,187,255));
         colors.add(new Color().rgb(156,205,205));
@@ -307,19 +454,20 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         colors.add(new Color().rgb(117,237,223));
 
         pieDataSet.setColors(colors);
+        pieDataSet.setSelectionShift(0);//设置不延伸
         PieData pieData = new PieData(pieDataSet);
         return pieData;
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
 
             case R.id.rl_performance_sjys:
-                Intent sjys = new Intent(mContext, BossSjysActivity.class);
-                sjys.putExtra("strtime",strTime);
-                sjys.putExtra("endtime",endTime);
-                mContext.startActivity(sjys);
+                Intent intent = new Intent(mContext, BossOrderVipAct.class);
+                intent.putExtra("strtime",strTime);
+                intent.putExtra("endtime",endTime);
+                mContext.startActivity(intent);
                 break;
 
             case R.id.rl_performance_vip:
@@ -359,6 +507,9 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
 
             case R.id.tv_shopname:
                 CHANGE_SHOP_STATE = "2";
+
+                RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(0f, 90f, 0.5f, 0.5f, 300, true);
+                img_title_indicator.startAnimation(rotateAnimation);
                 popupWindow = new PopupWindow();
                 View view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_changeshop, null);
                 pop_listview = (ListView) view.findViewById(R.id.pop_listview);
@@ -368,8 +519,88 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 popupWindow.setBackgroundDrawable(new PaintDrawable());
                 popupWindow.setFocusable(true);
                 popupWindow.showAsDropDown(tv_shopname);
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(90f, 0f, 0.5f, 0.5f, 300, true);
+                        img_title_indicator.startAnimation(rotateAnimation);
+                    }
+                });
                 getShopData();
                 break;
+
+            case R.id.ll_starttime:
+                dataPickPopWindow = DataPickdayPopWindow.getInstance(mContext, R.layout.popupwindow_datapickerday);
+
+                dataPickPopWindow.showPopupWindow(ll_starttime);
+
+
+
+                dataPickPopWindow.setDataPick(new DataPickdayPopWindow.DataPickListener() {
+                    @Override
+                    public void onFinish(String time) {
+                        startTime.setText(time);
+                        sTime = time + " 00:00:00";
+                        dataPickPopWindow.dismiss();
+                    }
+                });
+                dataPickPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+
+                        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_PERFORMANCE_HOME, RequestMethod.POST);
+                        jsonObjectRequest.add("sid", SpUtil.getString(mContext,"sid",""));
+                        jsonObjectRequest.add("strtime",sTime);
+                        jsonObjectRequest.add("endtime",eTime);
+                        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.BOSS_PERFORMANCE_HOME,true,false,true);
+                    }
+                });
+
+                break;
+
+            case R.id.ll_endtime:
+
+                 dataPickPopWindow = DataPickdayPopWindow.getInstance(mContext, R.layout.popupwindow_datapickerday);
+
+                dataPickPopWindow.showPopupWindow(ll_starttime);
+
+
+
+                dataPickPopWindow.setDataPick(new DataPickdayPopWindow.DataPickListener() {
+                    @Override
+                    public void onFinish(String time) {
+                        endTime1.setText(time);
+                        eTime = time+" 23:59:59";
+                        dataPickPopWindow.dismiss();
+                    }
+                });
+
+                dataPickPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+
+                        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_PERFORMANCE_HOME, RequestMethod.POST);
+
+                        jsonObjectRequest.add("sid", SpUtil.getString(mContext,"sid",""));
+                        jsonObjectRequest.add("strtime",sTime);
+                        jsonObjectRequest.add("endtime",eTime);
+
+                        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.BOSS_PERFORMANCE_HOME,true,false,true);
+                    }
+                });
+
+
+                break;
+
+            case R.id.rl_performance_order:
+
+                Intent sjys = new Intent(mContext, BossSjysActivity.class);
+                sjys.putExtra("strtime",strTime);
+                sjys.putExtra("endtime",endTime);
+                mContext.startActivity(sjys);
+                break;
+
+
 
         }
     }
@@ -395,7 +626,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         public void onSucceed(int what, Response<JSONObject> response) {
             
             if (what == UrlTag.BOSS_PERFORMANCE_HOME){
-
+                swipe_boss_pre.setRefreshing(false);
 
                 LogUtil.d(TAG,response.toString());
 
@@ -432,6 +663,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                                 shopdataBean.setSid(data.getJSONObject(i).getString("sid"));
                                 shopdataBean.setSname(data.getJSONObject(i).getString("sname"));
                                 shopdataBean.setFname(data.getJSONObject(i).getString("fname"));
+                                shopdataBean.setShenfen(data.getJSONObject(i).getString("shenfen"));
 
                                 shopList.add(shopdataBean);
                             }
@@ -490,16 +722,10 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                                             SpUtil.putString(mContext,"sid",shopList.get(position).getSid());
                                             SpUtil.putString(mContext,"shopname",item_tv.getText().toString());
                                             SpUtil.putString(mContext,"name",shopList.get(position).getFname());
+                                            SpUtil.putString(mContext,"shenfen",shopList.get(position).getShenfen());
 
-                                           /* FragmentManager fragmentManager = getFragmentManager();
 
-                                            BossWalletFrag bossWalletFrag = (BossWalletFrag) fragmentManager.findFragmentByTag("BossWalletFrag");
-
-                                            if (bossWalletFrag != null){
-
-                                                bossWalletFrag.changeShopName(item_tv.getText().toString());
-                                            }*/
-
+                                            //更换店名
                                             EventBus.getDefault().post(new BossMsgEvent(shopList.get(position).getSname()));
                                             //更换名字
                                             EventBus.getDefault().post(new BossNameMsgEvent(shopList.get(position).getFname()));
@@ -514,11 +740,7 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
 
                             }
 
-
-
                         }
-
-
                     }
 
                 } catch (JSONException e) {
@@ -528,8 +750,12 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
+            swipe_boss_pre.setRefreshing(false);
 
+            if (what == UrlTag.BOSS_SHOP_CHANGE){
+
+            }
         }
     };
 
@@ -538,12 +764,15 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
         if (data != null){
 
             try {
-
-
-
-                tv_sjys.setText(data.getString("sjys")+"元");
+                tv_performance_order.setText(data.getString("sjys")+"元");
                 tv_stafftc.setText(data.getString("ygtc")+"元");
-                tv_proRank.setText("No.1"+data.getString("no_project"));
+                tv_sjys.setText(data.getString("income")+"元");
+                if (!TextUtils.isEmpty(data.getString("no_project"))) {
+
+                    tv_proRank.setText("No.1"+data.getString("no_project"));
+                }else{
+                    tv_proRank.setText("暂无订单");
+                }
                 if (data.getString("kdj").equals("0")){
 
                     tv_kdj.setText(data.getString("kdj"));
@@ -563,49 +792,26 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
                 String hyxf = data.getString("hyxf");
                 String tgxf = data.getString("tgxf");
                 String yye = data.getString("yye");
-                ArrayList<PieEntry> pieEntries = new ArrayList<>();
+                ArrayList<String> dataList = new ArrayList<>();
+                dataList.add(zhifubao);
+                dataList.add(weixin);
+                dataList.add(hyxf);
+                dataList.add(xianjin);
+                dataList.add(tgxf);
+                dataList.add(pos);
 
+                pie_performance.setHoleText(yye);
+                pie_performance.setData(dataList);
+
+               /* ArrayList<PieEntry> pieEntries = new ArrayList<>();
                 pieEntries.add(new PieEntry(1,"支付宝"+"\n"+Float.valueOf(zhifubao)));
                 pieEntries.add(new PieEntry(1,"微信"+"\n"+Float.valueOf(weixin)));
                 pieEntries.add(new PieEntry(1,"现金收入"+"\n"+Float.valueOf(xianjin)));
                 pieEntries.add(new PieEntry(1,"pos"+"\n"+Float.valueOf(pos)));
                 pieEntries.add(new PieEntry(1,"团购收入"+"\n"+Float.valueOf(tgxf)));
                 pieEntries.add(new PieEntry(1,"会员消费"+"\n"+Float.valueOf(hyxf)));
-
-
-                /*if (!zhifubao.equals("0")){
-
-
-                }
-                if (!weixin.equals("0")){
-
-
-                }
-                if (!xianjin.equals("0")){
-
-
-                }
-                if (!pos.equals("0")){
-
-
-                }
-                if (!tgxf.equals("0")){
-
-
-                }
-                if (!hyxf.equals("0")){
-
-
-                }*/
-
-
-
-
-
-
                 PieData pieData = setPieData(pieEntries);
-
-                showPeiChart(pieData,yye);
+                showPeiChart(pieData,yye);*/
 
 
 
@@ -620,7 +826,9 @@ public class PerformanceFrag extends Fragment implements View.OnClickListener{
 
     }
 
-    public void changeShopName(String name){
-        tv_shopname.setText(name);
+
+    @Override
+    public void onRefresh() {
+        getPerformanceHomeData(strTime, endTime);
     }
 }

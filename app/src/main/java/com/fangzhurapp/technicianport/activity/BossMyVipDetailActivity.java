@@ -42,7 +42,6 @@ public class BossMyVipDetailActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boss_my_vip_detail);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
 
         initView();
 

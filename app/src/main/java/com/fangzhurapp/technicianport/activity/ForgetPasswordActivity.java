@@ -1,6 +1,7 @@
 package com.fangzhurapp.technicianport.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.utils.LogUtil;
+import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -112,11 +114,28 @@ public class ForgetPasswordActivity extends Activity implements View.OnClickList
                         Toast.makeText(ForgetPasswordActivity.this, "密码长度不够", Toast.LENGTH_SHORT).show();
                     }else{
 
-                        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.RETRIEVE_PW, RequestMethod.POST);
-                        jsonObjectRequest.add("phone",etForgetpwPhone.getText().toString());
-                        jsonObjectRequest.add("code",etForgetpwCode.getText().toString());
-                        jsonObjectRequest.add("passwd",etForgetpwConfirmpw.getText().toString());
-                        CallServer.getInstance().add(ForgetPasswordActivity.this,jsonObjectRequest,callback, UrlTag.RETRIEVE_PW,true,false,true);
+                        if (SpUtil.getString(ForgetPasswordActivity.this,"selectident","").equals("1")
+                                ){
+
+
+                            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.RETRIEVE_PW, RequestMethod.POST);
+                            jsonObjectRequest.add("phone",etForgetpwPhone.getText().toString());
+                            jsonObjectRequest.add("code",etForgetpwCode.getText().toString());
+                            jsonObjectRequest.add("passwd",etForgetpwConfirmpw.getText().toString());
+                            CallServer.getInstance().add(ForgetPasswordActivity.this,jsonObjectRequest,callback, UrlTag.RETRIEVE_PW,true,false,true);
+
+                        }else{
+
+
+                            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_CHANGE_PW, RequestMethod.POST);
+                            jsonObjectRequest.add("account", etForgetpwPhone.getText().toString());
+                            jsonObjectRequest.add("password",etForgetpwConfirmpw.getText().toString());
+                            jsonObjectRequest.add("type","1");
+                            jsonObjectRequest.add("code",etForgetpwCode.getText().toString());
+                            CallServer.getInstance().add(ForgetPasswordActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_CHANGE_PW,true,false,true);
+
+                        }
+
                     }
 
                 }else{
@@ -175,11 +194,34 @@ public class ForgetPasswordActivity extends Activity implements View.OnClickList
                 Toast.makeText(ForgetPasswordActivity.this, "验证码已发送", Toast.LENGTH_SHORT).show();
                 TimeTimer timeTimer = new TimeTimer(60000, 1000);
                 timeTimer.start();
+            }else if (what == UrlTag.BOSS_CHANGE_PW){
+
+                LogUtil.d(TAG,response.toString());
+
+                try {
+                    JSONObject jsonObject = response.get();
+                    String sucess = jsonObject.getString("sucess");
+                    if (sucess.equals("1")){
+
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String isok = data.getString("isok");
+                        if (isok.equals("1")){
+                            Toast.makeText(ForgetPasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                            ForgetPasswordActivity.this.finish();
+                        }else {
+                            Toast.makeText(ForgetPasswordActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(ForgetPasswordActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

@@ -68,7 +68,6 @@ public class ChangePwActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_change_pw);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
 
         initView();
         initEvent();
@@ -168,11 +167,31 @@ public class ChangePwActivity extends AppCompatActivity implements View.OnClickL
 
     private void changePw() {
 
-        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CHANGE_PW, RequestMethod.POST);
-        jsonObjectRequest.add("phone", SpUtil.getString(ChangePwActivity.this,"phone",""));
-        jsonObjectRequest.add("passwd",etChangepwOldpw.getText().toString());
-        jsonObjectRequest.add("passwds",etChangepwConfirmpw.getText().toString());
-        CallServer.getInstance().add(ChangePwActivity.this,jsonObjectRequest,callback, UrlTag.CHANGE_PW,true,false,true);
+        if (SpUtil.getString(ChangePwActivity.this,"ident","").equals("js")){
+            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CHANGE_PW, RequestMethod.POST);
+            jsonObjectRequest.add("phone", SpUtil.getString(ChangePwActivity.this,"phone",""));
+            jsonObjectRequest.add("passwd",etChangepwOldpw.getText().toString());
+            jsonObjectRequest.add("passwds",etChangepwConfirmpw.getText().toString());
+            CallServer.getInstance().add(ChangePwActivity.this,jsonObjectRequest,callback, UrlTag.CHANGE_PW,true,false,true);
+        }else if (SpUtil.getString(ChangePwActivity.this,"ident","").equals("boss")){
+            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_CHANGE_PW, RequestMethod.POST);
+            jsonObjectRequest.add("account", SpUtil.getString(ChangePwActivity.this,"phone",""));
+            jsonObjectRequest.add("passwd",etChangepwOldpw.getText().toString());
+            jsonObjectRequest.add("password",etChangepwConfirmpw.getText().toString());
+            jsonObjectRequest.add("type","2");
+            CallServer.getInstance().add(ChangePwActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_CHANGE_PW,true,false,true);
+        }else if (SpUtil.getString(ChangePwActivity.this,"ident","").equals("partner")){
+
+            Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_CHANGE_PW, RequestMethod.POST);
+            jsonObjectRequest.add("account", SpUtil.getString(ChangePwActivity.this,"phone",""));
+            jsonObjectRequest.add("passwd",etChangepwOldpw.getText().toString());
+            jsonObjectRequest.add("password",etChangepwConfirmpw.getText().toString());
+            jsonObjectRequest.add("type","2");
+            CallServer.getInstance().add(ChangePwActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_CHANGE_PW,true,false,true);
+
+        }
+
+
     }
 
     private HttpCallBack<JSONObject> callback = new HttpCallBack<JSONObject>() {
@@ -202,11 +221,54 @@ public class ChangePwActivity extends AppCompatActivity implements View.OnClickL
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else if (what == UrlTag.BOSS_CHANGE_PW){
+
+                LogUtil.d(TAG,response.toString());
+
+                try {
+                    JSONObject jsonObject = response.get();
+                    String sucess = jsonObject.getString("sucess");
+                    if (sucess.equals("1")){
+
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String isok = data.getString("isok");
+                        if (isok.equals("1")){
+                            Toast.makeText(ChangePwActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                            CustomApplication.removeAllAct();
+                            Intent intent = new Intent(ChangePwActivity.this, SelectIdent.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(ChangePwActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(ChangePwActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }else if (what == UrlTag.PARTNER_CHANGE_PW){
+
+                LogUtil.d(TAG,response.toString());
+
+                JSONObject jsonObject = response.get();
+
+                try {
+                    String sucess = jsonObject.getString("sucess");
+
+                    if (sucess.equals("1")){
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

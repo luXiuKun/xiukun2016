@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +22,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.bean.BankCardData;
+import com.fangzhurapp.technicianport.eventbus.MsgEvent1;
+import com.fangzhurapp.technicianport.eventbus.TxEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
@@ -32,6 +37,7 @@ import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,7 +82,6 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
         Fresco.initialize(TXActivity.this);
         setContentView(R.layout.activity_tx);
         CustomApplication.addAct(this);
-        getSupportActionBar().hide();
 
         ButterKnife.bind(this);
         initView();
@@ -87,6 +92,44 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
         imgLogo.setOnClickListener(this);
         rlTxCheckcard.setOnClickListener(this);
         ibTxNext.setOnClickListener(this);
+
+        etTxPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        etTxPrice.setText(s);
+                        etTxPrice.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    etTxPrice.setText(s);
+                    etTxPrice.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        etTxPrice.setText(s.subSequence(0, 1));
+                        etTxPrice.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -177,6 +220,7 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
         payPwDialog = new PayPwDialog(TXActivity.this, R.layout.dialog_paypw,price);
         payPwDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         payPwDialog.show();
+        payPwDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         payPwDialog.setPayPwDialogListener(new PayPwDialog.payListener() {
             @Override
@@ -200,6 +244,7 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
         jsonObjectRequest.add("bid",id);
         jsonObjectRequest.add("money",price);
         jsonObjectRequest.add("payment",pw);
+        jsonObjectRequest.add("zmoney",SpUtil.getString(TXActivity.this,"ktxprice",""));
 
         CallServer.getInstance().add(TXActivity.this,jsonObjectRequest,callback,UrlTag.TX,true,false,true);
     }
@@ -215,27 +260,34 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
                         JSONArray data = jsonObject.getJSONArray("data");
-                        cardList = new ArrayList<>();
 
-                        for (int i =0;i<data.length();i++){
+                        if (data.length() > 0){
+                            cardList = new ArrayList<>();
 
-                            BankCardData bankCardData = new BankCardData();
-                            bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
-                            bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
-                            bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
-                            bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
-                            bankCardData.setSname(data.getJSONObject(i).getString("sname"));
-                            bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
-                            bankCardData.setId(data.getJSONObject(i).getString("id"));
-                            cardList.add(bankCardData);
+                            for (int i =0;i<data.length();i++){
+
+                                BankCardData bankCardData = new BankCardData();
+                                bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
+                                bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
+                                bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
+                                bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
+                                bankCardData.setSname(data.getJSONObject(i).getString("sname"));
+                                bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
+                                bankCardData.setId(data.getJSONObject(i).getString("id"));
+                                cardList.add(bankCardData);
+                            }
+
+                            tvTxBankname.setText(cardList.get(0).getBankname());
+                            String cardnumber = cardList.get(0).getCardnumber();
+                            cardnumber = cardnumber.substring(cardnumber.length()-4,cardnumber.length());
+                            tvTxNum.setText("尾号"+cardnumber);
+                            imgTxBanklogo.setImageURI(Uri.parse(cardList.get(0).getLogourl()));
+                            id = cardList.get(0).getId();
+
+                        }else{
+                            Toast.makeText(TXActivity.this, "获取银行卡信息失败", Toast.LENGTH_SHORT).show();
                         }
 
-                        tvTxBankname.setText(cardList.get(0).getBankname());
-                        String cardnumber = cardList.get(0).getCardnumber();
-                        cardnumber = cardnumber.substring(cardnumber.length()-4,cardnumber.length());
-                        tvTxNum.setText("尾号"+cardnumber);
-                        imgTxBanklogo.setImageURI(Uri.parse(cardList.get(0).getLogourl()));
-                        id = cardList.get(0).getId();
                     }else{
                         Toast.makeText(TXActivity.this, "获取银行卡信息失败", Toast.LENGTH_SHORT).show();
                     }
@@ -255,6 +307,7 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
                         String isok = data.getString("isok");
                         if (isok.equals("1")){
                             payPwDialog.dismiss();
+                            EventBus.getDefault().post(new TxEvent(true));
                             Intent intent = new Intent(TXActivity.this, TxSucessActivity.class);
                             startActivity(intent);
                             TXActivity.this.finish();
@@ -263,8 +316,9 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
                             Toast.makeText(TXActivity.this, "提现失败", Toast.LENGTH_SHORT).show();
                         }
                     }else{
+                        String msg = jsonObject.getString("msg");
 
-                        Toast.makeText(TXActivity.this, "提现失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TXActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -273,14 +327,10 @@ public class TXActivity extends AppCompatActivity implements View.OnClickListene
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getBindList();
-    }
+
 }

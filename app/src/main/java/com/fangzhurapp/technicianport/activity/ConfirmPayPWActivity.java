@@ -51,7 +51,6 @@ public class ConfirmPayPWActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_pay_pw);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -166,7 +165,7 @@ public class ConfirmPayPWActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

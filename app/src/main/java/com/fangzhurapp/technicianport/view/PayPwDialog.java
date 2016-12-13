@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.activity.SetPayPWActivity;
+import com.fangzhurapp.technicianport.utils.NumberUtils;
 import com.jungly.gridpasswordview.GridPasswordView;
 
 /**
@@ -44,8 +47,9 @@ public class PayPwDialog extends Dialog {
 
         GridPasswordView gpv_paypwdialog_pw = (GridPasswordView) view.findViewById(R.id.gpv_paypwdialog_pw);
 
+
         ImageButton ib_paypwdialog_close = (ImageButton) view.findViewById(R.id.ib_paypwdialog_close);
-        tv_paypwdialog_price.setText("￥"+mPrice);
+        tv_paypwdialog_price.setText("￥"+ NumberUtils.floatFormat(Float.valueOf(mPrice)));
         ib_paypwdialog_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

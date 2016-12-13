@@ -44,6 +44,6 @@ public interface HttpCallBack<T> {
 	 * @param responseCode server response code.
 	 * @param networkMillis request process consumption time.
 	 */
-	void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis);
+	void onFailed(int what, Response<T> response);
 
 }

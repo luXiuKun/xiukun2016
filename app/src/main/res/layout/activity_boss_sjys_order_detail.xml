@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     >
 
     <include layout="@layout/activity_main_title"></include>
@@ -88,8 +89,38 @@
             android:textSize="18sp"
             android:text="项目名称:"/>
 
+
+
+
         <TextView
             android:id="@+id/tv_sjysdetail_proname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:text=""/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_10px"
+        android:paddingBottom="@dimen/dd_dimen_10px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="房  间  号:"/>
+
+
+
+
+        <TextView
+            android:id="@+id/tv_sjysdetail_housenum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"

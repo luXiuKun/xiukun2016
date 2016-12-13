@@ -12,10 +12,12 @@ import android.view.ViewStub;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,17 +72,18 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
     private UnBindSucessDialog unBindSucessDialog;
 
     private int selectPosition;
-    private ViewStub mycard_nodata;
+    private RelativeLayout mycard_nodata;
+    private Button btn_mycard_bindcard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_my_bind_bank);
-        mycard_nodata = (ViewStub) findViewById(R.id.mycard_nodata);
+        mycard_nodata = (RelativeLayout) findViewById(R.id.mycard_nodata);
+        btn_mycard_bindcard = (Button) findViewById(R.id.btn_mycard_bindcard);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
 
         initView();
         initEvent();
@@ -90,7 +93,7 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
         imgLogo.setOnClickListener(this);
         imgTitleRight.setOnClickListener(this);
         ibBindbankUnbind.setOnClickListener(this);
-
+        btn_mycard_bindcard.setOnClickListener(this);
         lvBindbankMycard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +126,7 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
         imgTitleIndicator.setVisibility(View.INVISIBLE);
         imgTitleRight.setBackgroundResource(R.drawable.img_addbankcard);
         getBindCard();
+        lvBindbankMycard.setEmptyView(mycard_nodata);
     }
 
     private void getBindCard() {
@@ -142,6 +146,11 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
             case R.id.img_title_right:
                 Intent intent = new Intent(MyBindBankActivity.this, BindBankCardActivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.btn_mycard_bindcard:
+                Intent intent1 = new Intent(MyBindBankActivity.this, BindBankCardActivity.class);
+                startActivity(intent1);
                 break;
 
             case R.id.ib_bindbank_unbind:
@@ -175,31 +184,35 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")) {
                         JSONArray data = jsonObject.getJSONArray("data");
-                        bindCardList = new ArrayList<>();
-                        mycard_nodata.setVisibility(View.GONE);
-                        ibBindbankUnbind.setVisibility(View.VISIBLE);
-                        for (int i = 0; i < data.length(); i++) {
 
-                            BankCardData bankCardData = new BankCardData();
-                            bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
-                            bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
-                            bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
-                            bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
-                            bankCardData.setSname(data.getJSONObject(i).getString("sname"));
-                            bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
-                            bankCardData.setId(data.getJSONObject(i).getString("id"));
-                            bindCardList.add(bankCardData);
+                        if (data.length() > 0){
+                            bindCardList = new ArrayList<>();
+                            ibBindbankUnbind.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < data.length(); i++) {
+
+                                BankCardData bankCardData = new BankCardData();
+                                bankCardData.setAddtime(data.getJSONObject(i).getString("addtime"));
+                                bankCardData.setBankname(data.getJSONObject(i).getString("bankname"));
+                                bankCardData.setCardnumber(data.getJSONObject(i).getString("cardnumber"));
+                                bankCardData.setLogourl(data.getJSONObject(i).getString("logourl"));
+                                bankCardData.setSname(data.getJSONObject(i).getString("sname"));
+                                bankCardData.setStaff_id(data.getJSONObject(i).getString("staff_id"));
+                                bankCardData.setId(data.getJSONObject(i).getString("id"));
+                                bindCardList.add(bankCardData);
+                            }
+
+                            initCheck();
+                        }else{
+
+                            ibBindbankUnbind.setVisibility(View.GONE);
                         }
 
-                        initCheck();
 
 
                     } else {
-                        mycard_nodata.setVisibility(View.VISIBLE);
                         ibBindbankUnbind.setVisibility(View.GONE);
                     }
                 } catch (JSONException e) {
-                    mycard_nodata.setVisibility(View.VISIBLE);
                     ibBindbankUnbind.setVisibility(View.GONE);
                     e.printStackTrace();
                 }
@@ -243,8 +256,7 @@ public class MyBindBankActivity extends AppCompatActivity implements View.OnClic
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-            mycard_nodata.setVisibility(View.VISIBLE);
+        public void onFailed(int what, Response<JSONObject> response) {
             ibBindbankUnbind.setVisibility(View.GONE);
         }
     };

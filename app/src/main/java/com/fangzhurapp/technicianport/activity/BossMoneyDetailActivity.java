@@ -1,8 +1,11 @@
 package com.fangzhurapp.technicianport.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -18,6 +21,7 @@ import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
+import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
@@ -56,7 +60,6 @@ public class BossMoneyDetailActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_money_detail);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -64,10 +67,19 @@ public class BossMoneyDetailActivity extends AppCompatActivity implements View.O
     private void initEvent() {
         imgLogo.setOnClickListener(this);
 
+        lvMoneydetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(BossMoneyDetailActivity.this, MoneyTradeDetailActivity.class);
+                intent.putExtra("tradedetail",list.get(position));
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initView() {
-
         imgLogo.setBackgroundResource(R.drawable.img_title_back);
         tvShopname.setText("现金明细");
         imgTitleIndicator.setVisibility(View.INVISIBLE);
@@ -111,17 +123,27 @@ public class BossMoneyDetailActivity extends AppCompatActivity implements View.O
 
                         if (data.length() > 0) {
                             list = new ArrayList<>();
+
                             for (int i = 0; i < data.length(); i++) {
                                 moneyDetailBean moneyDetailBean = new moneyDetailBean();
-
+                                moneyDetailBean.setCname(data.getJSONObject(i).getString("cname"));
                                 moneyDetailBean.setMoney(data.getJSONObject(i).getString("money"));
                                 moneyDetailBean.setTime(data.getJSONObject(i).getString("time"));
                                 moneyDetailBean.setType(data.getJSONObject(i).getString("type"));
 
+                                if (TextUtils.isEmpty(data.getJSONObject(i).getString("payment_onumber"))){
+
+                                    moneyDetailBean.setPayment_onumber("无");
+                                }else{
+                                    moneyDetailBean.setPayment_onumber(data.getJSONObject(i).getString("payment_onumber"));
+
+                                }
+                                moneyDetailBean.setSmoney(data.getJSONObject(i).getString("smoney"));
+
+
                                 list.add(moneyDetailBean);
 
                             }
-
                             moneyDetailAdapter moneyDetailAdapter = new moneyDetailAdapter(list, BossMoneyDetailActivity.this);
                             lvMoneydetail.setAdapter(moneyDetailAdapter);
 
@@ -140,7 +162,7 @@ public class BossMoneyDetailActivity extends AppCompatActivity implements View.O
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

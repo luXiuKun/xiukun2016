@@ -72,7 +72,6 @@ public class BossShopManagerActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_boss_shop_manager);
         ButterKnife.bind(this);
         CustomApplication.addAct(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -93,7 +92,7 @@ public class BossShopManagerActivity extends AppCompatActivity implements View.O
         smrBossshopmg.setItemAnimator(new DefaultItemAnimator());
         smrBossshopmg.setHasFixedSize(true);
         smrBossshopmg.setLayoutManager(new LinearLayoutManager(this));
-        smrBossshopmg.addItemDecoration(new ListViewDecoration());
+        //smrBossshopmg.addItemDecoration(new ListViewDecoration());
         if (SpUtil.getString(BossShopManagerActivity.this,"shenfen","").equals("1")){
 
             smrBossshopmg.setSwipeMenuCreator(swipeMenuCreator);
@@ -193,8 +192,12 @@ public class BossShopManagerActivity extends AppCompatActivity implements View.O
                 break;
 
             case R.id.img_title_right:
+                if (SpUtil.getString(BossShopManagerActivity.this,"shenfen","").equals("1")){
 
-                showDialog();
+                    showDialog();
+                }else{
+                    Toast.makeText(BossShopManagerActivity.this, "无操作权限", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -322,7 +325,7 @@ public class BossShopManagerActivity extends AppCompatActivity implements View.O
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

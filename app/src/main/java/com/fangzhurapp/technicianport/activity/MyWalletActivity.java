@@ -2,7 +2,10 @@ package com.fangzhurapp.technicianport.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
+import com.fangzhurapp.technicianport.utils.AnimationUtils;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.fangzhurapp.technicianport.utils.TimeUtils;
@@ -61,6 +65,8 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     TextView tvMywalletBonus;
     @Bind(R.id.tv_mywallet_fine)
     TextView tvMywalletFine;
+    @Bind(R.id.img_staffwages_indicator)
+    ImageView imgStaffwagesIndicator;
 
     private Calendar mCalendar = Calendar.getInstance();
     private String mYear = "";
@@ -75,7 +81,6 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_my_wallet);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -131,6 +136,10 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
     private void showCalendar() {
 
 
+
+        RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(0f, 90f, 0.5f, 0.5f, 300, true);
+        imgStaffwagesIndicator.startAnimation(rotateAnimation);
+
         dataPickPopWindow = DataPickPopWindow.getInstance(MyWalletActivity.this, R.layout.popupwindow_datapicker);
         dataPickPopWindow.showPopupWindow(tvMywalletTime);
         dataPickPopWindow.setDataPick(new DataPickPopWindow.DataPickListener() {
@@ -144,31 +153,17 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        /*if (dataPickPopWindow == null){
-            dataPickPopWindow = new DataPickPopWindow(MyWalletActivity.this, R.layout.popupwindow_datapicker);
-
-            dataPickPopWindow.showPopupWindow(tvMywalletTime);
-            dataPickPopWindow.setDataPick(new DataPickPopWindow.DataPickListener() {
-                @Override
-                public void onFinish(String time) {
-                    tvMywalletTime.setText(time);
-                    mYear = time.substring(0, 4);
-                    mMonth = time.substring(5, time.length());
-                    dataPickPopWindow.dismiss();
-                    getMyWage();
-                }
-            });
-
-            dataPickPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    dataPickPopWindow = null;
-                }
-            });*/
-
-        }
+        dataPickPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(90f, 0f, 0.5f, 0.5f, 300, true);
+                imgStaffwagesIndicator.startAnimation(rotateAnimation);
+                dataPickPopWindow = null;
+            }
+        });
 
 
+    }
 
 
     private HttpCallBack<JSONObject> callback = new HttpCallBack<JSONObject>() {
@@ -205,6 +200,16 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
                             tvMywalletState.setText("工资未发放");
                         }
 
+                    } else {
+                        tvMywalletState.setText("本月没有工资记录");
+                        tvMywalletDixin.setText("0");
+                        tvMywalletZmoney.setText("￥" + "0");
+                        tvMywalletPz.setText("0");
+                        tvMywalletDz.setText("0");
+                        tvMywalletViptc.setText("0");
+                        tvMywalletBonus.setText("0");
+                        tvMywalletFine.setText("0");
+
                     }
                 } catch (JSONException e) {
                     tvMywalletState.setText("本月没有工资记录");
@@ -221,7 +226,7 @@ public class MyWalletActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };

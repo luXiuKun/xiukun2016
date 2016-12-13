@@ -2,14 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     >
 
     <include
         android:id="@+id/boss_bindbank"
         layout="@layout/activity_main_title"></include>
-
-
-
 
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
 
@@ -63,7 +61,7 @@
     <RelativeLayout
         android:id="@+id/rl_bossbindbank"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_height="match_parent">
 
 
@@ -71,17 +69,27 @@
             android:id="@+id/img_mycard_nodata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dd_dimen_200px"
             android:background="@drawable/img_mycard_nodata"/>
+
+        <TextView
+            android:id="@+id/tv_bossbindbank_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_mycard_nodata"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:text="一张银行卡也没有，快去绑定吧"/>
 
 
         <Button
             android:id="@+id/btn_bossbindbank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_mycard_nodata"
+            android:layout_below="@+id/tv_bossbindbank_nodata"
+            android:layout_marginTop="@dimen/dd_dimen_30px"
             android:layout_centerHorizontal="true"
-
             android:background="@drawable/img_addcard"/>
 
     </RelativeLayout>

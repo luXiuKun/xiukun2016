@@ -11,7 +11,7 @@ public class NumberUtils {
      * @return
      */
     public static String floatFormat(float num){
-        DecimalFormat decimalFormat = new DecimalFormat(".00");
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
         return decimalFormat.format(num);
     }
@@ -23,6 +23,16 @@ public class NumberUtils {
      */
     public static String floatFormat1(float num){
         DecimalFormat decimalFormat = new DecimalFormat(".0");
+
+        return decimalFormat.format(num);
+    }
+
+
+    /**
+     * 不保留小数点
+     */
+    public static String floatFormat2(float num){
+        DecimalFormat decimalFormat = new DecimalFormat("0");
 
         return decimalFormat.format(num);
     }

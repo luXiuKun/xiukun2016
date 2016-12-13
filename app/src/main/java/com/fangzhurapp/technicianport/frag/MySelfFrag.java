@@ -2,11 +2,13 @@ package com.fangzhurapp.technicianport.frag;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.fangzhurapp.technicianport.activity.BossMyselfVipActivity;
 import com.fangzhurapp.technicianport.activity.BossShopManagerActivity;
 import com.fangzhurapp.technicianport.activity.ChangePwActivity;
 import com.fangzhurapp.technicianport.activity.FeedBackActivity;
+import com.fangzhurapp.technicianport.activity.MessageActivity;
 import com.fangzhurapp.technicianport.activity.SelectIdent;
 import com.fangzhurapp.technicianport.eventbus.BossMsgEvent;
 import com.fangzhurapp.technicianport.eventbus.BossNameMsgEvent;
@@ -49,6 +52,8 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
     private RelativeLayout mHotLine;
     private RelativeLayout moutLogin;
     private TextView tv_myself_name;
+    private AlertDialog alertDialog;
+    private ImageView img_boss_message;
 
     @Override
     public void onAttach(Context context) {
@@ -82,6 +87,7 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
         mForgetPw.setOnClickListener(this);
         mHotLine.setOnClickListener(this);
         moutLogin.setOnClickListener(this);
+        img_boss_message.setOnClickListener(this);
     }
 
     private void initView() {
@@ -96,6 +102,7 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
         mHotLine = (RelativeLayout) view.findViewById(R.id.rl_myself_hotline);
         moutLogin = (RelativeLayout) view.findViewById(R.id.rl_myself_outlogin);
         tv_myself_name = (TextView) view.findViewById(R.id.tv_myself_name);
+        img_boss_message = (ImageView) view.findViewById(R.id.img_boss_message);
 
         tv_myself_name.setText(SpUtil.getString(mContext,"name",""));
     }
@@ -104,6 +111,11 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         switch (v.getId()){
+
+            case R.id.img_boss_message:
+                Intent bossMsg = new Intent(mContext, MessageActivity.class);
+                startActivity(bossMsg);
+                break;
 
             case R.id.ll_myself_shopmanager:
                 Intent shopmg = new Intent(mContext, BossShopManagerActivity.class);
@@ -137,17 +149,47 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.rl_myself_hotline:
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:01053396608"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:01053396609"));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
 
             case R.id.rl_myself_outlogin:
-                CustomApplication.removeAllAct();
-                Intent ident = new Intent(mContext, SelectIdent.class);
-                startActivity(ident);
+                outLogin();
+
                 break;
         }
+
+    }
+
+    private void outLogin() {
+
+        AlertDialog.Builder outLogin = new AlertDialog.Builder(mContext);
+
+        outLogin.setTitle("退出登录")
+                .setMessage("确定要退出登录吗?")
+                .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (alertDialog != null){
+
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+        outLogin.setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CustomApplication.removeAllAct();
+                SpUtil.remove(mContext,"password");
+                SpUtil.remove(mContext,"selectident");
+
+                Intent ident = new Intent(mContext, SelectIdent.class);
+                startActivity(ident);
+            }
+        });
+        alertDialog = outLogin.show();
+
 
     }
 
@@ -157,4 +199,7 @@ public class MySelfFrag extends Fragment implements View.OnClickListener{
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
+
+
+
 }

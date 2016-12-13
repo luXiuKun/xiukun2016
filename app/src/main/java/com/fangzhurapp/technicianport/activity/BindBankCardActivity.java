@@ -27,6 +27,7 @@ import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
+import com.fangzhurapp.technicianport.utils.ToastUtil;
 import com.fangzhurapp.technicianport.view.CancelBindDialog;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
@@ -78,7 +79,6 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
         CustomApplication.addAct(this);
         Fresco.initialize(BindBankCardActivity.this);
         setContentView(R.layout.activity_bind_bank_card);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
         initView();
         initEvent();
@@ -188,13 +188,33 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else if (what == UrlTag.PARTNER_BINDCARD){
+
+                LogUtil.d(TAG,response.toString());
+                try {
+                    JSONObject jsonObject = response.get();
+                    String sucess = jsonObject.getString("sucess");
+                    if (sucess.equals("1")){
+                        ToastUtil.showToast(BindBankCardActivity.this,"绑定成功");
+
+                        BindBankCardActivity.this.finish();
+
+                    }else{
+                       ToastUtil.showToast(BindBankCardActivity.this,"绑定失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
             REQUEST_STATE = true;
         }
+
+
     };
 
     private void initView() {
@@ -202,6 +222,13 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
         tvShopname.setText("绑定银行卡");
         imgTitleIndicator.setVisibility(View.INVISIBLE);
         imgTitleRight.setVisibility(View.INVISIBLE);
+        if (SpUtil.getString(BindBankCardActivity.this,"ident","").equals("partner")){
+            etBindbankName.setEnabled(true);
+
+        }else{
+            etBindbankName.setEnabled(false);
+            etBindbankName.setText(SpUtil.getString(BindBankCardActivity.this,"name",""));
+        }
 
     }
 
@@ -213,9 +240,20 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
             case R.id.ib_bindbank_confirm:
 
                 if ( !TextUtils.isEmpty(etBindbankName.getText().toString())
-                        &&!TextUtils.isEmpty(etBindbankCard.getText().toString()) && GET_CARDSUCESS ){
+                        &&!TextUtils.isEmpty(etBindbankCard.getText().toString()) && GET_CARDSUCESS
+                        && etBindbankCard.getText().toString().length() >= 16){
+                    if (SpUtil.getString(BindBankCardActivity.this,"ident","").equals("partner")){
+                        if (!TextUtils.isEmpty(etBindbankName.getText().toString())){
 
-                    bindBank();
+                            bindPartnerCard();
+                        }else{
+                            ToastUtil.showToast(BindBankCardActivity.this,"请输入姓名");
+                        }
+
+                    }else{
+
+                        bindBank();
+                    }
                 }else{
 
                     if (TextUtils.isEmpty(etBindbankName.getText().toString()) ){
@@ -224,6 +262,8 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
                         Toast.makeText(BindBankCardActivity.this, "请输入银行卡号!", Toast.LENGTH_SHORT).show();
                     }else if (!GET_CARDSUCESS){
                         Toast.makeText(BindBankCardActivity.this, "没有银行卡信息!", Toast.LENGTH_SHORT).show();
+                    }else if (etBindbankCard.getText().toString().length() < 16){
+                        Toast.makeText(BindBankCardActivity.this, "银行卡号位数不够", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -241,6 +281,18 @@ public class BindBankCardActivity extends AppCompatActivity implements View.OnCl
                 });
                 break;
         }
+    }
+
+    private void bindPartnerCard() {
+        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.PARTNER_BINDCARD, RequestMethod.POST);
+        jsonObjectRequest.add("account",etBindbankCard.getText().toString());
+        jsonObjectRequest.add("identity","4");
+        jsonObjectRequest.add("staff_id", SpUtil.getString(BindBankCardActivity.this,"partnerid",""));
+        jsonObjectRequest.add("sname",etBindbankName.getText().toString());
+        jsonObjectRequest.add("bankname",bankName);
+        jsonObjectRequest.add("logourl",bankLogo);
+        CallServer.getInstance().add(BindBankCardActivity.this,jsonObjectRequest,callback,UrlTag.PARTNER_BINDCARD,true,false,true);
+
     }
 
     private void bindBank() {

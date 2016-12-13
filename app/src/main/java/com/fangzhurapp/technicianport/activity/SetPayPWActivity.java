@@ -34,7 +34,6 @@ public class SetPayPWActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_pay_pw);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         SETPAYPWACTIVITY = this;
         initView();
         initEvent();

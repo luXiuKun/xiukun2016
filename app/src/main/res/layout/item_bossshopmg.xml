@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/dd_dimen_20px"
-    android:paddingBottom="@dimen/dd_dimen_10px"
-    android:paddingLeft="@dimen/dd_dimen_50px"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
@@ -13,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
         android:textColor="@color/wordcolor"
         />
 
@@ -22,6 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/viewline"
+        android:layout_marginLeft="@dimen/dd_dimen_50px"
         android:textSize="17sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewline">
+
+    </View>
 
 </LinearLayout>

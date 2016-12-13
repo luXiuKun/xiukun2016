@@ -76,7 +76,6 @@ public class BossGdActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_boss_gd);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
@@ -97,7 +96,7 @@ public class BossGdActivity extends AppCompatActivity implements View.OnClickLis
         smrBossgd.setItemAnimator(new DefaultItemAnimator());
         smrBossgd.setHasFixedSize(true);
         smrBossgd.setLayoutManager(new LinearLayoutManager(this));
-        smrBossgd.addItemDecoration(new ListViewDecoration());
+        //smrBossgd.addItemDecoration(new ListViewDecoration());
         if (SpUtil.getString(BossGdActivity.this,"shenfen","").equals("1")){
 
             smrBossgd.setSwipeMenuCreator(swipeMenuCreator);
@@ -179,7 +178,12 @@ public class BossGdActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.img_title_right:
-                showDialog();
+                if (SpUtil.getString(BossGdActivity.this,"shenfen","").equals("1")){
+
+                    showDialog();
+                }else{
+                    Toast.makeText(BossGdActivity.this, "无操作权限", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -299,7 +303,7 @@ public class BossGdActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
 
         }

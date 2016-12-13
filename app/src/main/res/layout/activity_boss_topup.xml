@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    >
+
+    <include layout="@layout/activity_main_title"></include>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dd_dimen_30px"
+        android:background="@color/gray_line"></View>
+
+    <RelativeLayout
+        android:id="@+id/rl_bosstopup_weixin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_30px"
+        android:paddingLeft="@dimen/dd_dimen_50px"
+        android:background="@color/buttom_bg"
+        android:paddingBottom="@dimen/dd_dimen_30px">
+
+        <ImageView
+            android:id="@+id/topup_weixinlogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/weixin_logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/topup_weixinlogo"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            android:text="微信"/>
+
+        <CheckBox
+            android:id="@+id/cb_weixin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/selector_selectcard"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line">
+
+    </View>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dd_dimen_30px"
+        android:paddingBottom="@dimen/dd_dimen_30px"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:text="金额"/>
+
+        <EditText
+            android:id="@+id/et_bosstopup_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/dd_dimen_100px"
+            android:hint="最低转入100元以上金额"
+            />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line">
+
+    </View>
+
+
+    <Button
+        android:id="@+id/btn_confirmtopup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_confirmtopup_bg"
+        android:layout_marginTop="@dimen/dd_dimen_100px"/>
+
+
+
+</LinearLayout>

@@ -1,8 +1,10 @@
 package com.fangzhurapp.technicianport.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -38,6 +40,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     ImageButton ibSettingOutlogin;
     @Bind(R.id.ib_setting_head)
     ImageButton ibSetttingHead;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_setting);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
 
         initView();
         initEvent();
@@ -95,9 +97,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.ib_setting_outlogin:
-                CustomApplication.removeAllAct();
-                Intent outlogin = new Intent(SettingActivity.this, SelectIdent.class);
-                startActivity(outlogin);
+
+                outLogin();
+
                 break;
             case R.id.rl_setting_about:
                 Intent about = new Intent(SettingActivity.this, AboutActivity.class);
@@ -116,6 +118,36 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(hotline);
                 break;
         }
+
+    }
+
+    private void outLogin() {
+
+        AlertDialog.Builder outLogin = new AlertDialog.Builder(SettingActivity.this);
+
+        outLogin.setTitle("退出登录")
+                .setMessage("确定要退出登录吗?")
+                .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (alertDialog != null){
+
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+        outLogin.setPositiveButton("是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CustomApplication.removeAllAct();
+                SpUtil.remove(SettingActivity.this,"password");
+                SpUtil.remove(SettingActivity.this,"selectident");
+                Intent outlogin = new Intent(SettingActivity.this, SelectIdent.class);
+                startActivity(outlogin);
+            }
+        });
+        alertDialog = outLogin.show();
+
 
     }
 }

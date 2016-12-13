@@ -1,12 +1,17 @@
 package com.fangzhurapp.technicianport.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +24,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.bean.BankCardData;
+import com.fangzhurapp.technicianport.eventbus.BossBoolMsgEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
@@ -32,6 +38,8 @@ import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,7 +85,6 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         Fresco.initialize(BossTXActivity.this);
         setContentView(R.layout.activity_tx);
         CustomApplication.addAct(this);
-        getSupportActionBar().hide();
 
         ButterKnife.bind(this);
         initView();
@@ -88,6 +95,44 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         imgLogo.setOnClickListener(this);
         rlTxCheckcard.setOnClickListener(this);
         ibTxNext.setOnClickListener(this);
+
+        etTxPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        etTxPrice.setText(s);
+                        etTxPrice.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    etTxPrice.setText(s);
+                    etTxPrice.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        etTxPrice.setText(s.subSequence(0, 1));
+                        etTxPrice.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void initView() {
@@ -96,8 +141,8 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         imgTitleRight.setVisibility(View.INVISIBLE);
         imgTitleIndicator.setVisibility(View.INVISIBLE);
 
-        price = SpUtil.getString(BossTXActivity.this, "bossktxprice", "").substring(1, SpUtil.getString(BossTXActivity.this, "bossktxprice", "").length());
-        etTxPrice.setHint("可提现金额"+ price +"元");
+        price = SpUtil.getString(BossTXActivity.this, "bossktxprice", "");
+        etTxPrice.setHint("可提现金额"+ SpUtil.getString(BossTXActivity.this, "bossktxprice", "") +"元");
 
         getBindList();
     }
@@ -108,6 +153,8 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         jsonObjectRequest.add("staff_id", SpUtil.getString(BossTXActivity.this,"id",""));
         CallServer.getInstance().add(BossTXActivity.this,jsonObjectRequest,callback, UrlTag.BOSS_BIND_CARD_LIST,true,false,true);
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -141,6 +188,7 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
                             }else{
 
                                 String s = NumberUtils.floatFormat(aFloat);
+
                                 showPayDialog(s);
                             }
 
@@ -180,6 +228,8 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         payPwDialog = new PayPwDialog(BossTXActivity.this, R.layout.dialog_paypw,price);
         payPwDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         payPwDialog.show();
+        //弹出软键盘
+        payPwDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         payPwDialog.setPayPwDialogListener(new PayPwDialog.payListener() {
             @Override
@@ -203,6 +253,8 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         jsonObjectRequest.add("bid",id);
         jsonObjectRequest.add("money",price);
         jsonObjectRequest.add("payment",pw);
+        jsonObjectRequest.add("zmoney",
+                SpUtil.getString(BossTXActivity.this, "bossktxprice", ""));
 
         CallServer.getInstance().add(BossTXActivity.this,jsonObjectRequest,callback,UrlTag.BOSS_TX,true,false,true);
     }
@@ -258,6 +310,8 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
                         String isok = data.getString("isok");
                         if (isok.equals("1")){
                             payPwDialog.dismiss();
+                            //提现成功更新钱包的可提现金额
+                            EventBus.getDefault().post(new BossBoolMsgEvent(true));
                             Intent intent = new Intent(BossTXActivity.this, TxSucessActivity.class);
                             startActivity(intent);
                             BossTXActivity.this.finish();
@@ -266,9 +320,13 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(BossTXActivity.this, "提现失败", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        JSONObject msg = jsonObject.getJSONObject("msg");
-                        String fanhui = msg.getString("fanhui");
-                        Toast.makeText(BossTXActivity.this, fanhui, Toast.LENGTH_SHORT).show();
+
+
+
+                        String msg = jsonObject.getString("msg");
+                        Toast.makeText(BossTXActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -277,7 +335,7 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
 
         }
     };
@@ -287,4 +345,6 @@ public class BossTXActivity extends AppCompatActivity implements View.OnClickLis
         super.onRestart();
         getBindList();
     }
+
+
 }

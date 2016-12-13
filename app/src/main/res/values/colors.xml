@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#FFFFFF</color>
 
     <color name="buttom_bg">#F8F8F8</color>
     <color name="tab_bg">#34C083</color>//蓝色
@@ -19,6 +20,13 @@
     <color name="cardtext">#04BBcb</color>
 
     <color name="wordcolor">#666666</color>
+    <color name="blacktext">#414141</color>
+
+    <color name="bosswallet_blue">#64AADB</color>
+
+    <color name="bosswallet_xjzh">#FF7D77</color>
+    <color name="bosswallet_card">#f1b32d</color>
+    <color name="bosswallet_staffwage">#35C4D5</color>
 
 
     <!--日历-->
@@ -35,4 +43,10 @@
 
     <color name="red_normal">#FF0000</color>
     <color name="red_pressed">#FF6666</color>
+
+    <color name="touming">#626262</color>
+
+    <color name="green">#2bcccc</color>
+
+    <color name="colorTitleTheme">@android:color/black</color>
 </resources>

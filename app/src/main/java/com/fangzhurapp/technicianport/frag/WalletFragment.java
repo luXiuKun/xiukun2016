@@ -2,72 +2,84 @@ package com.fangzhurapp.technicianport.frag;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.MainActivity;
 import com.fangzhurapp.technicianport.R;
-import com.fangzhurapp.technicianport.activity.BossMoneyDetailActivity;
+import com.fangzhurapp.technicianport.activity.InComeActivity;
+import com.fangzhurapp.technicianport.activity.MyBindBankActivity;
 import com.fangzhurapp.technicianport.activity.MyWalletActivity;
 import com.fangzhurapp.technicianport.activity.SettingActivity;
+import com.fangzhurapp.technicianport.activity.PartnerIncomeAct;
+import com.fangzhurapp.technicianport.activity.StaffInComeActivity;
 import com.fangzhurapp.technicianport.activity.TXPriceActivity;
+import com.fangzhurapp.technicianport.adapter.CommAdapter;
+import com.fangzhurapp.technicianport.adapter.ViewHolder;
+import com.fangzhurapp.technicianport.bean.ShopdataBean;
 import com.fangzhurapp.technicianport.eventbus.MsgEvent;
 import com.fangzhurapp.technicianport.eventbus.MsgEvent1;
+import com.fangzhurapp.technicianport.eventbus.MsgEventAils;
+import com.fangzhurapp.technicianport.eventbus.TxEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
+import com.fangzhurapp.technicianport.utils.AnimationUtils;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
-import com.umeng.socialize.ShareAction;
+import com.fangzhurapp.technicianport.view.SharePopWindow;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.shareboard.SnsPlatform;
-import com.umeng.socialize.utils.ShareBoardlistener;
 import com.yolanda.nohttp.NoHttp;
 import com.yolanda.nohttp.RequestMethod;
+import com.yolanda.nohttp.rest.CacheMode;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.Manifest;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WalletFragment extends Fragment implements OnRefreshListener,View.OnClickListener{
 
     private static final String TAG = "WalletFragment";
     private View view;
-    private String[] text = new String[]{"可提现金额","结算中的金额","我的工资","推荐店铺送百元红包"};
-    private int[] img = new int[]{R.drawable.wallet_ktxmoney,R.drawable.wallet_jsmoney,R.drawable.wallet_wage,R.drawable.wallet_share};
-    private GridView swipe_target;
-    private String[] stringArr ;
+    private ScrollView swipe_target;
     private ImageView mTitleRight;
     private Context mContext;
     private SwipeToLoadLayout swipe_wallet;
     private ImageView img_title_indicator;
     private TextView tv_shopname;
+
+    private List<ShopdataBean> shopList;
+    private String CHANGE_SHOP_STATE = "1";
+    private PopupWindow popupWindow;
+    private ListView pop_listview;
+    private PopupWindow sharePop;
+    private TextView tv_jswallet_xjzh;
+    private TextView tv_jswallet_wage;
+    private TextView tv_jswallet_cardcount;
+    private TextView tv_jswallet_income;
+    private String jsz;
 
     @Override
     public void onAttach(Context context) {
@@ -92,10 +104,8 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d(TAG, "onCreateView: "+"WalletFragment");
         EventBus.getDefault().register(this);
-        view = inflater.inflate(R.layout.fragment_wallet, container, false);
-
+        view = inflater.inflate(R.layout.fragment_wallet1, container, false);
 
         initView();
         initEvent();
@@ -107,8 +117,9 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
 
 
     private void initEvent() {
+        tv_shopname.setOnClickListener(this);
         mTitleRight.setOnClickListener(this);
-        swipe_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*swipe_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -116,11 +127,6 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
                     case 0:
                         Intent intent = new Intent(mContext, TXPriceActivity.class);
 
-                       TextView tv_gvwallet_price = (TextView) parent.getChildAt(position).findViewById(R.id.tv_gvwallet_price);
-                        if (tv_gvwallet_price != null){
-
-                            SpUtil.putString(mContext,"ktxprice",tv_gvwallet_price.getText().toString());
-                        }
                         startActivity(intent);
                         break;
 
@@ -135,61 +141,22 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
                         break;
                 }
             }
-        });
+        });*/
     }
 
     private void share() {
 
-        UMImage umImage = new UMImage(mContext, BitmapFactory.decodeResource(getResources(), R.drawable.share_logo));
-
-        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
-                {
-                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE
-                };
 
 
-        new ShareAction(getActivity()).setDisplayList(displaylist)
-                .setListenerList(umShareListener)
-               // .setShareboardclickCallback(shareBoardlistener)
-                .withMedia(umImage)
-                .withText("足浴养生行业领先的移动智能服务平台，一天只要1块钱，一年省下10万元！")
-                .withTitle("记钟宝——足浴人的生财神器")
-                .withTargetUrl("http://www.fangzhur.com/public/download.php")
-                .open();
 
+        SharePopWindow instance = SharePopWindow.getInstance(getActivity(),mContext, R.layout.layout_share_popupwindow);
+        instance.showPopupWindow(view);
 
 
     }
-   /* private ShareBoardlistener shareBoardlistener = new ShareBoardlistener() {
-        @Override
-        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
 
-            if (share_media.equals("WEIXIN")){
-                Toast.makeText(mContext, "微信好友", Toast.LENGTH_SHORT).show();
 
-            }else if (share_media.equals("WEIXIN_CIRCLE")){
-                Toast.makeText(mContext, "微信朋友圈", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };*/
 
-    private UMShareListener umShareListener =new UMShareListener(){
-
-        @Override
-        public void onResult(SHARE_MEDIA share_media) {
-            Toast.makeText(mContext, "分享成功", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-            Toast.makeText(mContext, "分享失败", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media) {
-            Toast.makeText(mContext, "取消分享", Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,64 +166,51 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
 
     private void initView() {
 
-        swipe_target = (GridView) view.findViewById(R.id.swipe_target);
+        swipe_target = (ScrollView) view.findViewById(R.id.swipe_target);
         mTitleRight = (ImageView) view.findViewById(R.id.img_title_right);
         mTitleRight.setBackgroundResource(R.drawable.img_setting);
         swipe_wallet = (SwipeToLoadLayout) view.findViewById(R.id.swipe_wallet);
+
         img_title_indicator = (ImageView) view.findViewById(R.id.img_title_indicator);
         tv_shopname = (TextView) view.findViewById(R.id.tv_shopname);
         tv_shopname.setText(SpUtil.getString(mContext,"shopname",""));
-        img_title_indicator.setVisibility(View.INVISIBLE);
+
+        RelativeLayout rl_jswallet_xjzh = (RelativeLayout) view.findViewById(R.id.rl_jswallet_xjzh);
+        RelativeLayout rl_jswallet_wage = (RelativeLayout) view.findViewById(R.id.rl_jswallet_wage);
+        RelativeLayout rl_jswallet_bindcard = (RelativeLayout) view.findViewById(R.id.rl_jswallet_bindcard);
+        RelativeLayout rl_jswallet_share = (RelativeLayout) view.findViewById(R.id.rl_jswallet_share);
+        RelativeLayout rl_jswallet_income= (RelativeLayout) view.findViewById(R.id.rl_jswallet_income);
+
+        rl_jswallet_xjzh.setOnClickListener(this);
+        rl_jswallet_wage.setOnClickListener(this);
+        rl_jswallet_bindcard.setOnClickListener(this);
+        rl_jswallet_share.setOnClickListener(this);
+        rl_jswallet_income.setOnClickListener(this);
+        tv_jswallet_xjzh = (TextView) view.findViewById(R.id.tv_jswallet_xjzh);
+        tv_jswallet_wage = (TextView) view.findViewById(R.id.tv_jswallet_wage);
+        tv_jswallet_cardcount = (TextView) view.findViewById(R.id.tv_jswallet_cardcount);
+        tv_jswallet_income = (TextView) view.findViewById(R.id.tv_jswallet_income);
 
         swipe_wallet.setOnRefreshListener(this);
         swipe_wallet.setRefreshing(true);
 
-        swipe_target.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return text.length;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return text[position];
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                convertView = View.inflate(mContext,R.layout.item_walletgv,null);
-                TextView tv_gvwallet_type = (TextView) convertView.findViewById(R.id.tv_gvwallet_type);
-                TextView tv_gvwallet_price = (TextView) convertView.findViewById(R.id.tv_gvwallet_price);
-                ImageView img_gvwallet = (ImageView) convertView.findViewById(R.id.img_gvwallet);
-
-                if (position ==text.length -1 ){
-                    img_gvwallet.setBackgroundResource(img[img.length-1]);
-                    tv_gvwallet_price.setText("推荐有礼");
-                    tv_gvwallet_type.setText("推荐店铺送百元红包");
-                    tv_gvwallet_type.setTextSize(13F);
-                    tv_gvwallet_type.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor1));
-                }else{
-
-                    img_gvwallet.setBackgroundResource(img[position]);
-                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                    tv_gvwallet_type.setText(text[position]);
-                    tv_gvwallet_price.setText("0.0");
-                }
-                return convertView;
-            }
-        });
 
 
 
 
+        changeShop();
 
     }
+
+    private void changeShop() {
+
+        Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.CHANGE_SHOP, RequestMethod.POST);
+        jsonObjectRequest.add("phone",SpUtil.getString(mContext,"phone",""));
+        jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
+        CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.CHANGE_SHOP,false,false,true);
+    }
+
+
     @Subscribe
     public void onEventMainThread(MsgEvent msg) {
 
@@ -269,6 +223,12 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
 
     }
 
+    @Subscribe
+    public void onEventMainThread(TxEvent msg) {
+        swipe_wallet.setRefreshing(msg.getBooleanMsg());
+
+    }
+
 
     private HttpCallBack<JSONObject> callback = new HttpCallBack<JSONObject>() {
         @Override
@@ -277,75 +237,145 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
                 swipe_wallet.setRefreshing(false);
                 LogUtil.d(TAG,response.toString());
 
+
+
                 JSONObject jsonObject = response.get();
                 try {
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
-                        stringArr = new String[3];
                         JSONObject data = jsonObject.getJSONObject("data");
-                        String jsz = data.getString("jsz");
+                        jsz = data.getString("jsz");
                         String ktxye = data.getString("ktxye");
-                        stringArr[1] = jsz;
-                        stringArr[0] = ktxye;
+                        SpUtil.putString(mContext,"ktxprice",ktxye);
                         String gz = data.getString("gz");
-                        stringArr[2] = gz;
+                        String count = data.getString("count");
 
-
-                        swipe_target.setAdapter(new BaseAdapter() {
-                            @Override
-                            public int getCount() {
-                                return text.length;
-                            }
-
-                            @Override
-                            public Object getItem(int position) {
-                                return text[position];
-                            }
-
-                            @Override
-                            public long getItemId(int position) {
-                                return position;
-                            }
-
-                            @Override
-                            public View getView(int position, View convertView, ViewGroup parent) {
-
-                                convertView = View.inflate(mContext,R.layout.item_walletgv,null);
-                                TextView tv_gvwallet_type = (TextView) convertView.findViewById(R.id.tv_gvwallet_type);
-                                TextView tv_gvwallet_price = (TextView) convertView.findViewById(R.id.tv_gvwallet_price);
-                                ImageView img_gvwallet = (ImageView) convertView.findViewById(R.id.img_gvwallet);
-
-                                if (position ==text.length -1 ){
-                                    img_gvwallet.setBackgroundResource(img[img.length-1]);
-                                    tv_gvwallet_price.setText("推荐有礼");
-                                    tv_gvwallet_type.setText("推荐店铺送百元红包");
-                                    tv_gvwallet_type.setTextSize(13F);
-                                    tv_gvwallet_type.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor1));
-                                }else{
-
-                                    img_gvwallet.setBackgroundResource(img[position]);
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                                    tv_gvwallet_type.setText(text[position]);
-                                    tv_gvwallet_price.setText(stringArr[position]);
-                                }
-                                return convertView;
-                            }
-                        });
-
+                        tv_jswallet_xjzh.setText(ktxye+"元");
+                        tv_jswallet_wage.setText(gz+"元");
+                        tv_jswallet_cardcount.setText(count+"张");
+                        tv_jswallet_income.setText(jsz);
                     }else{
 
 
                     }
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                 }
 
+
+            }else if (what == UrlTag.CHANGE_SHOP){
+
+                LogUtil.d(TAG,response.toString());
+                JSONObject jsonObject = response.get();
+                try {
+                    String sucess = jsonObject.getString("sucess");
+                    if (sucess.equals("1")){
+                        JSONArray data = jsonObject.getJSONArray("data");
+
+                        if (data.length() > 0){
+
+
+                            shopList = new ArrayList<>();
+
+                            for (int i =0 ;i<data.length();i++){
+                                ShopdataBean shopdataBean = new ShopdataBean();
+                                shopdataBean.setId(data.getJSONObject(i).getString("id"));
+                                shopdataBean.setSid(data.getJSONObject(i).getString("sid"));
+                                shopdataBean.setSname(data.getJSONObject(i).getString("sname"));
+                                shopdataBean.setName(data.getJSONObject(i).getString("name"));
+                                shopdataBean.setId_number(data.getJSONObject(i).getString("id_number"));
+                                shopList.add(shopdataBean);
+                            }
+                            //进入界面
+                            if (CHANGE_SHOP_STATE.equals("1")){
+
+                                if (shopList.size() == 1){
+                                   // tv_shopname.setText(shopList.get(0).getSname());
+                                    tv_shopname.setEnabled(false);
+                                    img_title_indicator.setVisibility(View.INVISIBLE);
+                                    SpUtil.putString(mContext,"shopname",shopList.get(0).getSname());
+
+                                }else{
+
+                                    //tv_shopname.setText(shopList.get(0).getSname());
+
+                                    SpUtil.putString(mContext,"shopname",shopList.get(0).getSname());
+                                }
+
+                                //如果多家商店
+                            }else{
+
+                                if (shopList.size() == 1){
+
+                                    tv_shopname.setEnabled(false);
+                                    img_title_indicator.setVisibility(View.INVISIBLE);
+                                    CommAdapter<ShopdataBean> commAdapter = new CommAdapter<ShopdataBean>(mContext, R.layout.item_changeshop, shopList) {
+                                        @Override
+                                        public void convert(ViewHolder holder, ShopdataBean shopdataBean, int position) {
+
+                                            TextView tv_shopname = holder.getView(R.id.tv_shopname);
+                                            tv_shopname.setText(shopdataBean.getSname());
+                                            SpUtil.putString(mContext,"shopname",shopdataBean.getSname());
+                                        }
+                                    };
+                                    pop_listview.setAdapter(commAdapter);
+
+                                }else{
+
+                                    CommAdapter<ShopdataBean> commAdapter = new CommAdapter<ShopdataBean>(mContext, R.layout.item_changeshop, shopList) {
+                                        @Override
+                                        public void convert(ViewHolder holder, ShopdataBean shopdataBean, int position) {
+
+                                            TextView tv_shopname = holder.getView(R.id.tv_shopname);
+                                            tv_shopname.setText(shopdataBean.getSname());
+                                        }
+                                    };
+                                    pop_listview.setAdapter(commAdapter);
+
+                                    pop_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            tv_shopname.setText(shopList.get(position).getSname());
+
+                                            SpUtil.putString(mContext,"id",shopList.get(position).getId());
+                                            SpUtil.putString(mContext,"sid",shopList.get(position).getSid());
+                                            SpUtil.putString(mContext,"shopname",shopList.get(position).getSname());
+                                            SpUtil.putString(mContext,"name",shopList.get(position).getName());
+                                            SpUtil.putString(mContext, "id_number", shopList.get(position).getId_number());
+
+
+                                            EventBus.getDefault().post(new MsgEvent(shopList.get(position).getSname()));
+                                            //发送消息刷新
+                                            EventBus.getDefault().post(new MsgEvent1(true));
+                                            //切换商店重新设置别名
+                                            EventBus.getDefault().post(new MsgEventAils(true));
+
+                                            popupWindow.dismiss();
+
+                                        }
+                                    });
+
+                                }
+
+                            }
+
+
+
+                        }
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
             swipe_wallet.setRefreshing(false);
         }
     };
@@ -368,19 +398,64 @@ public class WalletFragment extends Fragment implements OnRefreshListener,View.O
                 startActivity(intent);
 
                 break;
+
+            case R.id.tv_shopname:
+                CHANGE_SHOP_STATE = "2";
+                RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(0f, 90f, 0.5f, 0.5f, 300, true);
+                img_title_indicator.startAnimation(rotateAnimation);
+                popupWindow = new PopupWindow();
+                View view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_changeshop, null);
+                pop_listview = (ListView) view.findViewById(R.id.pop_listview);
+                popupWindow.setContentView(view);
+                popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow.setBackgroundDrawable(new PaintDrawable());
+                popupWindow.setFocusable(true);
+                popupWindow.showAsDropDown(tv_shopname);
+
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(90f, 0f, 0.5f, 0.5f, 300, true);
+                        img_title_indicator.startAnimation(rotateAnimation);
+                    }
+                });
+                changeShop();
+
+                break;
+
+            case R.id.rl_jswallet_xjzh:
+                Intent tx = new Intent(mContext, TXPriceActivity.class);
+
+                startActivity(tx);
+                break;
+
+            case R.id.rl_jswallet_wage:
+                Intent intent1 = new Intent(mContext, MyWalletActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.rl_jswallet_bindcard:
+                Intent bindCard = new Intent(mContext, MyBindBankActivity.class);
+                startActivity(bindCard);
+                break;
+
+            case R.id.rl_jswallet_share:
+                share();
+                break;
+
+            case R.id.rl_jswallet_income:
+
+                Intent staffIncome = new Intent(mContext, StaffInComeActivity.class);
+                staffIncome.putExtra("jsincome",jsz);
+                startActivity(staffIncome);
+                break;
+
         }
     }
 
 
-    public void changeShopName(String shopname){
 
-        tv_shopname.setText(shopname);
-    }
-
-    public void refresh(){
-
-        swipe_wallet.setRefreshing(true);
-    }
 
 
 }

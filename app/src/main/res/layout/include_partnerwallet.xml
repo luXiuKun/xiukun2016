@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:layout_marginLeft="@dimen/dd_dimen_10px"
+    android:layout_marginRight="@dimen/dd_dimen_10px"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_partnerwallet_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_jswallet_income"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_incometag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_partnerwallet_income"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="@color/bosswallet_blue"
+            android:text="我的收入"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_incometag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_partnerwallet_income"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_below="@+id/tv_partnerwallet_incometag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="累计收入:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_incomemoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_partnerwallet_incometag1"
+            android:layout_toRightOf="@+id/tv_partnerwallet_incometag1"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textColor="@color/viewline"
+            android:text="0.00元"/>
+
+
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_wallet_indicator"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_bankcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_partnerwallet_bankcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_wallet_bindcard"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_bankcardtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_partnerwallet_bankcard"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="@color/bosswallet_card"
+            android:text="我的银行卡"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_bankcardtag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_partnerwallet_bankcard"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_below="@+id/tv_partnerwallet_bankcardtag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="已绑定银行卡:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_cardcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_partnerwallet_bankcardtag1"
+            android:layout_toRightOf="@+id/tv_partnerwallet_bankcardtag1"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textColor="@color/viewline"
+            android:text="0张"/>
+
+
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_wallet_indicator"/>
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_partnerwallet_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_partnerwallet_city"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_partnerwallet_city"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="@color/bosswallet_staffwage"
+            android:text="我的城市"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_tag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_partnerwallet_city"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_below="@+id/tv_partnerwallet_tag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="已付费:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_citymoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_partnerwallet_tag1"
+            android:layout_toRightOf="@+id/tv_partnerwallet_tag1"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textColor="@color/viewline"
+            android:text="0人"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_tag2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_citymoney"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_below="@+id/tv_partnerwallet_tag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="未付费:"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_nopay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_tag2"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_below="@+id/tv_partnerwallet_tag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="0人"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_wallet_indicator"/>
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_partnerwallet_onetag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_partnerwallet_one"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_onetag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_partnerwallet_onetag"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="@color/bosswallet_xjzh"
+            android:text="我的一级"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_onetag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_partnerwallet_onetag"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_below="@+id/tv_partnerwallet_onetag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="已付费:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_partnerwallet_onetag1"
+            android:layout_toRightOf="@+id/tv_partnerwallet_onetag1"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textColor="@color/viewline"
+            android:text="0人"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_onetag2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_one"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_below="@+id/tv_partnerwallet_onetag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="未付费:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_onenopay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_onetag2"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_below="@+id/tv_partnerwallet_onetag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="0人"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_wallet_indicator"/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_partner_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_bosswallet_staffwage_bg">
+
+        <ImageView
+            android:id="@+id/img_partnerwallet_twotag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_partnerwallet_two"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dd_dimen_80px"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_twotag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_toRightOf="@+id/img_partnerwallet_twotag"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_marginTop="@dimen/dd_dimen_40px"
+            android:textColor="#b6a1cc"
+            android:text="我的二级"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_twotag1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_partnerwallet_twotag"
+            android:layout_marginLeft="@dimen/dd_dimen_50px"
+            android:layout_below="@+id/tv_partnerwallet_twotag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="已付费:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_partnerwallet_twotag1"
+            android:layout_toRightOf="@+id/tv_partnerwallet_twotag1"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:textColor="@color/viewline"
+            android:text="0人"/>
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_twotag2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_two"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_below="@+id/tv_partnerwallet_twotag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="未付费:"
+            />
+
+        <TextView
+            android:id="@+id/tv_partnerwallet_twonopay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_partnerwallet_twotag2"
+            android:layout_marginLeft="@dimen/dd_dimen_10px"
+            android:layout_below="@+id/tv_partnerwallet_twotag"
+            android:layout_marginTop="@dimen/dd_dimen_20px"
+            android:textColor="@color/viewline"
+            android:text="0人"
+            />
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_wallet_indicator"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

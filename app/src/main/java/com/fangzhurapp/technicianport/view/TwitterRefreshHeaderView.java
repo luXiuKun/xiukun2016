@@ -64,7 +64,7 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
         ivArrow.clearAnimation();
         ivArrow.setVisibility(GONE);
         progressBar.setVisibility(VISIBLE);
-        tvRefresh.setText("刷新订单...");
+        tvRefresh.setText("加载中...");
     }
 
     @Override
@@ -109,7 +109,7 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
         ivArrow.clearAnimation();
         ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
-        tvRefresh.setText("刷新完成");
+        tvRefresh.setText("加载完成");
     }
 
     @Override

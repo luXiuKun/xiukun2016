@@ -20,6 +20,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
+import com.fangzhurapp.technicianport.eventbus.BossBindSucessEvent;
 import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
@@ -32,6 +33,7 @@ import com.yolanda.nohttp.RequestMethod;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +77,6 @@ public class BossBindCardActivity extends AppCompatActivity implements View.OnCl
         CustomApplication.addAct(this);
         Fresco.initialize(BossBindCardActivity.this);
         setContentView(R.layout.activity_bind_bank_card);
-        getSupportActionBar().hide();
         ButterKnife.bind(this);
         initView();
         initEvent();
@@ -173,9 +174,11 @@ public class BossBindCardActivity extends AppCompatActivity implements View.OnCl
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
 
+                        EventBus.getDefault().post(new BossBindSucessEvent(true));
                         Intent intent = new Intent(BossBindCardActivity.this, BindSucessActivty.class);
                         startActivity(intent);
                         BossBindCardActivity.this.finish();
+
 
                     }else{
                         JSONObject msg = jsonObject.getJSONObject("msg");
@@ -189,7 +192,7 @@ public class BossBindCardActivity extends AppCompatActivity implements View.OnCl
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
             REQUEST_STATE = true;
         }
     };
@@ -199,7 +202,7 @@ public class BossBindCardActivity extends AppCompatActivity implements View.OnCl
         tvShopname.setText("绑定银行卡");
         imgTitleIndicator.setVisibility(View.INVISIBLE);
         imgTitleRight.setVisibility(View.INVISIBLE);
-
+        etBindbankName.setText(SpUtil.getString(BossBindCardActivity.this,"name",""));
     }
 
 

@@ -1,8 +1,10 @@
 package com.fangzhurapp.technicianport.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -56,13 +58,21 @@ public class MoneyDetailActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_money_detail);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initView();
         initEvent();
     }
 
     private void initEvent() {
         imgLogo.setOnClickListener(this);
+
+        lvMoneydetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MoneyDetailActivity.this, MoneyTradeDetailActivity.class);
+                intent.putExtra("tradedetail",list.get(position));
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -113,10 +123,13 @@ public class MoneyDetailActivity extends AppCompatActivity implements View.OnCli
                             list = new ArrayList<>();
                             for (int i = 0; i < data.length(); i++) {
                                 moneyDetailBean moneyDetailBean = new moneyDetailBean();
-
+                                moneyDetailBean.setCname(data.getJSONObject(i).getString("cname"));
                                 moneyDetailBean.setMoney(data.getJSONObject(i).getString("money"));
                                 moneyDetailBean.setTime(data.getJSONObject(i).getString("time"));
                                 moneyDetailBean.setType(data.getJSONObject(i).getString("type"));
+                                moneyDetailBean.setSmoney(data.getJSONObject(i).getString("smoney"));
+                                moneyDetailBean.setPayment_onumber(data.getJSONObject(i).getString("payment_onumber"));
+
 
                                 list.add(moneyDetailBean);
 
@@ -140,7 +153,7 @@ public class MoneyDetailActivity extends AppCompatActivity implements View.OnCli
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

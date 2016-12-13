@@ -7,30 +7,31 @@ import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.fangzhurapp.technicianport.BossMainActivity;
-import com.fangzhurapp.technicianport.CustomApplication;
 import com.fangzhurapp.technicianport.R;
 import com.fangzhurapp.technicianport.activity.BossBindBankActivity;
 import com.fangzhurapp.technicianport.activity.BossStaffWageActivity;
 import com.fangzhurapp.technicianport.activity.BossTXPriceActivity;
+import com.fangzhurapp.technicianport.activity.InComeActivity;
 import com.fangzhurapp.technicianport.adapter.CommAdapter;
 import com.fangzhurapp.technicianport.adapter.ViewHolder;
 import com.fangzhurapp.technicianport.bean.ShopdataBean;
+import com.fangzhurapp.technicianport.eventbus.BossBindSucessEvent;
 import com.fangzhurapp.technicianport.eventbus.BossBoolMsgEvent;
 import com.fangzhurapp.technicianport.eventbus.BossMsgEvent;
 import com.fangzhurapp.technicianport.eventbus.BossNameMsgEvent;
@@ -38,6 +39,7 @@ import com.fangzhurapp.technicianport.http.CallServer;
 import com.fangzhurapp.technicianport.http.HttpCallBack;
 import com.fangzhurapp.technicianport.http.UrlConstant;
 import com.fangzhurapp.technicianport.http.UrlTag;
+import com.fangzhurapp.technicianport.utils.AnimationUtils;
 import com.fangzhurapp.technicianport.utils.LogUtil;
 import com.fangzhurapp.technicianport.utils.SpUtil;
 import com.yolanda.nohttp.NoHttp;
@@ -62,23 +64,28 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
 
     private Context mContext;
     private View view;
-    private GridView swipe_target;
+    private ScrollView swipe_target;
     private TextView tv_shopname;
     private SwipeToLoadLayout swipe_bosswallet;
-    private String[] text = new String[]{"可提现金额","结算中的金额","员工工资","我的银行卡"};
-    private int[] img = new int[]{R.drawable.wallet_ktxmoney,R.drawable.wallet_jsmoney,R.drawable.wallet_wage,R.drawable.img_bosswallet_bankcard};
     private static final String TAG = "BossWalletFrag";
-    private List<String> dataList;
 
     private String CHANGE_SHOP_STATE = "1";
     private PopupWindow popupWindow;
     private ListView pop_listview;
     private List<ShopdataBean> shopList;
     private ImageView img_title_indicator;
+    private TextView tv_bosswallet_smsr;
+    private TextView tv_bosswallet_daymoney;
+    private TextView tv_bosswallet_js;
+    private TextView tv_bosswallet_txprice;
+    private TextView tv_bosswallet_cardcount;
+    private TextView tv_bosswallet_staffwage;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = (BossMainActivity)context;
+
     }
 
     @Override
@@ -91,7 +98,7 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.frag_bosswallet, null);
+        view = inflater.inflate(R.layout.frag_bosswallet1, null);
         EventBus.getDefault().register(this);
         initView();
         initEvent();
@@ -103,33 +110,7 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
         tv_shopname.setOnClickListener(this);
         swipe_bosswallet.setOnRefreshListener(this);
 
-        swipe_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                switch (position){
-
-                    case 0:
-
-                        TextView tv_gvwallet_price = (TextView) parent.getChildAt(position).findViewById(R.id.tv_gvwallet_price);
-                        SpUtil.putString(mContext,"bossktxprice",tv_gvwallet_price.getText().toString());
-                        Intent intent = new Intent(mContext, BossTXPriceActivity.class);
-                        startActivity(intent);
-
-                        break;
-
-                    case 2:
-                        Intent staffwage = new Intent(mContext, BossStaffWageActivity.class);
-                        startActivity(staffwage);
-                        break;
-
-                    case 3:
-                        Intent bossbind = new Intent(mContext, BossBindBankActivity.class);
-                        startActivity(bossbind);
-                        break;
-                }
-            }
-        });
 
     }
 
@@ -137,64 +118,34 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
 
         ImageView img_title_right = (ImageView) view.findViewById(R.id.img_title_right);
         img_title_right.setVisibility(View.INVISIBLE);
-        swipe_target = (GridView) view.findViewById(R.id.swipe_target);
+        swipe_target = (ScrollView) view.findViewById(R.id.swipe_target);
         tv_shopname = (TextView) view.findViewById(R.id.tv_shopname);
         swipe_bosswallet = (SwipeToLoadLayout) view.findViewById(R.id.swipe_bosswallet);
 
         img_title_indicator = (ImageView) view.findViewById(R.id.img_title_indicator);
-  /*      swipe_target.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return text.length;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return text[position];
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                convertView = View.inflate(mContext,R.layout.item_walletgv,null);
-                TextView tv_gvwallet_type = (TextView) convertView.findViewById(R.id.tv_gvwallet_type);
-                TextView tv_gvwallet_price = (TextView) convertView.findViewById(R.id.tv_gvwallet_price);
-                ImageView img_gvwallet = (ImageView) convertView.findViewById(R.id.img_gvwallet);
 
 
-                    if (position ==text.length -1 ){
+        LinearLayout ll_bosswallet_smsr  = (LinearLayout) view.findViewById(R.id.ll_bosswallet_smsr);
+        LinearLayout ll_bosswallet_ktx  = (LinearLayout) view.findViewById(R.id.ll_bosswallet_ktx);
+        LinearLayout ll_bosswallet_bindcard  = (LinearLayout) view.findViewById(R.id.ll_bosswallet_bindcard);
+        RelativeLayout rl_bosswallet_staffwage  = (RelativeLayout) view.findViewById(R.id.rl_bosswallet_staffwage);
 
-                        img_gvwallet.setBackgroundResource(img[position]);
-                        tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                        tv_gvwallet_type.setText(text[position]);
-                        tv_gvwallet_price.setText("0张");
-                        tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.cardtext));
-                    }else if(position == 1){
-
-                        img_gvwallet.setBackgroundResource(img[position]);
-                        tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                        tv_gvwallet_type.setText(text[position]);
-                        tv_gvwallet_type.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.viewline));
-                        tv_gvwallet_price.setText("￥"+"0.0");
-                        tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.viewline));
-                    }else{
-                        img_gvwallet.setBackgroundResource(img[position]);
-                        tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                        tv_gvwallet_type.setText(text[position]);
-                        tv_gvwallet_price.setText("￥"+"0.0");
-                    }
+        ll_bosswallet_smsr.setOnClickListener(this);
+        ll_bosswallet_ktx.setOnClickListener(this);
+        ll_bosswallet_bindcard.setOnClickListener(this);
+        rl_bosswallet_staffwage.setOnClickListener(this);
+        tv_bosswallet_smsr = (TextView) view.findViewById(R.id.tv_bosswallet_smsr);
+        tv_bosswallet_daymoney = (TextView) view.findViewById(R.id.tv_bosswallet_daymoney);
+        tv_bosswallet_js = (TextView) view.findViewById(R.id.tv_bosswallet_js);
+        tv_bosswallet_txprice = (TextView) view.findViewById(R.id.tv_bosswallet_txprice);
+        tv_bosswallet_cardcount = (TextView) view.findViewById(R.id.tv_bosswallet_cardcount);
+        tv_bosswallet_staffwage = (TextView) view.findViewById(R.id.tv_bosswallet_staffwage);
 
 
-                return convertView;
-            }
-        });*/
+        tv_shopname.setText(SpUtil.getString(mContext,"shopname","这是店铺名"));
         getShopData();
         swipe_bosswallet.setRefreshing(true);
+
     }
 
 
@@ -208,6 +159,11 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
         swipe_bosswallet.setRefreshing(true);
     }
 
+    @Subscribe
+    public void onEventMainThread(BossBindSucessEvent msg){
+        swipe_bosswallet.setRefreshing(true);
+    }
+
     @Override
     public void onRefresh() {
 
@@ -216,7 +172,7 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
         jsonObjectRequest.add("sid",SpUtil.getString(mContext,"sid",""));
         jsonObjectRequest.add("id",SpUtil.getString(mContext,"id",""));
         jsonObjectRequest.setCacheMode(CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE);
-        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.BOSS_WALLET_HOME,true,false,true);
+        CallServer.getInstance().add(mContext,jsonObjectRequest,callback, UrlTag.BOSS_WALLET_HOME,false,false,true);
 
     }
 
@@ -224,6 +180,7 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
 
         Request<JSONObject> jsonObjectRequest = NoHttp.createJsonObjectRequest(UrlConstant.BOSS_SHOP_CHANGE, RequestMethod.POST);
         jsonObjectRequest.add("phone",SpUtil.getString(mContext,"phone",""));
+        jsonObjectRequest.setRetryCount(3);
         CallServer.getInstance().add(mContext,jsonObjectRequest,callback,UrlTag.BOSS_SHOP_CHANGE,true,false,true);
     }
 
@@ -240,46 +197,17 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
                 try {
                     String sucess = jsonObject.getString("sucess");
                     if (sucess.equals("1")){
-                        dataList = new ArrayList<>();
+
                         JSONObject data = jsonObject.getJSONObject("data");
-                        dataList.add(data.getString("tx_money"));
-                        dataList.add(data.getString("js_money"));
-                        dataList.add(data.getString("yggz"));
-                        dataList.add( data.getString("binbank_count"));
-                        swipe_target.setAdapter(new CommAdapter<String>(mContext,R.layout.item_walletgv,dataList) {
-                            @Override
-                            public void convert(ViewHolder holder, String s, int position) {
+                        SpUtil.putString(mContext,"bossktxprice",data.getString("tx_money"));
 
-                                TextView tv_gvwallet_type = holder.getView(R.id.tv_gvwallet_type);
-                                TextView tv_gvwallet_price = holder.getView(R.id.tv_gvwallet_price);
-                                ImageView img_gvwallet = holder.getView(R.id.img_gvwallet);
 
-                                if (position ==text.length -1 ){
-
-                                    img_gvwallet.setBackgroundResource(img[position]);
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                                    tv_gvwallet_type.setText(text[position]);
-                                    tv_gvwallet_price.setText(dataList.get(position)+"张");
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.cardtext));
-
-                                }else if(position == 1){
-
-                                    img_gvwallet.setBackgroundResource(img[position]);
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                                    tv_gvwallet_type.setText(text[position]);
-                                    tv_gvwallet_type.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.viewline));
-                                    tv_gvwallet_price.setText("￥"+dataList.get(position));
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.viewline));
-                                }else{
-                                    img_gvwallet.setBackgroundResource(img[position]);
-                                    tv_gvwallet_price.setTextColor(CustomApplication.getInstance().getResources().getColor(R.color.gvwallet_textcolor));
-                                    tv_gvwallet_type.setText(text[position]);
-                                    tv_gvwallet_price.setText("￥"+dataList.get(position));
-                                }
-
-                            }
-                        });
-
+                        tv_bosswallet_txprice.setText(data.getString("tx_money")+"元");
+                        tv_bosswallet_staffwage.setText(data.getString("yggz")+"元");
+                        tv_bosswallet_cardcount.setText(data.getString("binbank_count")+"张");
+                        tv_bosswallet_daymoney.setText(data.getString("todayToAccount"));
+                        tv_bosswallet_js.setText(data.getString("inSettlement"));
+                        tv_bosswallet_smsr.setText(data.getString("onLineIncome")+"元");
 
                     }else{
 
@@ -308,21 +236,21 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
                                 shopdataBean.setSid(data.getJSONObject(i).getString("sid"));
                                 shopdataBean.setSname(data.getJSONObject(i).getString("sname"));
                                 shopdataBean.setFname(data.getJSONObject(i).getString("fname"));
-
+                                shopdataBean.setShenfen(data.getJSONObject(i).getString("shenfen"));
                                 shopList.add(shopdataBean);
                             }
                             //进入界面
                             if (CHANGE_SHOP_STATE.equals("1")){
 
                                 if (shopList.size() == 1){
-                                    tv_shopname.setText(shopList.get(0).getSname());
+                                    //tv_shopname.setText(shopList.get(0).getSname());
                                     tv_shopname.setEnabled(false);
                                     img_title_indicator.setVisibility(View.INVISIBLE);
                                     SpUtil.putString(mContext,"shopname",shopList.get(0).getSname());
 
                                 }else{
 
-                                    tv_shopname.setText(shopList.get(0).getSname());
+                                    //tv_shopname.setText(shopList.get(0).getSname());
 
                                     SpUtil.putString(mContext,"shopname",shopList.get(0).getSname());
                                 }
@@ -366,16 +294,8 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
                                             SpUtil.putString(mContext,"sid",shopList.get(position).getSid());
                                             SpUtil.putString(mContext,"shopname",item_tv.getText().toString());
                                             SpUtil.putString(mContext,"name",shopList.get(position).getFname());
+                                            SpUtil.putString(mContext,"shenfen",shopList.get(position).getShenfen());
 
-                                            /*FragmentManager fragmentManager = getFragmentManager();
-
-                                            PerformanceFrag perFrag = (PerformanceFrag) fragmentManager.findFragmentByTag("PerformanceFrag");
-
-                                            if (perFrag != null){
-
-                                                perFrag.changeShopName(item_tv.getText().toString());
-                                            }
-*/
                                             EventBus.getDefault().post(new BossMsgEvent(shopList.get(position).getSname()));
                                             //更换名字
                                             EventBus.getDefault().post(new BossNameMsgEvent(shopList.get(position).getFname()));
@@ -391,12 +311,7 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
                                 }
 
                             }
-
-
-
                         }
-
-
                     }
 
                 } catch (JSONException e) {
@@ -409,9 +324,10 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what,  Response<JSONObject> response) {
             if (what == UrlTag.BOSS_WALLET_HOME){
                 swipe_bosswallet.setRefreshing(false);
+            }else if (what == UrlTag.BOSS_SHOP_CHANGE){
             }
         }
     };
@@ -421,6 +337,9 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
         switch (v.getId()){
             case R.id.tv_shopname:
                 CHANGE_SHOP_STATE = "2";
+
+                RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(0f, 90f, 0.5f, 0.5f, 300, true);
+                img_title_indicator.startAnimation(rotateAnimation);
                 popupWindow = new PopupWindow();
                 View view = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_changeshop, null);
                 pop_listview = (ListView) view.findViewById(R.id.pop_listview);
@@ -430,13 +349,38 @@ public class BossWalletFrag extends Fragment implements OnRefreshListener,View.O
                 popupWindow.setBackgroundDrawable(new PaintDrawable());
                 popupWindow.setFocusable(true);
                 popupWindow.showAsDropDown(tv_shopname);
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        RotateAnimation rotateAnimation = AnimationUtils.setRotateAnimation(90f, 0f, 0.5f, 0.5f, 300, true);
+                        img_title_indicator.startAnimation(rotateAnimation);
+                    }
+                });
                 getShopData();
+                break;
+
+            case R.id.ll_bosswallet_smsr:
+                Intent inCome = new Intent(getActivity(), InComeActivity.class);
+                startActivity(inCome);
+                break;
+
+            case R.id.ll_bosswallet_ktx:
+
+                Intent intent = new Intent(mContext, BossTXPriceActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.ll_bosswallet_bindcard:
+                Intent bossbind = new Intent(mContext, BossBindBankActivity.class);
+                startActivity(bossbind);
+                break;
+            case R.id.rl_bosswallet_staffwage:
+                Intent staffwage = new Intent(mContext, BossStaffWageActivity.class);
+                startActivity(staffwage);
                 break;
         }
     }
 
 
-    public void changeShopName(String name){
-        tv_shopname.setText(name);
-    }
+
 }

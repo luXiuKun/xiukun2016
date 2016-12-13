@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dd_dimen_20px"
         android:paddingBottom="@dimen/dd_dimen_20px"
-        android:background="#F5F4F9"
+        android:background="@color/buttom_bg"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -118,18 +118,93 @@
 
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.PieChart
+    <com.fangzhurapp.technicianport.view.LxkCircleView
         android:id="@+id/pie_performance"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
         >
-    </com.github.mikephil.charting.charts.PieChart>
+    </com.fangzhurapp.technicianport.view.LxkCircleView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dd_dimen_50px"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/ll_starttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_calendar"/>
+
+
+            <TextView
+                android:id="@+id/tv_performance_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:textSize="16sp"
+                android:textColor="#64AADB"
+                android:text="2016.10.13"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="@dimen/dd_dimen_80px"
+            android:layout_height="2dp"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:layout_gravity="center_vertical"
+            android:background="@color/blacktext">
+        </View>
+
+        <LinearLayout
+            android:id="@+id/ll_endtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dd_dimen_20px"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/img_performance_calendar"/>
+
+
+            <TextView
+                android:id="@+id/tv_performance_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dd_dimen_20px"
+                android:textSize="16sp"
+                android:textColor="#64AADB"
+                android:text="2016.10.13"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
         android:background="@drawable/img_performance_viewbg"></View>
 
 
@@ -140,8 +215,9 @@
         android:background="#ffffff"
         android:orientation="horizontal">
 
+
         <RelativeLayout
-            android:id="@+id/rl_performance_sjys"
+            android:id="@+id/rl_performance_order"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:paddingTop="@dimen/dd_dimen_20px"
@@ -149,7 +225,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_performance_sjysmoney"
+                android:id="@+id/tv_performance_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -158,28 +234,30 @@
 
 
             <ImageView
-                android:id="@+id/img_performance_sjys"
+                android:id="@+id/img_performance_order"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/dd_dimen_10px"
-                android:layout_below="@+id/tv_performance_sjysmoney"
-                android:background="@drawable/img_performance_sjys"
+                android:layout_below="@+id/tv_performance_order"
+                android:background="@drawable/img_performance_order"
                 android:layout_marginLeft="@dimen/dd_dimen_80px"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tv_performance_sjys"
+                android:id="@+id/tv_performance_ordertag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
                 android:textColor="#64AADB"
                 android:layout_marginLeft="@dimen/dd_dimen_20px"
-                android:layout_toRightOf="@+id/img_performance_sjys"
-                android:layout_alignBottom="@+id/img_performance_sjys"
-                android:text="实际营收"/>
+                android:layout_toRightOf="@+id/img_performance_order"
+                android:layout_alignBottom="@+id/img_performance_order"
+                android:text="订单收入"/>
 
 
         </RelativeLayout>
+
+
 
         <View
             android:layout_width="1dp"
@@ -227,7 +305,7 @@
                 android:layout_marginLeft="@dimen/dd_dimen_20px"
                 android:layout_toRightOf="@+id/img_performance_vip"
                 android:layout_alignBottom="@+id/img_performance_vip"
-                android:text="会员开卡"/>
+                android:text="开卡收入"/>
 
 
         </RelativeLayout>
@@ -237,7 +315,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/viewline">
+        android:background="@color/gray_line">
 
     </View>
 
@@ -297,9 +375,8 @@
 
         </View>
 
-
         <RelativeLayout
-            android:id="@+id/rl_performance_proname"
+            android:id="@+id/rl_performance_sjys"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:paddingTop="@dimen/dd_dimen_20px"
@@ -307,39 +384,101 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_performance_prorank"
+                android:id="@+id/tv_performance_sjysmoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:textSize="18sp"
-                android:text="项目名称"/>
+                android:text="0元"/>
 
 
             <ImageView
-                android:id="@+id/img_performance_rankicon"
+                android:id="@+id/img_performance_sjys"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/dd_dimen_10px"
-                android:layout_below="@+id/tv_performance_prorank"
-                android:background="@drawable/img_performance_rank"
+                android:layout_below="@+id/tv_performance_sjysmoney"
+                android:background="@drawable/img_performance_sjys"
                 android:layout_marginLeft="@dimen/dd_dimen_80px"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tv_performance_rank"
+                android:id="@+id/tv_performance_sjys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textSize="16sp"
-                android:textColor="#FBCD3C"
+                android:textColor="#64AADB"
                 android:layout_marginLeft="@dimen/dd_dimen_20px"
-                android:layout_toRightOf="@+id/img_performance_rankicon"
-                android:layout_alignBottom="@+id/img_performance_rankicon"
-                android:text="项目排行"/>
+                android:layout_toRightOf="@+id/img_performance_sjys"
+                android:layout_alignBottom="@+id/img_performance_sjys"
+                android:text="实际营收"/>
 
 
         </RelativeLayout>
 
+
+
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line">
+
+    </View>
+
+
+    <RelativeLayout
+                    android:id="@+id/rl_performance_proname"
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/dd_dimen_30px"
+                    android:paddingBottom="@dimen/dd_dimen_30px"
+                    android:layout_height="wrap_content">
+
+               <TextView
+                   android:id="@+id/tv_performance_prorank"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:textSize="16sp"
+                   android:layout_marginRight="@dimen/dd_dimen_20px"
+                   android:layout_toLeftOf="@+id/img_performance_indicator"
+                   android:textColor="#FBCD3C"
+                   android:text="项目名称"/>
+
+
+               <ImageView
+                   android:id="@+id/img_performance_rankicon"
+                   android:layout_width="wrap_content"
+                   android:background="@drawable/img_performance_rank"
+                   android:layout_marginLeft="@dimen/dd_dimen_80px"
+                   android:layout_centerVertical="true"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/tv_performance_rank"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:textSize="18sp"
+                   android:layout_toRightOf="@+id/img_performance_rankicon"
+                  android:layout_marginLeft="@dimen/dd_dimen_20px"
+                   android:text="项目排行"/>
+
+                <ImageView
+                    android:id="@+id/img_performance_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/img_myself_indicator"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dd_dimen_50px"
+                    />
+
+
+           </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"

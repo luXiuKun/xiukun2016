@@ -17,6 +17,7 @@
         android:paddingBottom="@dimen/dd_dimen_20px"
         >
 
+
         <ImageButton
             android:id="@+id/ib_paypwdialog_close"
             android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
         android:textSize="20sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dd_dimen_20px"
-        android:text="￥3333.00"/>
+        android:text=""/>
 
     <com.jungly.gridpasswordview.GridPasswordView
         android:id="@+id/gpv_paypwdialog_pw"
@@ -89,4 +90,6 @@
         android:textColor="@color/tab_bg"/>
 
     </RelativeLayout>
+
+
 </LinearLayout>

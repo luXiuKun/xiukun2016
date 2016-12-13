@@ -58,6 +58,7 @@ public class RestartPWActivity extends AppCompatActivity implements View.OnClick
     private Boolean SEE_CONFIRMPW = true;
 
     private static final String TAG = "RestartPWActivity";
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,6 @@ public class RestartPWActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_restart_pw);
         CustomApplication.addAct(this);
         ButterKnife.bind(this);
-        getSupportActionBar().hide();
         initEvent();
     }
 
@@ -75,6 +75,13 @@ public class RestartPWActivity extends AppCompatActivity implements View.OnClick
         imgRestartpwNewpwsee.setOnClickListener(this);
         imgRestartpwConfirmpwsee.setOnClickListener(this);
         ibRestartConfirm.setOnClickListener(this);
+        if (getIntent() != null){
+
+            id = getIntent().getStringExtra("id");
+
+
+
+        }
     }
 
     @Override
@@ -146,6 +153,7 @@ public class RestartPWActivity extends AppCompatActivity implements View.OnClick
                     jsonObjectRequest.add("phone", SpUtil.getString(RestartPWActivity.this,"phone",""));
                     jsonObjectRequest.add("passwd", SpUtil.getString(RestartPWActivity.this,"password",""));
                     jsonObjectRequest.add("passwds", etConfirmpw.getText().toString());
+                    jsonObjectRequest.add("id",id);
                     CallServer.getInstance().add(RestartPWActivity.this,jsonObjectRequest,callback, UrlTag.CHANGE_PW,true,false,true);
                 }
 
@@ -202,7 +210,7 @@ public class RestartPWActivity extends AppCompatActivity implements View.OnClick
         }
 
         @Override
-        public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+        public void onFailed(int what, Response<JSONObject> response) {
 
         }
     };

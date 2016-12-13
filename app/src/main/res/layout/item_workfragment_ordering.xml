@@ -9,12 +9,96 @@
     android:orientation="vertical">
     
     
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <ImageView
+            android:id="@+id/img_ordering_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/img_ordering"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_ordering_proname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tab_bg"
+            android:textSize="18sp"
+            android:text="项目名称"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_ordering_tag"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_50px"
+            android:background="@drawable/img_ordering_housenum_bg"/>
+
+
+        <LinearLayout
+            android:layout_width="@dimen/dd_dimen_100px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dd_dimen_55px"
+            android:layout_marginTop="@dimen/dd_dimen_50px"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:id="@+id/tv_ordering_housenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:text="1232房"/>
+
+            </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        android:layout_marginTop="@dimen/dd_dimen_10px">
+
+    </View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_10px"
         android:orientation="horizontal">
 
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dd_dimen_20px"
+        >
+
         <TextView
+            android:id="@+id/tv_ordering_ordernumtag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -25,23 +109,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:layout_toRightOf="@+id/tv_ordering_ordernumtag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             />
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dd_dimen_10px"
-        android:orientation="horizontal">
-
         <TextView
+            android:id="@+id/tv_ordering_ordertimetag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:layout_toRightOf="@+id/tv_ordering_ordernum"
+            android:layout_marginLeft="@dimen/dd_dimen_30px"
             android:text="下单时间:"/>
 
         <TextView
@@ -49,42 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:layout_marginLeft="@dimen/dd_dimen_10px"
-            />
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_line"
-        android:layout_marginTop="@dimen/dd_dimen_10px">
-
-    </View>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dd_dimen_20px"
-        >
-
-        <TextView
-            android:id="@+id/tv_ordering_pronametag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="项目名称:"/>
-
-        <TextView
-            android:id="@+id/tv_ordering_proname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/tab_bg"
-            android:textSize="16sp"
-            android:text="asdas"
-            android:layout_toRightOf="@+id/tv_ordering_pronametag"
+            android:layout_toRightOf="@+id/tv_ordering_ordertimetag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             />
 
@@ -93,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_below="@+id/tv_ordering_pronametag"
+            android:layout_below="@+id/tv_ordering_ordernumtag"
             android:layout_marginTop="@dimen/dd_dimen_20px"
             android:text="标  准  价:"/>
 
@@ -103,7 +146,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/tab_bg"
             android:textSize="16sp"
-            android:text="asfasf"
+            android:text=""
             android:layout_toRightOf="@+id/tv_ordering_bzjtag"
             android:layout_alignBottom="@+id/tv_ordering_bzjtag"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
@@ -124,19 +167,14 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/tab_bg"
-            android:text="asfasf"
+            android:text=""
             android:layout_toRightOf="@+id/tv_ordertype"
             android:layout_alignBottom="@+id/tv_ordertype"
             android:layout_marginLeft="@dimen/dd_dimen_10px"
             />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/tv_ordertype"
-            android:background="@drawable/img_ordering"/>
+
 
 
     </RelativeLayout>
